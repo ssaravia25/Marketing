@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing - Reportes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f2027;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 700px;
+            width: 90%;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+        }
+        p.sub {
+            color: #90a4ae;
+            margin-bottom: 2.5rem;
+            font-size: .95rem;
+        }
+        .report-list {
+            list-style: none;
+        }
+        .report-list li {
+            margin-bottom: 1rem;
+        }
+        .report-list a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            transition: all .2s;
+        }
+        .report-list a:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #e65100;
+            transform: translateY(-2px);
+        }
+        .icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #e65100, #ff8a50);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .report-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: .2rem;
+        }
+        .report-info span {
+            font-size: .8rem;
+            color: #90a4ae;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Marketing</h1>
+        <p class="sub">Reportes y auditorias</p>
+        <ul class="report-list">
+            <li>
+                <a href="/auditoria-seo-dicoinchile">
+                    <div class="icon">SEO</div>
+                    <div class="report-info">
+                        <h3>Auditoria SEO - dicoinchile.cl</h3>
+                        <span>Analisis tecnico, on-page, contenido y backlinks</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

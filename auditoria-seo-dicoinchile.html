@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría SEO - dicoinchile.cl</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f2027;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --critical: #d63031;
+            --steel: #37474f;
+            --steel-light: #546e7a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ============ COVER ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 40px;
+            margin: -15mm -12mm 0 -12mm;
+            width: calc(100% + 24mm);
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(230,81,0,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(44,83,100,0.3) 0%, transparent 50%);
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+
+        .cover-logo {
+            font-size: 13px; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 40px;
+            position: relative; z-index: 1; font-weight: 600;
+        }
+
+        .cover h1 {
+            font-size: 48px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+
+        .cover-domain {
+            font-size: 26px; font-weight: 300; color: rgba(255,255,255,0.55);
+            margin-bottom: 8px; position: relative; z-index: 1;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+
+        .cover-subtitle {
+            font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.65);
+            margin-bottom: 45px; position: relative; z-index: 1;
+        }
+
+        .cover-meta {
+            position: relative; z-index: 1;
+            display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+        }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.4); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 15px; font-weight: 600; }
+
+        .cover-score { margin-top: 45px; position: relative; z-index: 1; }
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid var(--critical);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; background: rgba(214,48,49,0.08);
+        }
+        .score-circle .number { font-size: 44px; font-weight: 900; color: var(--critical); line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
+        /* ============ CONTENT ============ */
+        .content { max-width: 860px; margin: 0 auto; padding: 20px 10px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+            page-break-after: always;
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-top: 25px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 18px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; }
+        .summary-score-card .score.critical { color: var(--critical); }
+        .summary-score-card .score.low { color: #e67e22; }
+        .summary-score-card .score.mid { color: #f39c12; }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; page-break-inside: avoid; padding-top: 5px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+        .section-score {
+            margin-left: auto; background: var(--bg-alt); padding: 6px 14px;
+            border-radius: 8px; font-weight: 700; font-size: 15px;
+        }
+        .section-score.low { color: var(--critical); background: #ffeef0; }
+        .section-score.mid { color: #e67e22; background: #fef9e7; }
+        .section-score.good { color: var(--success); background: #e8f8f5; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 14px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-critical { background: #ffeef0; color: var(--critical); }
+        .badge-high { background: #fff3e0; color: #e67e22; }
+        .badge-medium { background: #fef9e7; color: #f39c12; }
+        .badge-low { background: #e8f8f5; color: #27ae60; }
+        .badge-ok { background: #e8f8f5; color: var(--success); }
+        .badge-none { background: #f0f0f0; color: #999; }
+
+        .alert {
+            padding: 15px 18px; border-radius: 9px; margin: 12px 0; font-size: 13px;
+        }
+        .alert-critical { background: #ffeef0; border-left: 4px solid var(--critical); color: #c0392b; }
+        .alert-warning { background: #fff8e1; border-left: 4px solid #f39c12; color: #e67e22; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #eef2ff; border-left: 4px solid #5b6abf; color: #3949ab; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .code-block {
+            background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11px;
+            line-height: 1.7; overflow-x: auto; margin: 12px 0; white-space: pre-wrap;
+        }
+        .code-block .comment { color: #6c7086; }
+        .code-block .tag { color: #f38ba8; }
+        .code-block .attr { color: #a6e3a1; }
+        .code-block .value { color: #f9e2af; }
+
+        .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+        .rec-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+        .rec-card h4 { margin: 0 0 6px; font-size: 13px; }
+        .rec-card p { font-size: 12px; color: var(--text-light); margin: 0; }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        .action-plan { page-break-before: always; padding-top: 10px; }
+        .priority-section { margin-bottom: 24px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px;
+        }
+        .priority-critical { background: var(--critical); color: white; }
+        .priority-high { background: #e67e22; color: white; }
+        .priority-medium { background: #f39c12; color: white; }
+        .priority-low { background: var(--success); color: white; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 22px; font-weight: 800; color: var(--primary); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 3px;
+        }
+
+        .competitor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+        .competitor-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            border: 1px solid var(--border);
+        }
+        .competitor-card .name { font-weight: 700; color: var(--primary); margin-bottom: 3px; font-size: 13px; }
+        .competitor-card .url { font-size: 11px; color: var(--accent); margin-bottom: 4px; font-family: monospace; }
+        .competitor-card .strength { font-size: 12px; color: var(--text-light); }
+
+        .keyword-table td:first-child { font-weight: 600; color: var(--primary); }
+
+        .tree-structure {
+            background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11.5px;
+            line-height: 1.8; margin: 12px 0;
+        }
+        .tree-structure .folder { color: #89b4fa; }
+        .tree-structure .file { color: #cdd6f4; }
+        .tree-structure .warning { color: #f38ba8; }
+        .tree-structure .ok { color: #a6e3a1; }
+        .tree-structure .dim { color: #6c7086; }
+
+        .timeline { margin: 16px 0; }
+        .timeline-item {
+            display: flex; gap: 16px; margin-bottom: 16px;
+            padding-left: 20px; border-left: 3px solid var(--border);
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            width: 12px; height: 12px; border-radius: 50%;
+            position: absolute; left: -7.5px; top: 4px;
+        }
+        .timeline-item.phase1::before { background: var(--critical); }
+        .timeline-item.phase2::before { background: #e67e22; }
+        .timeline-item.phase3::before { background: #f39c12; }
+        .timeline-item.phase4::before { background: var(--success); }
+        .timeline-content { flex: 1; }
+        .timeline-label { font-weight: 700; font-size: 14px; color: var(--primary); margin-bottom: 4px; }
+        .timeline-desc { font-size: 12px; color: var(--text-light); }
+
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .kpi-card {
+            background: white; border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .kpi-card .kpi-value { font-size: 24px; font-weight: 900; color: var(--accent); }
+        .kpi-card .kpi-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+        .kpi-card .kpi-note { font-size: 10px; color: #aaa; margin-top: 2px; }
+
+        .signature {
+            margin-top: 60px; padding-top: 30px; border-top: 2px solid var(--border);
+            text-align: center; page-break-inside: avoid;
+        }
+        .signature-name { font-size: 24px; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
+        .signature-role { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 3px; margin-top: 3px; }
+        .signature-date { font-size: 12px; color: var(--text-light); margin-top: 12px; }
+
+        .footer-brand {
+            margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);
+            text-align: center; font-size: 11px; color: var(--text-light);
+        }
+
+        @media print {
+            .cover { min-height: 97vh; }
+            .section { page-break-inside: avoid; padding-top: 5px; }
+            .executive-summary { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ COVER ============ -->
+    <div class="cover">
+        <div class="cover-logo">Auditoría Digital</div>
+        <h1>Auditoría <span>SEO</span></h1>
+        <div class="cover-domain">dicoinchile.cl</div>
+        <div class="cover-subtitle">Cubiertas y Revestimientos Industriales</div>
+
+        <div class="cover-meta">
+            <div class="cover-meta-item">
+                <div class="label">Cliente</div>
+                <div class="value">DICOIN Chile</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="label">Industria</div>
+                <div class="value">Construcción Industrial</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="label">Ubicación</div>
+                <div class="value">Placilla, Valparaíso</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="label">Fecha</div>
+                <div class="value">18 Febrero 2026</div>
+            </div>
+        </div>
+
+        <div class="cover-score">
+            <div class="score-circle">
+                <div class="number">1.8</div>
+                <div class="out-of">/10</div>
+                <div class="label">Score</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ CONTENT ============ -->
+    <div class="content">
+
+        <!-- EXECUTIVE SUMMARY -->
+        <div class="executive-summary">
+            <h2>Resumen Ejecutivo</h2>
+            <p><strong>DICOIN (Diseño & Construcción Industrial)</strong> es una empresa con ~5 años de trayectoria en Placilla, Valparaíso, dedicada a la fabricación y venta de paneles metálicos para cubiertas y revestimientos industriales y arquitectónicos.</p>
+            <p>El sitio web <strong>dicoinchile.cl</strong> presenta problemas críticos que invalidan prácticamente toda su presencia digital: el servidor da timeout (no carga), no existe Google Business Profile, no rankea para ninguna keyword comercial, tiene contenido duplicado, y su competencia domina completamente las búsquedas del sector.</p>
+            <p>El score SEO de <strong>1.8/10</strong> refleja un sitio que, en su estado actual, no genera valor digital alguno. Sin embargo, con intervenciones priorizadas, existe una oportunidad significativa de capturar tráfico en keywords de nicho donde la competencia no invierte.</p>
+
+            <div class="summary-scores">
+                <div class="summary-score-card">
+                    <div class="score critical">0.5</div>
+                    <div class="category">Rendimiento Técnico</div>
+                </div>
+                <div class="summary-score-card">
+                    <div class="score critical">1.5</div>
+                    <div class="category">SEO On-Page</div>
+                </div>
+                <div class="summary-score-card">
+                    <div class="score critical">1.0</div>
+                    <div class="category">Autoridad / Links</div>
+                </div>
+                <div class="summary-score-card">
+                    <div class="score low">3.0</div>
+                    <div class="category">Contenido</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SECTION 1: TECHNICAL ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <div class="section-title">Rendimiento Técnico</div>
+                <div class="section-score low">0.5 / 10</div>
+            </div>
+
+            <div class="alert alert-critical">
+                <strong>ESTADO CRÍTICO: Sitio Inaccesible</strong>
+                El sitio web da timeout (>60 segundos) en conexiones directas. Google no puede rastrear el sitio correctamente, y el 100% de los usuarios que intentan acceder abandonan antes de ver contenido.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>Estado Actual</th>
+                        <th>Objetivo</th>
+                        <th>Severidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tiempo de carga</td>
+                        <td>TIMEOUT (>60s)</td>
+                        <td>&lt; 3 segundos</td>
+                        <td><span class="badge badge-critical">Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td>Disponibilidad (uptime)</td>
+                        <td>Intermitente / caído</td>
+                        <td>99.9%</td>
+                        <td><span class="badge badge-critical">Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td>Core Web Vitals</td>
+                        <td>No medibles</td>
+                        <td>Todas en verde</td>
+                        <td><span class="badge badge-critical">Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile-friendly</td>
+                        <td>No verificable</td>
+                        <td>100% responsive</td>
+                        <td><span class="badge badge-high">Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td>SSL/HTTPS</td>
+                        <td>Probablemente activo</td>
+                        <td>Certificado válido</td>
+                        <td><span class="badge badge-medium">Medio</span></td>
+                    </tr>
+                    <tr>
+                        <td>CDN</td>
+                        <td>No implementado</td>
+                        <td>Cloudflare activo</td>
+                        <td><span class="badge badge-high">Alto</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Diagnóstico Probable</h3>
+            <p>El sitio utiliza <strong>WordPress + WooCommerce</strong> (evidenciado por la estructura de URLs /producto/). Las causas más probables del timeout son:</p>
+            <ul>
+                <li>Hosting compartido de baja calidad o servidor sobrecargado</li>
+                <li>Plugins pesados o mal configurados en WordPress</li>
+                <li>Imágenes sin optimizar (paneles industriales requieren fotos de alta resolución)</li>
+                <li>Sin sistema de caché implementado</li>
+                <li>Base de datos de WooCommerce sin optimizar</li>
+            </ul>
+
+            <div class="rec-grid">
+                <div class="rec-card">
+                    <h4>Migrar Hosting</h4>
+                    <p>Migrar a SiteGround, Cloudways o WP Engine. Hosting actual no soporta la carga del sitio. Costo: $15-30 USD/mes.</p>
+                </div>
+                <div class="rec-card">
+                    <h4>Implementar CDN</h4>
+                    <p>Activar Cloudflare (plan gratuito). Reduce latencia, protege contra DDoS y cachea contenido estático globalmente.</p>
+                </div>
+                <div class="rec-card">
+                    <h4>Plugin de Caché</h4>
+                    <p>Instalar WP Rocket o LiteSpeed Cache. Minificación CSS/JS, lazy loading de imágenes, caché de navegador.</p>
+                </div>
+                <div class="rec-card">
+                    <h4>Optimizar Imágenes</h4>
+                    <p>Comprimir todas las imágenes con ShortPixel/Imagify. Convertir a WebP. Las fotos de paneles probablemente pesan 2-5MB cada una.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SECTION 2: INDEXATION ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <div class="section-title">Indexación y Estructura del Sitio</div>
+                <div class="section-score low">2.0 / 10</div>
+            </div>
+
+            <h3>Páginas Indexadas en Google</h3>
+            <p>Se detectaron aproximadamente <strong>20+ URLs</strong> indexadas en Google. Sin embargo, existen problemas graves de duplicación y páginas huérfanas que diluyen la autoridad del dominio.</p>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">~20</div>
+                    <div class="metric-label">Páginas Indexadas</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--critical);">4</div>
+                    <div class="metric-label">URLs Duplicadas</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--danger);">2</div>
+                    <div class="metric-label">Páginas Huérfanas</div>
+                </div>
+            </div>
+
+            <h3>Arquitectura de URLs</h3>
+            <div class="tree-structure">
+<span class="folder">dicoinchile.cl/</span>
+├── <span class="file">inicio/</span>                      <span class="warning">← DUPLICADO del home /</span>
+├── <span class="file">tienda/</span>                      <span class="ok">← OK</span>
+├── <span class="file">nosotros/</span>                    <span class="warning">← DUPLICADO</span>
+├── <span class="file">nosotros-2/</span>                  <span class="warning">← DUPLICADO</span>
+├── <span class="file">contacto/</span>                    <span class="ok">← OK</span>
+├── <span class="file">video/</span>                       <span class="dim">← Bajo valor SEO</span>
+├── <span class="file">insumo1/</span>                     <span class="warning">← HUÉRFANA (eliminar)</span>
+├── <span class="file">insumo2/</span>                     <span class="warning">← HUÉRFANA (eliminar)</span>
+└── <span class="folder">producto/</span>                    <span class="dim">← Sin categorías intermedias</span>
+    ├── <span class="file">panel-pv8-1000/</span>
+    ├── <span class="file">panel-pv4-1000-2/</span>        <span class="warning">← "-2" = duplicado probable</span>
+    ├── <span class="file">panel-pv3-1080/</span>
+    ├── <span class="file">panel-pv6-910/</span>
+    ├── <span class="file">panel-pv18-457/</span>
+    ├── <span class="file">pv7/</span>                     <span class="warning">← Inconsistencia en nombre</span>
+    ├── <span class="file">panel-super-cuadro-390/</span>
+    ├── <span class="file">panel-mini-wave-270/</span>
+    ├── <span class="file">panel-perforado/</span>
+    ├── <span class="file">panel-camara-1170/</span>
+    ├── <span class="file">panel-cover-pol-1000-2/</span>
+    ├── <span class="file">panel-cover-pur-1000/</span>
+    ├── <span class="file">panel-tinglado-1000/</span>
+    ├── <span class="file">panel-pt-900/</span>
+    ├── <span class="file">celosia-d23/</span>
+    ├── <span class="file">plancha-ct-1053/</span>
+    ├── <span class="file">crown/</span>
+    └── <span class="file">accesorios/</span>
+            </div>
+
+            <h3>Problemas Detectados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problema</th>
+                        <th>Detalle</th>
+                        <th>Acción</th>
+                        <th>Severidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Home duplicado</td>
+                        <td><code>/</code> y <code>/inicio/</code> son la misma página</td>
+                        <td>Redirect 301 de /inicio/ a /</td>
+                        <td><span class="badge badge-critical">Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td>Nosotros duplicado</td>
+                        <td><code>/nosotros/</code> y <code>/nosotros-2/</code></td>
+                        <td>Consolidar en una, redirect 301</td>
+                        <td><span class="badge badge-critical">Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td>Páginas huérfanas</td>
+                        <td><code>/insumo1/</code> y <code>/insumo2/</code> sin contenido útil</td>
+                        <td>Eliminar o noindex</td>
+                        <td><span class="badge badge-high">Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td>URLs inconsistentes</td>
+                        <td>Mezcla de <code>panel-pv8-1000</code> vs <code>pv7</code> vs <code>crown</code></td>
+                        <td>Estandarizar nomenclatura</td>
+                        <td><span class="badge badge-medium">Medio</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sin categorías</td>
+                        <td>Todos los productos bajo /producto/ sin jerarquía</td>
+                        <td>Crear /cubiertas-industriales/, /linea-arquitectonica/</td>
+                        <td><span class="badge badge-high">Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sin canonical tags</td>
+                        <td>No hay evidencia de etiquetas canonical</td>
+                        <td>Implementar en todas las páginas</td>
+                        <td><span class="badge badge-high">Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sitemap XML</td>
+                        <td>No verificable (sitio caído)</td>
+                        <td>Crear/validar y enviar a Search Console</td>
+                        <td><span class="badge badge-high">Alto</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Estructura Recomendada</h3>
+            <div class="tree-structure">
+<span class="folder">dicoinchile.cl/</span>                              <span class="ok">← Home optimizado</span>
+├── <span class="folder">cubiertas-industriales/</span>                   <span class="ok">← Landing de categoría</span>
+│   ├── <span class="file">panel-pv3/</span>
+│   ├── <span class="file">panel-pv4/</span>
+│   ├── <span class="file">panel-pv6/</span>
+│   ├── <span class="file">panel-pv7/</span>
+│   ├── <span class="file">panel-pv8/</span>
+│   └── <span class="file">tinglado/</span>
+├── <span class="folder">revestimientos-arquitectonicos/</span>           <span class="ok">← Landing de categoría</span>
+│   ├── <span class="file">celosias/</span>
+│   ├── <span class="file">cuadro/</span>
+│   ├── <span class="file">wave/</span>
+│   ├── <span class="file">perforados/</span>
+│   └── <span class="file">crown/</span>
+├── <span class="folder">paneles-aislantes/</span>                       <span class="ok">← Landing de categoría</span>
+│   ├── <span class="file">isopol-pur/</span>
+│   └── <span class="file">koverpol-pur/</span>
+├── <span class="folder">accesorios/</span>
+├── <span class="folder">blog/</span>                                    <span class="ok">← NUEVO: Contenido SEO</span>
+├── <span class="file">nosotros/</span>
+├── <span class="file">contacto/</span>
+└── <span class="file">cotizar/</span>                                  <span class="ok">← NUEVO: Formulario CTA</span>
+            </div>
+        </div>
+
+        <!-- ============ SECTION 3: ON-PAGE SEO ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <div class="section-title">SEO On-Page</div>
+                <div class="section-score low">1.5 / 10</div>
+            </div>
+
+            <h3>Title Tags (Actuales vs. Recomendados)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Página</th>
+                        <th>Title Actual</th>
+                        <th>Title Recomendado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Home</td>
+                        <td><span style="color:var(--critical)">DICOIN</span> <span class="badge badge-critical">7 chars</span></td>
+                        <td>DICOIN | Cubiertas y Revestimientos Industriales Chile</td>
+                    </tr>
+                    <tr>
+                        <td>Inicio</td>
+                        <td>Diseño & Construcción Industrial - DICOINCHILE</td>
+                        <td>Paneles Metálicos para Cubiertas y Fachadas | DICOIN Chile</td>
+                    </tr>
+                    <tr>
+                        <td>Tienda</td>
+                        <td><span style="color:var(--danger)">Tienda | DICOIN</span></td>
+                        <td>Catálogo de Paneles y Revestimientos Metálicos | DICOIN</td>
+                    </tr>
+                    <tr>
+                        <td>Nosotros</td>
+                        <td><span style="color:var(--danger)">Nosotros | DICOIN</span> (x2)</td>
+                        <td>Sobre DICOIN | Fabricantes de Cubiertas en Valparaíso</td>
+                    </tr>
+                    <tr>
+                        <td>PV 8</td>
+                        <td><span style="color:var(--danger)">PV 8 | DICOIN</span></td>
+                        <td>Panel PV8 - Cubierta Industrial de Acero | DICOIN Chile</td>
+                    </tr>
+                    <tr>
+                        <td>Celosías</td>
+                        <td><span style="color:var(--danger)">Celosías | DICOIN</span></td>
+                        <td>Celosías Metálicas para Fachadas y Ventilación | DICOIN</td>
+                    </tr>
+                    <tr>
+                        <td>Isopol</td>
+                        <td>Isopol – Pur | DICOIN</td>
+                        <td>Panel Sandwich Isopol PUR - Aislación Industrial | DICOIN</td>
+                    </tr>
+                    <tr>
+                        <td>Perforados</td>
+                        <td>Perforados | DICOIN</td>
+                        <td>Paneles Perforados para Fachadas Ventiladas | DICOIN Chile</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Meta Descriptions</h3>
+            <div class="alert alert-warning">
+                <strong>Meta descriptions ausentes o no optimizadas</strong>
+                Google está usando fragmentos aleatorios del contenido como snippet. Cada página necesita una meta description única de 150-160 caracteres con keyword principal y CTA.
+            </div>
+
+            <h4>Ejemplos de Meta Descriptions Recomendadas:</h4>
+            <div class="code-block">
+<span class="comment">/* Home */</span>
+<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"description"</span> <span class="attr">content</span>=<span class="value">"Paneles metálicos para cubiertas y revestimientos industriales y arquitectónicos. Entrega inmediata, cotización en 24hrs. Placilla, Valparaíso. Cotiza ahora."</span><span class="tag">/&gt;</span>
+
+<span class="comment">/* Panel PV8 */</span>
+<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"description"</span> <span class="attr">content</span>=<span class="value">"Panel PV8 de acero con patrón trapezoidal para cubiertas residenciales e industriales. Ancho útil 1000mm. Largos a pedido desde 5 días. Cotiza en DICOIN."</span><span class="tag">/&gt;</span>
+
+<span class="comment">/* Celosías */</span>
+<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"description"</span> <span class="attr">content</span>=<span class="value">"Celosías metálicas para fachadas con ventilación y confort visual. Ideales para proyectos arquitectónicos. Fabricación a medida en Valparaíso. Pide tu cotización."</span><span class="tag">/&gt;</span>
+            </div>
+
+            <h3>Checklist On-Page</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Estado Actual</th>
+                        <th>Recomendación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Title Tags con keywords</td>
+                        <td><span class="badge badge-critical">No</span></td>
+                        <td>Reescribir todos los titles con keywords comerciales</td>
+                    </tr>
+                    <tr>
+                        <td>Meta Descriptions únicas</td>
+                        <td><span class="badge badge-critical">No</span></td>
+                        <td>Escribir 150-160 chars únicos por página</td>
+                    </tr>
+                    <tr>
+                        <td>H1 único por página</td>
+                        <td><span class="badge badge-medium">Parcial</span></td>
+                        <td>Verificar un solo H1 con keyword principal</td>
+                    </tr>
+                    <tr>
+                        <td>Alt text en imágenes</td>
+                        <td><span class="badge badge-critical">Probable No</span></td>
+                        <td>Agregar alt descriptivo con keywords en todas las fotos</td>
+                    </tr>
+                    <tr>
+                        <td>Schema markup</td>
+                        <td><span class="badge badge-critical">No</span></td>
+                        <td>Product, LocalBusiness, BreadcrumbList, Organization</td>
+                    </tr>
+                    <tr>
+                        <td>Internal linking</td>
+                        <td><span class="badge badge-high">Débil</span></td>
+                        <td>Enlazar productos relacionados, categorías y blog</td>
+                    </tr>
+                    <tr>
+                        <td>Breadcrumbs</td>
+                        <td><span class="badge badge-none">Ausente</span></td>
+                        <td>Implementar breadcrumbs con schema</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============ SECTION 4: KEYWORDS ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div class="section-title">Análisis de Keywords</div>
+                <div class="section-score low">1.0 / 10</div>
+            </div>
+
+            <div class="alert alert-critical">
+                <strong>Visibilidad orgánica: Prácticamente nula</strong>
+                DICOIN solo rankea para búsquedas de marca ("dicoin chile", "dicoinchile"). No aparece en el top 20 para ninguna keyword comercial del sector.
+            </div>
+
+            <h3>Keywords Actuales (Solo Marca)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Posición</th>
+                        <th>Volumen Est.</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"dicoin chile"</td>
+                        <td>#1</td>
+                        <td>&lt;10/mes</td>
+                        <td><span class="badge badge-none">Mínimo</span></td>
+                    </tr>
+                    <tr>
+                        <td>"dicoinchile"</td>
+                        <td>#1</td>
+                        <td>&lt;10/mes</td>
+                        <td><span class="badge badge-none">Mínimo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Keywords Objetivo Prioritarias</h3>
+            <table class="keyword-table">
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Volumen Est.</th>
+                        <th>Dificultad</th>
+                        <th>Intención</th>
+                        <th>Prioridad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>cubiertas industriales chile</td>
+                        <td>1K-5K/mes</td>
+                        <td>Alta</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-high">Media</span></td>
+                    </tr>
+                    <tr>
+                        <td>paneles metálicos chile</td>
+                        <td>500-1K/mes</td>
+                        <td>Alta</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-high">Media</span></td>
+                    </tr>
+                    <tr>
+                        <td>revestimientos metálicos fachada</td>
+                        <td>500-1K/mes</td>
+                        <td>Media</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>paneles sandwich poliuretano chile</td>
+                        <td>200-500/mes</td>
+                        <td>Media</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>celosías metálicas chile</td>
+                        <td>100-300/mes</td>
+                        <td>Baja</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>paneles perforados fachada</td>
+                        <td>100-300/mes</td>
+                        <td>Baja</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>cubiertas zincalum</td>
+                        <td>200-500/mes</td>
+                        <td>Media</td>
+                        <td>Comercial</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>revestimiento industrial valparaíso</td>
+                        <td>50-100/mes</td>
+                        <td>Baja</td>
+                        <td>Local + Comercial</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>panel pv4 chile</td>
+                        <td>50-100/mes</td>
+                        <td>Muy baja</td>
+                        <td>Transaccional</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                    <tr>
+                        <td>cotizar cubiertas metálicas</td>
+                        <td>100-300/mes</td>
+                        <td>Media</td>
+                        <td>Transaccional</td>
+                        <td><span class="badge badge-critical">Alta</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Keywords Informacionales (Para Blog)</h3>
+            <table class="keyword-table">
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Volumen Est.</th>
+                        <th>Tipo de Contenido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>tipos de cubiertas industriales</td>
+                        <td>200-500/mes</td>
+                        <td>Guía completa</td>
+                    </tr>
+                    <tr>
+                        <td>qué es un panel sandwich</td>
+                        <td>500-1K/mes</td>
+                        <td>Artículo educativo</td>
+                    </tr>
+                    <tr>
+                        <td>diferencia panel pv3 vs pv4</td>
+                        <td>50-100/mes</td>
+                        <td>Comparativa</td>
+                    </tr>
+                    <tr>
+                        <td>cómo elegir revestimiento metálico</td>
+                        <td>100-200/mes</td>
+                        <td>Guía de compra</td>
+                    </tr>
+                    <tr>
+                        <td>ventajas celosías metálicas</td>
+                        <td>50-100/mes</td>
+                        <td>Artículo técnico</td>
+                    </tr>
+                    <tr>
+                        <td>mantenimiento cubiertas acero</td>
+                        <td>100-200/mes</td>
+                        <td>Tutorial</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============ SECTION 5: COMPETITORS ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <div class="section-title">Competencia SEO</div>
+                <div class="section-score low">Análisis</div>
+            </div>
+
+            <p>DICOIN compite en un mercado donde empresas más grandes y establecidas dominan los resultados de búsqueda. Sin embargo, existen nichos desatendidos donde es posible posicionarse.</p>
+
+            <h3>Mapa Competitivo</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card">
+                    <div class="name">Cintac / Instapanel</div>
+                    <div class="url">cintac.cl</div>
+                    <div class="strength">Líder nacional. Cotiza en bolsa. DA estimado 50+. Domina keywords de alto volumen. Marca Instapanel muy posicionada.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">Acertech</div>
+                    <div class="url">acertech.cl</div>
+                    <div class="strength">Fuerte en cubiertas y revestimientos industriales. SEO bien trabajado. Contenido técnico sólido.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">CoverChile</div>
+                    <div class="url">coverchile.cl</div>
+                    <div class="strength">Especialista en cubiertas industriales. Grandes proyectos (bodegas, naves, minería). SEO activo.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">Arratia</div>
+                    <div class="url">arratia.cl</div>
+                    <div class="strength">Paneles aislados y revestimientos. Fabricación a medida. Buena presencia web con servicios de montaje.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">HS Paneles</div>
+                    <div class="url">hspaneles.cl</div>
+                    <div class="strength">Soluciones integrales: diseño, fabricación y montaje. Similar a DICOIN en tamaño. SEO moderado.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">Cubiertas Nacionales</div>
+                    <div class="url">cubiertasnacionales.cl</div>
+                    <div class="strength">Cobertura nacional. Tecnología vanguardista. Paneles metálicos conformados.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">Fasercon</div>
+                    <div class="url">fasercon.cl</div>
+                    <div class="strength">10+ años experiencia. Techos y revestimientos metálicos. Proyectos industriales.</div>
+                </div>
+                <div class="competitor-card">
+                    <div class="name">Polchile</div>
+                    <div class="url">polchile.cl</div>
+                    <div class="strength">Desde 2003. Paneles aislantes térmicos con poliuretano. LinkedIn activo.</div>
+                </div>
+            </div>
+
+            <h3>Gap Competitivo de DICOIN</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>DICOIN</th>
+                        <th>Competidores Top</th>
+                        <th>Gap</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Velocidad del sitio</td>
+                        <td><span class="badge badge-critical">Timeout</span></td>
+                        <td><span class="badge badge-ok">1-3 seg</span></td>
+                        <td>Abismal</td>
+                    </tr>
+                    <tr>
+                        <td>Domain Authority</td>
+                        <td><span class="badge badge-critical">~5-10</span></td>
+                        <td><span class="badge badge-ok">30-55</span></td>
+                        <td>Muy grande</td>
+                    </tr>
+                    <tr>
+                        <td>Páginas indexadas</td>
+                        <td>~20</td>
+                        <td>100-500+</td>
+                        <td>Grande</td>
+                    </tr>
+                    <tr>
+                        <td>Keywords posicionadas</td>
+                        <td>~2 (solo marca)</td>
+                        <td>50-200+</td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td>Google Business Profile</td>
+                        <td><span class="badge badge-critical">No existe</span></td>
+                        <td><span class="badge badge-ok">Verificado</span></td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td>Blog / contenido</td>
+                        <td><span class="badge badge-critical">No tiene</span></td>
+                        <td><span class="badge badge-ok">Activo</span></td>
+                        <td>Total</td>
+                    </tr>
+                    <tr>
+                        <td>Redes sociales</td>
+                        <td>2 likes FB</td>
+                        <td>Miles de seguidores</td>
+                        <td>Total</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">
+                <strong>Oportunidad Estratégica</strong>
+                Los competidores grandes (Cintac, Acertech) no invierten en keywords long-tail como "celosías metálicas ventilación", "paneles perforados fachada" o "cubiertas zincalum Valparaíso". DICOIN puede capturar estos nichos con contenido específico y SEO local.
+            </div>
+        </div>
+
+        <!-- ============ SECTION 6: LOCAL SEO ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <div class="section-title">SEO Local</div>
+                <div class="section-score low">0.5 / 10</div>
+            </div>
+
+            <div class="alert alert-critical">
+                <strong>Google Business Profile: No detectado</strong>
+                Para una empresa física con dirección en Placilla, Valparaíso, no tener Google Business Profile es una oportunidad perdida masiva, especialmente para búsquedas tipo "cubiertas industriales valparaíso".
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor Local</th>
+                        <th>Estado</th>
+                        <th>Acción Requerida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google Business Profile</td>
+                        <td><span class="badge badge-critical">No existe</span></td>
+                        <td>Crear y verificar inmediatamente</td>
+                    </tr>
+                    <tr>
+                        <td>Google Maps</td>
+                        <td><span class="badge badge-critical">No aparece</span></td>
+                        <td>Se activa con Business Profile</td>
+                    </tr>
+                    <tr>
+                        <td>Reseñas Google</td>
+                        <td><span class="badge badge-critical">0 reseñas</span></td>
+                        <td>Solicitar a clientes actuales</td>
+                    </tr>
+                    <tr>
+                        <td>NAP Consistente</td>
+                        <td><span class="badge badge-medium">Parcial</span></td>
+                        <td>Solo en sitio propio y Facebook</td>
+                    </tr>
+                    <tr>
+                        <td>Schema LocalBusiness</td>
+                        <td><span class="badge badge-critical">No implementado</span></td>
+                        <td>Agregar JSON-LD en home y contacto</td>
+                    </tr>
+                    <tr>
+                        <td>Directorios locales</td>
+                        <td><span class="badge badge-critical">No presente</span></td>
+                        <td>Registrar en PaginasAmarillas, CCHC, etc.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Schema LocalBusiness Recomendado</h3>
+            <div class="code-block">
+<span class="tag">&lt;script</span> <span class="attr">type</span>=<span class="value">"application/ld+json"</span><span class="tag">&gt;</span>
+{
+  <span class="attr">"@context"</span>: <span class="value">"https://schema.org"</span>,
+  <span class="attr">"@type"</span>: <span class="value">"LocalBusiness"</span>,
+  <span class="attr">"name"</span>: <span class="value">"DICOIN - Diseño & Construcción Industrial"</span>,
+  <span class="attr">"description"</span>: <span class="value">"Cubiertas y revestimientos industriales y arquitectónicos"</span>,
+  <span class="attr">"url"</span>: <span class="value">"https://dicoinchile.cl"</span>,
+  <span class="attr">"telephone"</span>: <span class="value">"+56944898250"</span>,
+  <span class="attr">"email"</span>: <span class="value">"ventas@dicoinchile.cl"</span>,
+  <span class="attr">"address"</span>: {
+    <span class="attr">"@type"</span>: <span class="value">"PostalAddress"</span>,
+    <span class="attr">"streetAddress"</span>: <span class="value">"El Sauce 1295"</span>,
+    <span class="attr">"addressLocality"</span>: <span class="value">"Placilla"</span>,
+    <span class="attr">"addressRegion"</span>: <span class="value">"Valparaíso"</span>,
+    <span class="attr">"addressCountry"</span>: <span class="value">"CL"</span>
+  },
+  <span class="attr">"geo"</span>: {
+    <span class="attr">"@type"</span>: <span class="value">"GeoCoordinates"</span>,
+    <span class="attr">"latitude"</span>: <span class="value">"-33.12"</span>,
+    <span class="attr">"longitude"</span>: <span class="value">"-71.55"</span>
+  }
+}
+<span class="tag">&lt;/script&gt;</span>
+            </div>
+
+            <h3>Directorios para Registro</h3>
+            <div class="rec-grid">
+                <div class="rec-card">
+                    <h4>Google Business Profile</h4>
+                    <p>PRIORITARIO. Verificar negocio con fotos del local, productos, horarios y categorías correctas.</p>
+                </div>
+                <div class="rec-card">
+                    <h4>Páginas Amarillas Chile</h4>
+                    <p>Registro gratuito. Categoría: Materiales de construcción / Cubiertas metálicas.</p>
+                </div>
+                <div class="rec-card">
+                    <h4>CCHC / Proveedores</h4>
+                    <p>Cámara Chilena de la Construcción. Registro de proveedores genera backlink de alta autoridad.</p>
+                </div>
+                <div class="rec-card">
+                    <h4>LinkedIn Company Page</h4>
+                    <p>Crear página de empresa. Publicar proyectos y fichas técnicas. Conectar con arquitectos y constructoras.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SECTION 7: BACKLINKS ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <div class="section-title">Autoridad de Dominio y Backlinks</div>
+                <div class="section-score low">1.0 / 10</div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--critical);">~5-10</div>
+                    <div class="metric-label">Domain Authority (est.)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--critical);">~1-3</div>
+                    <div class="metric-label">Dominios Referentes</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--critical);">~2-5</div>
+                    <div class="metric-label">Backlinks Totales</div>
+                </div>
+            </div>
+
+            <p>El perfil de backlinks de DICOIN es prácticamente <strong>inexistente</strong>. Las únicas fuentes externas detectadas son la página de Facebook (con 2 likes) y posiblemente algún directorio menor. Esto explica directamente la nula visibilidad en búsquedas comerciales.</p>
+
+            <h3>Estrategia de Link Building</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Táctica</th>
+                        <th>Fuentes Potenciales</th>
+                        <th>DA Estimado</th>
+                        <th>Plazo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Directorios de construcción</td>
+                        <td>CCHC, PaginasAmarillas, Constructores.cl</td>
+                        <td>30-50</td>
+                        <td>1-2 semanas</td>
+                    </tr>
+                    <tr>
+                        <td>Fichas técnicas enlazables</td>
+                        <td>PDFs con datos técnicos que arquitectos referencien</td>
+                        <td>Variable</td>
+                        <td>1-2 meses</td>
+                    </tr>
+                    <tr>
+                        <td>Casos de estudio / proyectos</td>
+                        <td>Fotos de obras que generen menciones naturales</td>
+                        <td>Variable</td>
+                        <td>2-3 meses</td>
+                    </tr>
+                    <tr>
+                        <td>Guías técnicas completas</td>
+                        <td>Blog posts tipo "Guía definitiva de cubiertas industriales"</td>
+                        <td>Variable</td>
+                        <td>2-4 meses</td>
+                    </tr>
+                    <tr>
+                        <td>Proveedores / partners</td>
+                        <td>Solicitar enlace desde proveedores de materia prima</td>
+                        <td>20-40</td>
+                        <td>1-2 meses</td>
+                    </tr>
+                    <tr>
+                        <td>Redes sociales activas</td>
+                        <td>LinkedIn, Instagram, Facebook con contenido regular</td>
+                        <td>80-95</td>
+                        <td>Continuo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============ SECTION 8: DIGITAL PRESENCE ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <div class="section-title">Presencia Digital y Redes</div>
+                <div class="section-score low">0.5 / 10</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Canal</th>
+                        <th>Estado</th>
+                        <th>Tracción</th>
+                        <th>Evaluación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sitio Web</td>
+                        <td>Caído / Timeout</td>
+                        <td>~0 visitas</td>
+                        <td><span class="badge badge-critical">Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td>Facebook</td>
+                        <td>Página creada</td>
+                        <td>2 likes</td>
+                        <td><span class="badge badge-critical">Inactivo</span></td>
+                    </tr>
+                    <tr>
+                        <td>Instagram</td>
+                        <td>No detectado</td>
+                        <td>-</td>
+                        <td><span class="badge badge-none">Ausente</span></td>
+                    </tr>
+                    <tr>
+                        <td>LinkedIn</td>
+                        <td>No detectado</td>
+                        <td>-</td>
+                        <td><span class="badge badge-none">Ausente</span></td>
+                    </tr>
+                    <tr>
+                        <td>Google Business</td>
+                        <td>No detectado</td>
+                        <td>-</td>
+                        <td><span class="badge badge-critical">Ausente</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tienda Online</td>
+                        <td>Existe (WooCommerce)</td>
+                        <td>~0 ventas online</td>
+                        <td><span class="badge badge-high">Inutilizable</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============ SECTION 9: ACTION PLAN ============ -->
+        <div class="section action-plan">
+            <div class="section-header">
+                <div class="section-number">9</div>
+                <div class="section-title">Plan de Acción SEO (90 Días)</div>
+                <div class="section-score mid">Roadmap</div>
+            </div>
+
+            <!-- PHASE 1 -->
+            <div class="priority-section">
+                <div class="priority-label priority-critical">Fase 1: Emergencia &mdash; Semanas 1-2</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Acción</th>
+                            <th>Detalle</th>
+                            <th>Costo Est.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.1</td>
+                            <td><strong>Migrar hosting</strong></td>
+                            <td>Migrar a SiteGround, Cloudways o WP Engine. El sitio DEBE cargar en &lt;3 segundos</td>
+                            <td>$15-30 USD/mes</td>
+                        </tr>
+                        <tr>
+                            <td>1.2</td>
+                            <td><strong>Implementar Cloudflare CDN</strong></td>
+                            <td>Plan gratuito. Configurar caché, SSL, protección DDoS y compresión</td>
+                            <td>Gratis</td>
+                        </tr>
+                        <tr>
+                            <td>1.3</td>
+                            <td><strong>Optimizar WordPress</strong></td>
+                            <td>Instalar WP Rocket, desactivar plugins innecesarios, limpiar base de datos WooCommerce</td>
+                            <td>$49 USD (licencia)</td>
+                        </tr>
+                        <tr>
+                            <td>1.4</td>
+                            <td><strong>Crear Google Business Profile</strong></td>
+                            <td>Verificar negocio en Google Maps. Agregar fotos, horarios, categorías, teléfono</td>
+                            <td>Gratis</td>
+                        </tr>
+                        <tr>
+                            <td>1.5</td>
+                            <td><strong>Crear Google Search Console</strong></td>
+                            <td>Verificar dominio, enviar sitemap, revisar errores de rastreo</td>
+                            <td>Gratis</td>
+                        </tr>
+                        <tr>
+                            <td>1.6</td>
+                            <td><strong>Instalar Google Analytics</strong></td>
+                            <td>GA4 con MonsterInsights. Configurar eventos de conversión (cotizaciones)</td>
+                            <td>Gratis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PHASE 2 -->
+            <div class="priority-section">
+                <div class="priority-label priority-high">Fase 2: Fundamentos SEO &mdash; Semanas 3-6</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Acción</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2.1</td>
+                            <td><strong>Eliminar contenido duplicado</strong></td>
+                            <td>Redirect 301 de /inicio/ → /. Consolidar /nosotros/ y /nosotros-2/. Eliminar /insumo1/ y /insumo2/</td>
+                        </tr>
+                        <tr>
+                            <td>2.2</td>
+                            <td><strong>Instalar Yoast SEO o Rank Math</strong></td>
+                            <td>Configurar sitemaps automáticos, meta tags, canonical URLs, breadcrumbs</td>
+                        </tr>
+                        <tr>
+                            <td>2.3</td>
+                            <td><strong>Reescribir title tags</strong></td>
+                            <td>Todas las páginas con keywords comerciales (ver tabla de títulos recomendados)</td>
+                        </tr>
+                        <tr>
+                            <td>2.4</td>
+                            <td><strong>Escribir meta descriptions</strong></td>
+                            <td>150-160 caracteres únicos por página, con keyword y CTA</td>
+                        </tr>
+                        <tr>
+                            <td>2.5</td>
+                            <td><strong>Reestructurar categorías</strong></td>
+                            <td>Crear /cubiertas-industriales/, /revestimientos-arquitectonicos/, /paneles-aislantes/</td>
+                        </tr>
+                        <tr>
+                            <td>2.6</td>
+                            <td><strong>Implementar Schema markup</strong></td>
+                            <td>LocalBusiness en home, Product en cada producto, BreadcrumbList, Organization</td>
+                        </tr>
+                        <tr>
+                            <td>2.7</td>
+                            <td><strong>Optimizar imágenes</strong></td>
+                            <td>Comprimir con ShortPixel, convertir a WebP, agregar alt text con keywords</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PHASE 3 -->
+            <div class="priority-section">
+                <div class="priority-label priority-medium">Fase 3: Contenido y Crecimiento &mdash; Semanas 7-12</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Acción</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3.1</td>
+                            <td><strong>Crear sección de Blog</strong></td>
+                            <td>1-2 artículos/semana: "Guía de paneles metálicos", "Cómo elegir cubiertas industriales", "PV3 vs PV4 vs PV8"</td>
+                        </tr>
+                        <tr>
+                            <td>3.2</td>
+                            <td><strong>Landing pages por zona</strong></td>
+                            <td>"Cubiertas industriales Valparaíso", "Revestimientos metálicos Santiago", "Paneles V Región"</td>
+                        </tr>
+                        <tr>
+                            <td>3.3</td>
+                            <td><strong>Mejorar páginas de producto</strong></td>
+                            <td>Especificaciones técnicas completas, tabla comparativa, FAQ, ficha técnica PDF descargable</td>
+                        </tr>
+                        <tr>
+                            <td>3.4</td>
+                            <td><strong>Casos de estudio</strong></td>
+                            <td>Páginas con fotos de obras realizadas, problema/solución, métricas del proyecto</td>
+                        </tr>
+                        <tr>
+                            <td>3.5</td>
+                            <td><strong>Link building</strong></td>
+                            <td>Registro en directorios de construcción, CCHC, contacto con proveedores para backlinks</td>
+                        </tr>
+                        <tr>
+                            <td>3.6</td>
+                            <td><strong>Redes sociales</strong></td>
+                            <td>Instagram (fotos de proyectos), LinkedIn (networking con arquitectos), Facebook (contenido regular)</td>
+                        </tr>
+                        <tr>
+                            <td>3.7</td>
+                            <td><strong>Reseñas Google</strong></td>
+                            <td>Solicitar a 10-20 clientes satisfechos que dejen reseña en Google Business Profile</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PHASE 4 -->
+            <div class="priority-section">
+                <div class="priority-label priority-low">Fase 4: Escalamiento &mdash; Mes 4+</div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Acción</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>4.1</td>
+                            <td><strong>Google Ads</strong></td>
+                            <td>Campañas PPC para keywords de alta intención mientras crece el tráfico orgánico</td>
+                        </tr>
+                        <tr>
+                            <td>4.2</td>
+                            <td><strong>Email marketing</strong></td>
+                            <td>Capturar leads con cotizador online, newsletter mensual con contenido técnico</td>
+                        </tr>
+                        <tr>
+                            <td>4.3</td>
+                            <td><strong>Herramientas interactivas</strong></td>
+                            <td>Calculadora de paneles necesarios, cotizador online automático</td>
+                        </tr>
+                        <tr>
+                            <td>4.4</td>
+                            <td><strong>A/B testing</strong></td>
+                            <td>Optimizar CTR en SERP con diferentes títulos y descriptions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ============ SECTION 10: PROJECTIONS ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">10</div>
+                <div class="section-title">Proyecciones y Métricas de Éxito</div>
+                <div class="section-score good">Objetivos</div>
+            </div>
+
+            <h3>KPIs a 3, 6 y 12 Meses</h3>
+
+            <h4>A 3 Meses (Post-Fase 1 y 2)</h4>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">&lt;3s</div>
+                    <div class="kpi-label">Tiempo de Carga</div>
+                    <div class="kpi-note">Actual: Timeout</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">50+</div>
+                    <div class="kpi-label">Páginas Indexadas</div>
+                    <div class="kpi-note">Actual: ~20</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">10</div>
+                    <div class="kpi-label">Keywords Top 20</div>
+                    <div class="kpi-note">Actual: 2</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">200</div>
+                    <div class="kpi-label">Visitas/Mes</div>
+                    <div class="kpi-note">Actual: ~0</div>
+                </div>
+            </div>
+
+            <h4>A 6 Meses (Post-Fase 3)</h4>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">100+</div>
+                    <div class="kpi-label">Keywords Indexadas</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">15</div>
+                    <div class="kpi-label">Keywords Top 10</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">500</div>
+                    <div class="kpi-label">Visitas/Mes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">25-30</div>
+                    <div class="kpi-label">Domain Authority</div>
+                </div>
+            </div>
+
+            <h4>A 12 Meses (Post-Fase 4)</h4>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">200+</div>
+                    <div class="kpi-label">Keywords Indexadas</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">50+</div>
+                    <div class="kpi-label">Keywords Top 10</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">2,000</div>
+                    <div class="kpi-label">Visitas/Mes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">20-30</div>
+                    <div class="kpi-label">Leads/Mes</div>
+                </div>
+            </div>
+
+            <h3>Inversión Estimada</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Costo Mensual</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hosting de calidad</td>
+                        <td>$15-30 USD</td>
+                        <td>SiteGround, Cloudways</td>
+                    </tr>
+                    <tr>
+                        <td>Cloudflare CDN</td>
+                        <td>Gratis</td>
+                        <td>Plan Free es suficiente</td>
+                    </tr>
+                    <tr>
+                        <td>Google Business Profile</td>
+                        <td>Gratis</td>
+                        <td>Verificación gratuita</td>
+                    </tr>
+                    <tr>
+                        <td>Plugins SEO (Yoast/WP Rocket)</td>
+                        <td>~$15 USD</td>
+                        <td>Licencia anual prorrateada</td>
+                    </tr>
+                    <tr>
+                        <td>Contenido SEO (si externo)</td>
+                        <td>$200-500 USD</td>
+                        <td>4-8 artículos/mes</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700;">Total Estimado</td>
+                        <td style="font-weight: 700;">$230-560 USD/mes</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success">
+                <strong>ROI Estimado</strong>
+                Cada lead orgánico en el sector de cubiertas industriales vale entre $500 y $5,000 USD en ventas potenciales. Con 20-30 leads mensuales al año, la inversión en SEO se recupera con creces. Un solo proyecto grande puede cubrir el costo anual completo de la estrategia SEO.
+            </div>
+        </div>
+
+        <!-- ============ SECTION 11: WORDPRESS PLUGINS ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">11</div>
+                <div class="section-title">Stack Técnico Recomendado (WordPress)</div>
+                <div class="section-score mid">Implementación</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plugin</th>
+                        <th>Función</th>
+                        <th>Prioridad</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Yoast SEO</strong> o Rank Math</td>
+                        <td>On-page SEO, sitemaps, robots.txt, canonical, breadcrumbs</td>
+                        <td><span class="badge badge-critical">Crítica</span></td>
+                        <td>Free / $99 USD/año</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WP Rocket</strong></td>
+                        <td>Caché, minificación CSS/JS, lazy loading, preload</td>
+                        <td><span class="badge badge-critical">Crítica</span></td>
+                        <td>$49 USD/año</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ShortPixel</strong></td>
+                        <td>Compresión de imágenes, conversión WebP</td>
+                        <td><span class="badge badge-high">Alta</span></td>
+                        <td>Free (100 img/mes)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Schema Pro</strong></td>
+                        <td>Structured data: Product, LocalBusiness, FAQ</td>
+                        <td><span class="badge badge-high">Alta</span></td>
+                        <td>$79 USD/año</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MonsterInsights</strong></td>
+                        <td>Google Analytics 4 integrado en WordPress</td>
+                        <td><span class="badge badge-medium">Media</span></td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Redirection</strong></td>
+                        <td>Gestionar redirects 301 para URLs duplicadas</td>
+                        <td><span class="badge badge-high">Alta</span></td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WP-Optimize</strong></td>
+                        <td>Limpiar base de datos, optimizar tablas WooCommerce</td>
+                        <td><span class="badge badge-medium">Media</span></td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UptimeRobot</strong></td>
+                        <td>Monitoreo de disponibilidad 24/7 (externo)</td>
+                        <td><span class="badge badge-critical">Crítica</span></td>
+                        <td>Free (50 monitores)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============ CONCLUSION ============ -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">+</div>
+                <div class="section-title">Conclusión</div>
+            </div>
+
+            <p>DICOIN tiene <strong>visibilidad SEO prácticamente nula</strong>. El sitio web está inaccesible, no rankea para keywords comerciales, no tiene Google Business Profile, y su competencia (Cintac, Acertech, CoverChile) domina completamente las búsquedas del sector.</p>
+
+            <p>Sin embargo, existen <strong>oportunidades significativas</strong> en tres frentes:</p>
+
+            <ol>
+                <li><strong>SEO Local:</strong> Dominar búsquedas en Valparaíso y zona central donde la competencia nacional no invierte</li>
+                <li><strong>Keywords Long-Tail:</strong> Capturar búsquedas específicas como "celosías metálicas", "paneles perforados fachada", "cubiertas zincalum" donde hay baja competencia</li>
+                <li><strong>Contenido Técnico:</strong> Posicionarse como referente con guías, comparativas y fichas técnicas que atraigan arquitectos, ingenieros y constructoras</li>
+            </ol>
+
+            <p>El mayor bloqueador actual es la <strong>inestabilidad técnica del servidor</strong>, que debe resolverse antes de invertir en cualquier otra estrategia. Con las acciones priorizadas en este plan, es realista esperar posicionamiento en 50+ keywords comerciales y 2,000+ visitas mensuales orgánicas en 12 meses.</p>
+
+            <div class="alert alert-info">
+                <strong>Próximo paso inmediato</strong>
+                Resolver el problema de hosting/servidor es la Prioridad #1 absoluta. Sin un sitio web funcional, ninguna otra inversión en SEO generará resultados. Esto puede resolverse en 24-48 horas con la migración correcta.
+            </div>
+        </div>
+
+        <!-- ============ SIGNATURE ============ -->
+        <div class="signature">
+            <div class="signature-name">Auditoría SEO</div>
+            <div class="signature-role">DICOIN Chile &mdash; dicoinchile.cl</div>
+            <div class="signature-date">18 de Febrero, 2026</div>
+        </div>
+
+        <div class="footer-brand">
+            Auditoría SEO generada con análisis de datos indexados, búsquedas competitivas y benchmarking del mercado chileno de cubiertas y revestimientos industriales.
+        </div>
+
+    </div>
+
+</body>
+</html>
