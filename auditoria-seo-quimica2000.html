@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría SEO - quimica2000.cl</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f2027;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --critical: #d63031;
+            --steel: #37474f;
+            --steel-light: #546e7a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ============ COVER ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(230,81,0,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(44,83,100,0.3) 0%, transparent 50%);
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+
+        .cover-logo {
+            font-size: 13px; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 40px;
+            position: relative; z-index: 1; font-weight: 600;
+        }
+
+        .cover h1 {
+            font-size: 48px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+
+        .cover-domain {
+            font-size: 26px; font-weight: 300; color: rgba(255,255,255,0.55);
+            margin-bottom: 8px; position: relative; z-index: 1;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+
+        .cover-subtitle {
+            font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.65);
+            margin-bottom: 45px; position: relative; z-index: 1;
+        }
+
+        .cover-meta {
+            position: relative; z-index: 1;
+            display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+        }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.4); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 15px; font-weight: 600; }
+
+        .cover-score { margin-top: 45px; position: relative; z-index: 1; }
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid #e67e22;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; background: rgba(230,126,34,0.08);
+        }
+        .score-circle .number { font-size: 44px; font-weight: 900; color: #e67e22; line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
+        /* ============ CONTENT ============ */
+        .content { max-width: 860px; margin: 0 auto; padding: 20px 10px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+            page-break-after: always;
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-top: 25px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 18px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; }
+        .summary-score-card .score.critical { color: var(--critical); }
+        .summary-score-card .score.low { color: #e67e22; }
+        .summary-score-card .score.mid { color: #f39c12; }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; page-break-inside: avoid; padding-top: 5px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+        .section-score {
+            margin-left: auto; background: var(--bg-alt); padding: 6px 14px;
+            border-radius: 8px; font-weight: 700; font-size: 15px;
+        }
+        .section-score.low { color: var(--critical); background: #ffeef0; }
+        .section-score.mid { color: #e67e22; background: #fef9e7; }
+        .section-score.good { color: var(--success); background: #e8f8f5; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 14px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-critical { background: #ffeef0; color: var(--critical); }
+        .badge-high { background: #fff3e0; color: #e67e22; }
+        .badge-medium { background: #fef9e7; color: #f39c12; }
+        .badge-low { background: #e8f8f5; color: #27ae60; }
+        .badge-ok { background: #e8f8f5; color: var(--success); }
+        .badge-none { background: #f0f0f0; color: #999; }
+
+        .alert {
+            padding: 15px 18px; border-radius: 9px; margin: 12px 0; font-size: 13px;
+        }
+        .alert-critical { background: #ffeef0; border-left: 4px solid var(--critical); color: #c0392b; }
+        .alert-warning { background: #fff8e1; border-left: 4px solid #f39c12; color: #e67e22; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #eef2ff; border-left: 4px solid #5b6abf; color: #3949ab; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .code-block {
+            background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11px;
+            line-height: 1.7; overflow-x: auto; margin: 12px 0; white-space: pre-wrap;
+        }
+        .code-block .comment { color: #6c7086; }
+        .code-block .tag { color: #f38ba8; }
+        .code-block .attr { color: #a6e3a1; }
+        .code-block .value { color: #f9e2af; }
+
+        .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+        .rec-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+        .rec-card h4 { margin: 0 0 6px; font-size: 13px; }
+        .rec-card p { font-size: 12px; color: var(--text-light); margin: 0; }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        .action-plan { page-break-before: always; padding-top: 10px; }
+        .priority-section { margin-bottom: 24px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px;
+        }
+        .priority-critical { background: var(--critical); color: white; }
+        .priority-high { background: #e67e22; color: white; }
+        .priority-medium { background: #f39c12; color: white; }
+        .priority-low { background: var(--success); color: white; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 22px; font-weight: 800; color: var(--primary); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 3px;
+        }
+
+        .competitor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+        .competitor-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            border: 1px solid var(--border);
+        }
+        .competitor-card .name { font-weight: 700; color: var(--primary); margin-bottom: 3px; font-size: 13px; }
+        .competitor-card .url { font-size: 11px; color: var(--accent); margin-bottom: 4px; font-family: monospace; }
+        .competitor-card .strength { font-size: 12px; color: var(--text-light); }
+
+        .keyword-table td:first-child { font-weight: 600; color: var(--primary); }
+
+        .tree-structure {
+            background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11.5px;
+            line-height: 1.8; margin: 12px 0;
+        }
+        .tree-structure .folder { color: #89b4fa; }
+        .tree-structure .file { color: #cdd6f4; }
+        .tree-structure .warning { color: #f38ba8; }
+        .tree-structure .ok { color: #a6e3a1; }
+        .tree-structure .dim { color: #6c7086; }
+
+        .timeline { margin: 16px 0; }
+        .timeline-item {
+            display: flex; gap: 16px; margin-bottom: 16px;
+            padding-left: 20px; border-left: 3px solid var(--border);
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            width: 12px; height: 12px; border-radius: 50%;
+            position: absolute; left: -7.5px; top: 4px;
+        }
+        .timeline-item.phase1::before { background: var(--critical); }
+        .timeline-item.phase2::before { background: #e67e22; }
+        .timeline-item.phase3::before { background: #f39c12; }
+        .timeline-item.phase4::before { background: var(--success); }
+        .timeline-content { flex: 1; }
+        .timeline-label { font-weight: 700; font-size: 14px; color: var(--primary); margin-bottom: 4px; }
+        .timeline-desc { font-size: 12px; color: var(--text-light); }
+
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .kpi-card {
+            background: white; border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .kpi-card .kpi-value { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .kpi-card .kpi-label {
+            font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+            color: var(--text-light); margin-top: 2px;
+        }
+        .kpi-card .kpi-target { font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 3px; }
+
+        .footer {
+            text-align: center; padding: 30px; margin-top: 40px;
+            border-top: 2px solid var(--border); color: var(--text-light); font-size: 11px;
+        }
+
+        @media print {
+            .cover { margin: -15mm -12mm 0 -12mm; width: calc(100% + 24mm); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+    <div class="cover-logo">Auditoria SEO Profesional</div>
+    <h1>Auditoria <span>SEO</span></h1>
+    <div class="cover-domain">quimica2000.cl</div>
+    <div class="cover-subtitle">Fabricacion y Distribucion de Detergentes Industriales</div>
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Fecha</div>
+            <div class="value">10 Marzo 2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">URLs Indexadas</div>
+            <div class="value">~130 paginas</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">CMS</div>
+            <div class="value">WordPress + WooCommerce</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Industria</div>
+            <div class="value">Quimica Industrial</div>
+        </div>
+    </div>
+    <div class="cover-score">
+        <div class="score-circle">
+            <div class="number">42</div>
+            <div class="out-of">/ 100</div>
+            <div class="label">Score SEO</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CONTENIDO ============ -->
+<div class="content">
+
+    <!-- Resumen Ejecutivo -->
+    <div class="executive-summary">
+        <h2>Resumen Ejecutivo</h2>
+        <p>
+            <strong>quimica2000.cl</strong> es un e-commerce B2B/B2C construido en WordPress + WooCommerce con Elementor, que comercializa productos quimicos industriales. El sitio cuenta con aproximadamente 130 URLs indexables, un catalogo de 63+ productos distribuidos en 12 categorias, y un blog con 11 articulos.
+        </p>
+        <p>
+            El sitio tiene una <strong>base tecnica aceptable</strong> (SSL activo, robots indexables, Google Site Verification configurado), pero presenta <strong>deficiencias importantes</strong> en SEO on-page, contenido, datos estructurados y estrategia de enlaces que limitan significativamente su visibilidad organica. El title tag del homepage es generico, no hay schema markup en la pagina principal, 26% de las imagenes carecen de alt text, y no se detectaron enlaces a redes sociales ni Google Business Profile.
+        </p>
+        <p>
+            Con las optimizaciones recomendadas, estimamos que el sitio puede <strong>duplicar su trafico organico en 4-6 meses</strong>, especialmente en busquedas comerciales de productos quimicos industriales en Chile.
+        </p>
+
+        <div class="summary-scores">
+            <div class="summary-score-card">
+                <div class="score low">35</div>
+                <div class="category">SEO Tecnico</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score mid">45</div>
+                <div class="category">On-Page</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score mid">50</div>
+                <div class="category">Contenido</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score low">30</div>
+                <div class="category">Off-Page</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 1: SEO TECNICO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">SEO Tecnico</div>
+            <div class="section-score low">35/100</div>
+        </div>
+
+        <h3>1.1 Infraestructura del Sitio</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">WP 6.9</div>
+                <div class="metric-label">WordPress</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">WC 10.5</div>
+                <div class="metric-label">WooCommerce</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">Elementor</div>
+                <div class="metric-label">Page Builder</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SSL/HTTPS</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Certificado SSL activo</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Robots.txt</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>index, follow configurado</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Google Verification</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Site Kit integrado</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Canonical Tags</td>
+                    <td><span class="badge badge-high">Problema</span></td>
+                    <td>Producto con canonical erroneo: incluye "#" al final</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Schema Markup (Home)</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td>Sin datos estructurados en homepage</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Schema Markup (Productos)</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>Product schema en paginas de producto</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Sitemap XML</td>
+                    <td><span class="badge badge-medium">No verificado</span></td>
+                    <td>Probable via Yoast/RankMath - verificar</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>URLs Amigables</td>
+                    <td><span class="badge badge-high">Problema</span></td>
+                    <td>URLs con %20 (espacios codificados) en marcas</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Idioma HTML</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>es-CL configurado</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Viewport Meta</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Responsive configurado</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Problema critico: Canonical con fragmento "#"</strong>
+            La pagina de producto "Desengrasante Busy Plus" tiene una canonical URL que termina en <code>#</code> (<code>https://quimica2000.cl/producto/desengrasante-alto-poder/#</code>). Esto puede confundir a Google sobre la URL canonica real. Se debe revisar TODOS los productos para detectar este patron.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>URLs con caracteres codificados</strong>
+            Las paginas de marca usan URLs con <code>%20</code> (ej: <code>/producto%20de%20la%20marca/quimica2000</code>). Google puede indexarlas, pero son poco amigables y pueden generar problemas de rastreo. Recomendacion: usar guiones en vez de espacios.
+        </div>
+
+        <h3>1.2 Estructura de URLs</h3>
+
+        <div class="tree-structure">
+<span class="folder">quimica2000.cl/</span>
+├── <span class="ok">catalogo/</span> <span class="dim">- Listado completo de productos</span>
+├── <span class="ok">producto/</span> <span class="dim">- Paginas individuales (~63 productos)</span>
+│   ├── <span class="ok">desengrasante-alto-poder/</span>
+│   ├── <span class="ok">jabon-crema/</span>
+│   └── <span class="ok">...</span>
+├── <span class="ok">producto-categoria/</span> <span class="dim">- 12 categorias</span>
+│   ├── <span class="ok">alimentaria/</span>
+│   ├── <span class="ok">automotriz/</span>
+│   ├── <span class="ok">mineria/</span>
+│   └── <span class="ok">...</span>
+├── <span class="warning">producto%20de%20la%20marca/</span> <span class="dim">- URLs con espacios codificados</span>
+│   ├── <span class="warning">quimica2000/</span>
+│   ├── <span class="warning">elite/</span>
+│   └── <span class="warning">tork/</span>
+├── <span class="ok">blog/</span> <span class="dim">- Articulos del blog</span>
+├── <span class="ok">nosotros/</span>
+├── <span class="ok">contacto/</span>
+├── <span class="warning">product-category/</span> <span class="dim">- Duplicado de categorias (slug diferente)</span>
+├── <span class="warning">wishlist/</span> <span class="dim">- Paginas sin valor SEO</span>
+├── <span class="warning">compare/</span> <span class="dim">- Paginas sin valor SEO</span>
+└── <span class="warning">cart/ checkout/ my-account/</span> <span class="dim">- Deben ser noindex</span>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Categorias duplicadas detectadas</strong>
+            Existen dos rutas de categorias: <code>/producto-categoria/</code> y <code>/product-category/</code>. Esto puede generar contenido duplicado. Se debe redirigir una a la otra con 301.
+        </div>
+
+        <h3>1.3 Rendimiento y Velocidad</h3>
+        <p>El sitio usa Elementor como page builder, lo cual agrega peso extra al DOM y al CSS/JS. Recomendaciones:</p>
+        <ul>
+            <li>Implementar plugin de cache (WP Rocket, LiteSpeed Cache)</li>
+            <li>Comprimir imagenes restantes a WebP (ya usa .webp en algunos productos - bien)</li>
+            <li>Eliminar CSS/JS no utilizado de Elementor en paginas especificas</li>
+            <li>Implementar lazy loading para imagenes del catalogo</li>
+        </ul>
+    </div>
+
+    <!-- ============ SECCION 2: SEO ON-PAGE ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">SEO On-Page</div>
+            <div class="section-score mid">45/100</div>
+        </div>
+
+        <h3>2.1 Meta Tags y Titles</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pagina</th>
+                    <th>Title</th>
+                    <th>Largo</th>
+                    <th>Evaluacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homepage</td>
+                    <td>Fabricacion Detergentes Industriales</td>
+                    <td>42 chars</td>
+                    <td><span class="badge badge-high">Generico</span></td>
+                </tr>
+                <tr>
+                    <td>Catalogo</td>
+                    <td>Catalogo de Producto - Quimica 2000</td>
+                    <td>37 chars</td>
+                    <td><span class="badge badge-medium">Mejorable</span></td>
+                </tr>
+                <tr>
+                    <td>Contacto</td>
+                    <td>Contacto - Quimica 2000 Te Asesoramos</td>
+                    <td>39 chars</td>
+                    <td><span class="badge badge-ok">Aceptable</span></td>
+                </tr>
+                <tr>
+                    <td>Nosotros</td>
+                    <td>Conoce mas sobre nuestra Empresa - Quimica 2000</td>
+                    <td>48 chars</td>
+                    <td><span class="badge badge-ok">Aceptable</span></td>
+                </tr>
+                <tr>
+                    <td>Desengrasante</td>
+                    <td>Desengrasante Industrial "Busy Plus" - Quimica 2000</td>
+                    <td>52 chars</td>
+                    <td><span class="badge badge-ok">Bueno</span></td>
+                </tr>
+                <tr>
+                    <td>Blog</td>
+                    <td>Blog - Quimica 2000</td>
+                    <td>20 chars</td>
+                    <td><span class="badge badge-high">Pobre</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Title del Homepage no incluye marca ni ubicacion</strong>
+            El title actual es "Fabricacion Detergentes Industriales" - no incluye el nombre "Quimica 2000" ni "Chile/Santiago". Propuesta: <em>"Quimica 2000 | Fabricacion de Detergentes y Productos Quimicos Industriales en Chile"</em>
+        </div>
+
+        <h3>2.2 Meta Descriptions</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pagina</th>
+                    <th>Meta Description</th>
+                    <th>Largo</th>
+                    <th>Evaluacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homepage</td>
+                    <td>Quimica 2000 Fabricacion de Detergentes Industriales, excelencia en la fabricacion y venta especializada de productos quimicos.</td>
+                    <td>128 chars</td>
+                    <td><span class="badge badge-medium">Corta</span></td>
+                </tr>
+                <tr>
+                    <td>Catalogo</td>
+                    <td>Te invitamos a conocer nuestro catalogo de producto industriales...</td>
+                    <td>~100 chars</td>
+                    <td><span class="badge badge-high">Sin CTA</span></td>
+                </tr>
+                <tr>
+                    <td>Contacto</td>
+                    <td>Si necesitas asesoria para elegir la mejor alternativa para solucionar tu problema...</td>
+                    <td>~120 chars</td>
+                    <td><span class="badge badge-ok">Aceptable</span></td>
+                </tr>
+                <tr>
+                    <td>Productos</td>
+                    <td>Descripciones especificas por producto</td>
+                    <td>Variable</td>
+                    <td><span class="badge badge-ok">Buenas</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>2.3 Estructura de Encabezados (Homepage)</h3>
+
+        <div class="code-block">
+<span class="tag">&lt;h1&gt;</span> Fabricacion y Distribucion de Detergentes Industriales. <span class="comment">-- OK, unico</span>
+<span class="tag">&lt;h2&gt;</span> SOBRE NOSOTROS <span class="comment">-- No descriptivo para SEO</span>
+<span class="tag">&lt;h2&gt;</span> LINEA <span class="comment">-- Generico, no keyword-rich</span>
+<span class="tag">&lt;h2&gt;</span> DETERGENTE LIQUIDO <span class="comment">-- OK pero aislado</span>
+<span class="tag">&lt;h3&gt;</span> Quimica 2000 <span class="comment">-- Deberia ser parte del H1 o brand section</span>
+<span class="tag">&lt;h3&gt;</span> Limpieza y mantencion de pisos <span class="comment">-- OK, categoria</span>
+<span class="tag">&lt;h3&gt;</span> Limpieza y aseo industrial <span class="comment">-- OK, categoria</span>
+<span class="tag">&lt;h3&gt;</span> Safi Ultra Clean <span class="comment">-- OK, producto</span>
+<span class="tag">&lt;h3&gt;</span> + de 25 anos <span class="comment">-- Informativo, no SEO</span>
+<span class="tag">&lt;h3&gt;</span> Satisfaccion del cliente <span class="comment">-- Informativo, no SEO</span>
+<span class="tag">&lt;h3&gt;</span> Fabricacion 100% Chilena <span class="comment">-- Bueno para local SEO</span>
+<span class="tag">&lt;h3&gt;</span> + de 200 productos <span class="comment">-- Informativo</span>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>H2s poco descriptivos</strong>
+            Los H2 como "SOBRE NOSOTROS" y "LINEA" no contienen keywords relevantes. Deberian ser descriptivos: "Nuestras Lineas de Productos Quimicos Industriales", "Mas de 25 Anos Fabricando Soluciones Quimicas en Chile".
+        </div>
+
+        <h3>2.4 Imagenes y Alt Text</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">38</div>
+                <div class="metric-label">Total Imagenes (Home)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" style="color: var(--critical);">10</div>
+                <div class="metric-label">Sin Alt Text</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">26%</div>
+                <div class="metric-label">% Sin Alt</div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>10 imagenes sin alt text en homepage</strong>
+            Varias imagenes de banners de productos (Limpia Parabrisas, Shampoo Automotriz, Limpiador Desinfectante, Lavaloza Industrial) no tienen texto alternativo. Esto afecta tanto accesibilidad como SEO de imagenes.
+        </div>
+
+        <p><strong>Positivo:</strong> Las paginas de producto individuales si tienen alt text en las imagenes (ej: "desengrasante", "fosfatizante", "Toallas Desengrasantes"). Buen trabajo en productos.</p>
+
+        <h3>2.5 Open Graph Tags</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>og:title</td>
+                    <td>Fabricacion Detergentes Industriales</td>
+                    <td><span class="badge badge-medium">Generico</span></td>
+                </tr>
+                <tr>
+                    <td>og:description</td>
+                    <td>Quimica 2000 Fabricacion de Detergentes Industriales...</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+                <tr>
+                    <td>og:image</td>
+                    <td>No detectado en homepage</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                </tr>
+                <tr>
+                    <td>og:type</td>
+                    <td>website</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+                <tr>
+                    <td>og:locale</td>
+                    <td>es_ES</td>
+                    <td><span class="badge badge-medium">Deberia ser es_CL</span></td>
+                </tr>
+                <tr>
+                    <td>twitter:card</td>
+                    <td>summary_large_image</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Sin og:image en Homepage</strong>
+            Cuando alguien comparte el link de quimica2000.cl en redes sociales o WhatsApp, no se muestra imagen de preview. Se debe agregar una imagen representativa.
+        </div>
+    </div>
+
+    <!-- ============ SECCION 3: CONTENIDO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">Contenido y Estrategia de Keywords</div>
+            <div class="section-score mid">50/100</div>
+        </div>
+
+        <h3>3.1 Catalogo de Productos</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">63+</div>
+                <div class="metric-label">Productos</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">12</div>
+                <div class="metric-label">Categorias</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">4</div>
+                <div class="metric-label">Marcas</div>
+            </div>
+        </div>
+
+        <h4>Categorias del Catalogo</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>URL Slug</th>
+                    <th>Potencial SEO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alimentaria</td>
+                    <td>/producto-categoria/alimentaria/</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Automotriz</td>
+                    <td>/producto-categoria/automotriz/</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Mineria</td>
+                    <td>/producto-categoria/mineria/</td>
+                    <td><span class="badge badge-high">Muy Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Metalurgicas</td>
+                    <td>/producto-categoria/metalurgicas/</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Construccion</td>
+                    <td>/producto-categoria/construccion/</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Limpieza Industrial</td>
+                    <td>/producto-categoria/limpieza-y-aseo-industrial/</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Mantencion de Pisos</td>
+                    <td>/producto-categoria/limpieza-y-mantencion-de-piso/</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Transporte</td>
+                    <td>/producto-categoria/transporte/</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Mantencion Piscinas</td>
+                    <td>/producto-categoria/mantencion-de-piscinas/</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Articulos de Aseo</td>
+                    <td>/producto-categoria/articulos-de-aseo/</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Venta Directa</td>
+                    <td>/producto-categoria/venta_directa/</td>
+                    <td><span class="badge badge-none">Ninguno</span></td>
+                </tr>
+                <tr>
+                    <td>Cotizar Producto</td>
+                    <td>/producto-categoria/cotizar_producto/</td>
+                    <td><span class="badge badge-none">Ninguno</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-info">
+            <strong>Categorias "Venta Directa" y "Cotizar Producto" no son categorias reales</strong>
+            Estas deberian ser funcionalidades del sitio, no categorias de producto. Generan paginas de categoria con poco contenido que diluyen la autoridad del sitio.
+        </div>
+
+        <h3>3.2 Blog: Analisis de Articulos</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Articulo</th>
+                    <th>Keyword Principal</th>
+                    <th>Potencial</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mantencion de Piscinas</td>
+                    <td>mantencion de piscinas</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Aceite soluble: que es y para que sirve</td>
+                    <td>aceite soluble</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Desmoldante para concreto</td>
+                    <td>desmoldante para concreto</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Renovador de gomas</td>
+                    <td>renovador de gomas</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Desengrasante industrial como aplicar</td>
+                    <td>desengrasante industrial</td>
+                    <td><span class="badge badge-high">Muy Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Refrigerante y anticongelante</td>
+                    <td>anticongelante refrigerante</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Supresor de polvo en mineria</td>
+                    <td>supresor de polvo mineria</td>
+                    <td><span class="badge badge-high">Alto (nicho)</span></td>
+                </tr>
+                <tr>
+                    <td>Removedor de oxido</td>
+                    <td>removedor de oxido</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Fosfatizante: que funcion cumple</td>
+                    <td>fosfatizante</td>
+                    <td><span class="badge badge-medium">Nicho</span></td>
+                </tr>
+                <tr>
+                    <td>Beneficios supresor de polvo</td>
+                    <td>supresor de polvo</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Precauciones al usar desengrasantes</td>
+                    <td>desengrasante industrial precauciones</td>
+                    <td><span class="badge badge-medium">Long tail</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-success">
+            <strong>Buena estrategia de contenido informativo</strong>
+            El blog cubre temas directamente relacionados con los productos que venden, generando trafico informacional que puede convertirse en ventas. Los articulos tienen potencial de posicionamiento en busquedas tipo "que es un [producto]" y "como usar [producto]".
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Blog desactualizado</strong>
+            El ultimo articulo es de Octubre 2024 (5+ meses sin publicar). Google premia la frescura del contenido. Se recomienda publicar al menos 2 articulos mensuales.
+        </div>
+
+        <h3>3.3 Keywords Objetivo Recomendadas</h3>
+
+        <table class="keyword-table">
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Intencion</th>
+                    <th>Dificultad Est.</th>
+                    <th>Pagina Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>desengrasante industrial Chile</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>/producto/desengrasante-alto-poder/</td>
+                </tr>
+                <tr>
+                    <td>productos quimicos industriales</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-high">Alta</span></td>
+                    <td>Homepage</td>
+                </tr>
+                <tr>
+                    <td>anticongelante para vehiculos Chile</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>/producto-categoria/transporte/</td>
+                </tr>
+                <tr>
+                    <td>supresor de polvo mineria</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/producto/supresor-de-polvo/</td>
+                </tr>
+                <tr>
+                    <td>detergente industrial concentrado</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>/producto-categoria/limpieza-y-aseo-industrial/</td>
+                </tr>
+                <tr>
+                    <td>removedor de oxido industrial</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/producto/acido-removedor-de-oxidos/</td>
+                </tr>
+                <tr>
+                    <td>cera acrilica para pisos industrial</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/producto/cera-acrilica-autobrillo/</td>
+                </tr>
+                <tr>
+                    <td>fluido de corte para metales</td>
+                    <td>Informacional</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/funciones-del-fluido-de-corte/</td>
+                </tr>
+                <tr>
+                    <td>jabones para mecanicos</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/producto/jabon-crema/</td>
+                </tr>
+                <tr>
+                    <td>cloro para piscinas Chile</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-high">Alta</span></td>
+                    <td>/producto-categoria/mantencion-de-piscinas/</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ============ SECCION 4: OFF-PAGE Y LOCAL SEO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">Off-Page, Local SEO y Presencia Digital</div>
+            <div class="section-score low">30/100</div>
+        </div>
+
+        <h3>4.1 Presencia en Redes Sociales</h3>
+
+        <div class="alert alert-critical">
+            <strong>Sin enlaces a redes sociales</strong>
+            No se detectaron enlaces a perfiles de redes sociales (Instagram, Facebook, LinkedIn, YouTube) en ninguna pagina del sitio. Esto es una perdida significativa de senales de autoridad y alcance de marca.
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plataforma</th>
+                    <th>Estado</th>
+                    <th>Recomendacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>WhatsApp Business</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>Bien integrado con boton flotante (+56 9 4431 8209)</td>
+                </tr>
+                <tr>
+                    <td>Google Business Profile</td>
+                    <td><span class="badge badge-critical">No detectado</span></td>
+                    <td>URGENTE: Crear y vincular perfil de Google Maps</td>
+                </tr>
+                <tr>
+                    <td>Instagram</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Crear perfil y enlazar desde el footer</td>
+                </tr>
+                <tr>
+                    <td>Facebook</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Crear pagina empresarial</td>
+                </tr>
+                <tr>
+                    <td>LinkedIn</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Importante para ventas B2B industriales</td>
+                </tr>
+                <tr>
+                    <td>YouTube</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Videos de aplicacion de productos = alto engagement</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>4.2 Local SEO</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Direccion fisica en sitio</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Google Maps embebido</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Schema LocalBusiness</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>NAP Consistente</td>
+                    <td><span class="badge badge-high">Incompleto</span></td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Horarios de atencion</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>Lun-Vie 09:00-18:00</td>
+                </tr>
+                <tr>
+                    <td>Email de contacto</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>info@quimica2000.cl</td>
+                </tr>
+                <tr>
+                    <td>Telefonos</td>
+                    <td><span class="badge badge-ok">Presentes</span></td>
+                    <td>+56 9 4431 8209 / +56 9 9397 0982</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Sin direccion fisica publicada</strong>
+            El sitio no muestra una direccion fisica en ninguna pagina. Esto es critico para:
+            <ul>
+                <li>Google Business Profile (requisito obligatorio)</li>
+                <li>Confianza del comprador B2B (empresas quieren saber donde estan)</li>
+                <li>Schema LocalBusiness (datos estructurados)</li>
+                <li>Posicionamiento en busquedas locales "productos quimicos cerca de mi"</li>
+            </ul>
+        </div>
+
+        <h3>4.3 Backlinks y Autoridad</h3>
+        <p>Sin acceso a herramientas como Ahrefs/SEMrush, evaluamos la autoridad por senales indirectas:</p>
+        <ul>
+            <li><strong>Dominio:</strong> quimica2000.cl - Registrado desde ~2000, buena antiguedad de dominio</li>
+            <li><strong>Links externos en el sitio:</strong> Solo 3 detectados (WhatsApp y imagenes externas de razziwp.com)</li>
+            <li><strong>Nofollow/Dofollow:</strong> No se detecta estrategia de link building</li>
+            <li><strong>Senales sociales:</strong> Inexistentes por falta de perfiles sociales enlazados</li>
+        </ul>
+
+        <div class="alert alert-info">
+            <strong>Nota sobre imagenes externas</strong>
+            Los iconos del footer (envio, caja, like) estan alojados en <code>razziwp.com</code>, un dominio de la plantilla. Se recomienda alojar estas imagenes localmente para evitar dependencias externas y mejorar tiempos de carga.
+        </div>
+
+        <h3>4.4 Competidores Potenciales</h3>
+
+        <div class="competitor-grid">
+            <div class="competitor-card">
+                <div class="name">Wurth Chile</div>
+                <div class="url">wurth.cl</div>
+                <div class="strength">Marca global, alto DA, amplio catalogo industrial</div>
+            </div>
+            <div class="competitor-card">
+                <div class="name">Quimica Universal</div>
+                <div class="url">quimicauniversal.cl</div>
+                <div class="strength">Competidor directo en quimica industrial Chile</div>
+            </div>
+            <div class="competitor-card">
+                <div class="name">Sodimac Pro</div>
+                <div class="url">sodimac.cl</div>
+                <div class="strength">Marketplace con alto DA, vende desengrasantes y quimicos</div>
+            </div>
+            <div class="competitor-card">
+                <div class="name">CRC Industries</div>
+                <div class="url">crcindustries.cl</div>
+                <div class="strength">Especialista en lubricantes y desengrasantes industriales</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 5: E-COMMERCE SEO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">SEO E-Commerce (WooCommerce)</div>
+            <div class="section-score mid">48/100</div>
+        </div>
+
+        <h3>5.1 Paginas de Producto</h3>
+
+        <div class="rec-grid">
+            <div class="rec-card">
+                <h4>Titles de Producto</h4>
+                <p>Bien optimizados. Incluyen nombre del producto + marca Quimica 2000. Formato consistente.</p>
+            </div>
+            <div class="rec-card">
+                <h4>Descriptions de Producto</h4>
+                <p>Buenas. Describen el producto con keywords naturales y beneficios. Largo adecuado.</p>
+            </div>
+            <div class="rec-card">
+                <h4>Imagenes de Producto</h4>
+                <p>Formato WebP. Buena calidad. Alt text presente en la mayoria. Algunas sin alt.</p>
+            </div>
+            <div class="rec-card">
+                <h4>Product Schema</h4>
+                <p>Presente en paginas de producto. Incluye precio y reviews. Buen fundamento.</p>
+            </div>
+        </div>
+
+        <h3>5.2 Problemas Detectados en E-Commerce</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Problema</th>
+                    <th>Severidad</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Paginas cart/checkout/my-account indexables</td>
+                    <td><span class="badge badge-high">Alta</span></td>
+                    <td>Estas paginas deben tener meta robots noindex</td>
+                </tr>
+                <tr>
+                    <td>Pagina wishlist indexable</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>Sin contenido util para SEO, debe ser noindex</td>
+                </tr>
+                <tr>
+                    <td>Pagina compare indexable</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>Sin contenido util para SEO, debe ser noindex</td>
+                </tr>
+                <tr>
+                    <td>Precios no visibles en algunos productos</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>Algunos productos solo muestran "Cotizar" sin precio, afecta CTR en SERPs</td>
+                </tr>
+                <tr>
+                    <td>Breadcrumbs</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>Breadcrumbs activos en paginas de producto</td>
+                </tr>
+                <tr>
+                    <td>Reviews/Valoraciones</td>
+                    <td><span class="badge badge-ok">Habilitadas</span></td>
+                    <td>Sistema de reviews activo - generar mas resenas</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>5.3 Paginas de Categoria</h3>
+
+        <div class="alert alert-warning">
+            <strong>Descripciones de categoria muy cortas</strong>
+            Las paginas de categoria como "Construccion archivos - Quimica 2000" solo listan productos sin contenido descriptivo. Agregar 200-300 palabras de texto descriptivo con keywords en cada categoria mejoraria significativamente el posicionamiento.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Titles de categoria con "archivos"</strong>
+            Los titles de categoria incluyen la palabra "archivos" (ej: "Construccion archivos - Quimica 2000"). Esto es un problema de configuracion de WooCommerce/WordPress que debe corregirse.
+        </div>
+    </div>
+
+    <!-- ============ SECCION 6: PLAN DE ACCION ============ -->
+    <div class="section action-plan">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            <div class="section-title">Plan de Accion Priorizado</div>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-critical">Prioridad Critica - Semana 1-2</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Corregir canonical URLs con "#" en paginas de producto</td>
+                        <td>Evitar confusion de indexacion</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Optimizar title tag del Homepage: incluir "Quimica 2000" + "Chile"</td>
+                        <td>+20-30% CTR en SERPs</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Crear Google Business Profile con direccion fisica real</td>
+                        <td>Aparecer en Google Maps y busquedas locales</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Agregar og:image en homepage y paginas principales</td>
+                        <td>Mejor preview en WhatsApp y redes</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Agregar noindex a cart, checkout, my-account, wishlist, compare</td>
+                        <td>Limpiar indice de Google</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-high">Prioridad Alta - Semana 3-4</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>6</td>
+                        <td>Agregar Schema LocalBusiness + Organization en homepage</td>
+                        <td>Rich snippets en resultados</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Corregir URLs de marcas (eliminar %20, usar guiones)</td>
+                        <td>URLs mas limpias y crawleables</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Unificar rutas de categoria (/product-category/ -> /producto-categoria/)</td>
+                        <td>Eliminar contenido duplicado</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Agregar alt text a las 10 imagenes del homepage sin alt</td>
+                        <td>Mejor accesibilidad y SEO de imagenes</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Corregir titles de categorias (eliminar "archivos")</td>
+                        <td>Titles mas profesionales en SERPs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-medium">Prioridad Media - Mes 2</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>11</td>
+                        <td>Escribir texto descriptivo (200-300 palabras) en cada pagina de categoria</td>
+                        <td>+15-25% trafico en categorias</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Reactivar blog: publicar 2 articulos mensuales con keywords comerciales</td>
+                        <td>Trafico informacional que convierte</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Crear perfiles en LinkedIn, Instagram, Facebook y enlazar desde el sitio</td>
+                        <td>Senales sociales + alcance de marca</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Implementar plugin de cache y optimizar Core Web Vitals</td>
+                        <td>Mejor velocidad = mejor ranking</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Mejorar H2s del homepage con keywords descriptivos</td>
+                        <td>Mejor estructura semantica</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-low">Optimizacion Continua - Mes 3+</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>16</td>
+                        <td>Crear paginas de landing para keywords de alta conversion</td>
+                        <td>Captar busquedas comerciales especificas</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>Iniciar estrategia de link building: directorios industriales, proveedores</td>
+                        <td>Aumentar Domain Authority</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>Crear videos de aplicacion de productos para YouTube</td>
+                        <td>Trafico de video + backlinks</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>Implementar FAQ schema en articulos del blog</td>
+                        <td>Rich snippets tipo "People Also Ask"</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>Solicitar resenas en Google Business Profile</td>
+                        <td>Social proof + ranking local</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>6.2 Schema Markup Recomendado (Homepage)</h3>
+
+        <div class="code-block">
+<span class="comment">// Agregar en el &lt;head&gt; del homepage</span>
+<span class="tag">&lt;script type="application/ld+json"&gt;</span>
+{
+  <span class="attr">"@context"</span>: <span class="value">"https://schema.org"</span>,
+  <span class="attr">"@type"</span>: <span class="value">"Organization"</span>,
+  <span class="attr">"name"</span>: <span class="value">"Quimica 2000"</span>,
+  <span class="attr">"url"</span>: <span class="value">"https://quimica2000.cl"</span>,
+  <span class="attr">"logo"</span>: <span class="value">"https://quimica2000.cl/wp-content/uploads/2024/05/logo.png"</span>,
+  <span class="attr">"description"</span>: <span class="value">"Fabricacion y distribucion de detergentes y productos quimicos industriales en Chile"</span>,
+  <span class="attr">"telephone"</span>: <span class="value">"+56944318209"</span>,
+  <span class="attr">"email"</span>: <span class="value">"info@quimica2000.cl"</span>,
+  <span class="attr">"foundingDate"</span>: <span class="value">"2000"</span>,
+  <span class="attr">"sameAs"</span>: [
+    <span class="value">"https://www.instagram.com/quimica2000cl"</span>,
+    <span class="value">"https://www.linkedin.com/company/quimica2000"</span>
+  ]
+}
+<span class="tag">&lt;/script&gt;</span>
+        </div>
+
+        <h3>6.3 KPIs de Seguimiento</h3>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-value">42</div>
+                <div class="kpi-label">Score SEO Actual</div>
+                <div class="kpi-target">Meta: 65+</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">~130</div>
+                <div class="kpi-label">Paginas Indexadas</div>
+                <div class="kpi-target">Meta: 100 (limpiar)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">0</div>
+                <div class="kpi-label">Redes Sociales</div>
+                <div class="kpi-target">Meta: 4 perfiles</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">11</div>
+                <div class="kpi-label">Articulos Blog</div>
+                <div class="kpi-target">Meta: 25+ en 6 meses</div>
+            </div>
+        </div>
+
+        <h3>6.4 Timeline de Implementacion</h3>
+
+        <div class="timeline">
+            <div class="timeline-item phase1">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 1: Correccion Tecnica (Semana 1-2)</div>
+                    <div class="timeline-desc">Canonicals, noindex en paginas de utilidad, title homepage, og:image, URLs limpias. Impacto inmediato en indexacion.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase2">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 2: Local SEO + Estructura (Semana 3-4)</div>
+                    <div class="timeline-desc">Google Business Profile, schema markup, unificar categorias, alt text, corregir titles de categorias. Visibilidad local.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase3">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 3: Contenido + Social (Mes 2)</div>
+                    <div class="timeline-desc">Textos en categorias, blog activo, perfiles sociales, optimizacion de velocidad. Crecimiento organico sostenido.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase4">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 4: Autoridad + Escala (Mes 3+)</div>
+                    <div class="timeline-desc">Link building, YouTube, FAQ schema, resenas Google. Consolidacion y liderazgo en SERPs industriales.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Auditoria SEO - quimica2000.cl</strong></p>
+        <p>Generado el 10 de Marzo 2026 | Analisis basado en datos reales del sitio</p>
+        <p>Este documento es confidencial y de uso exclusivo para el cliente.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
