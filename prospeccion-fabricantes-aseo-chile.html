@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospeccion de Socios - Fabricantes de Productos de Aseo en Chile</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f2027;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --critical: #d63031;
+            --steel: #37474f;
+            --steel-light: #546e7a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ============ COVER ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(230,81,0,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(44,83,100,0.3) 0%, transparent 50%);
+        }
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+        .cover-logo {
+            font-size: 13px; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 40px;
+            position: relative; z-index: 1; font-weight: 600;
+        }
+        .cover h1 {
+            font-size: 46px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+        .cover-domain {
+            font-size: 20px; font-weight: 300; color: rgba(255,255,255,0.55);
+            margin-bottom: 8px; position: relative; z-index: 1;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+        .cover-subtitle {
+            font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.65);
+            margin-bottom: 45px; position: relative; z-index: 1; max-width: 620px;
+        }
+        .cover-meta {
+            position: relative; z-index: 1;
+            display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+        }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.4); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 15px; font-weight: 600; }
+        .cover-score { margin-top: 45px; position: relative; z-index: 1; }
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid #e67e22;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; background: rgba(230,126,34,0.08);
+        }
+        .score-circle .number { font-size: 44px; font-weight: 900; color: #e67e22; line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
+        /* ============ CONTENT ============ */
+        .content { max-width: 860px; margin: 0 auto; padding: 20px 10px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-top: 25px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 18px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; color: var(--accent); }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; padding-top: 5px; }
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 14px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-high { background: #fff3e0; color: #e67e22; }
+        .badge-medium { background: #fef9e7; color: #f39c12; }
+        .badge-ok { background: #e8f8f5; color: var(--success); }
+        .badge-none { background: #f0f0f0; color: #999; }
+        .badge-rm { background: #eef2ff; color: #3949ab; }
+
+        .alert {
+            padding: 15px 18px; border-radius: 9px; margin: 12px 0; font-size: 13px;
+        }
+        .alert-warning { background: #fff8e1; border-left: 4px solid #f39c12; color: #e67e22; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #eef2ff; border-left: 4px solid #5b6abf; color: #3949ab; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 24px; font-weight: 800; color: var(--primary); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 3px;
+        }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        /* ============ COMPANY CARDS ============ */
+        .company {
+            border: 1px solid var(--border); border-radius: 12px;
+            padding: 0; margin: 18px 0; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            page-break-inside: avoid;
+        }
+        .company-head {
+            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+            color: white; padding: 16px 20px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .company-rank {
+            width: 34px; height: 34px; border-radius: 8px;
+            background: var(--accent); color: white; font-weight: 800; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .company-head .ch-name { font-size: 17px; font-weight: 800; line-height: 1.2; }
+        .company-head .ch-web { font-size: 11px; color: var(--accent-light); font-family: monospace; }
+        .company-head .ch-badges { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+        .company-body { padding: 16px 20px; }
+        .company-body p { font-size: 12.5px; margin-bottom: 10px; }
+        .company-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px;
+        }
+        .info-block h5 {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); margin-bottom: 6px; font-weight: 700;
+        }
+        .info-block ul { list-style: none; margin: 0; }
+        .info-block li { font-size: 12px; margin-bottom: 4px; color: var(--text); }
+        .info-block li span.k { color: var(--text-light); display: inline-block; min-width: 64px; }
+        .contact-block {
+            background: var(--bg-alt); border-radius: 9px; padding: 12px 14px;
+            border: 1px solid var(--border);
+        }
+        .contact-block a { color: var(--accent); text-decoration: none; }
+        .angle {
+            background: #fff8f3; border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 12px; font-size: 12.5px;
+        }
+        .angle strong { color: var(--accent); }
+
+        /* ============ PRIORITY ============ */
+        .priority-section { margin-bottom: 20px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px;
+        }
+        .priority-high { background: #e67e22; color: white; }
+        .priority-medium { background: #f39c12; color: white; }
+        .priority-low { background: var(--steel-light); color: white; }
+
+        .footer {
+            text-align: center; padding: 30px; margin-top: 40px;
+            border-top: 2px solid var(--border); color: var(--text-light); font-size: 11px;
+        }
+
+        @media print {
+            .cover { margin: -15mm -12mm 0 -12mm; width: calc(100% + 24mm); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+    <div class="cover-logo">Inteligencia Comercial</div>
+    <h1>Prospeccion de <span>Socios</span></h1>
+    <div class="cover-domain">Fabricantes de Productos de Aseo en Chile</div>
+    <div class="cover-subtitle">10 pymes chilenas fabricantes / formuladoras para colaboracion y co-desarrollo de productos de aseo. Benchmark de referencia: nitsche.cl</div>
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Fecha</div>
+            <div class="value">20 Junio 2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Empresas</div>
+            <div class="value">10 fabricantes</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Segmento</div>
+            <div class="value">Aseo hogar / institucional</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Foco geografico</div>
+            <div class="value">Region Metropolitana</div>
+        </div>
+    </div>
+    <div class="cover-score">
+        <div class="score-circle">
+            <div class="number">10</div>
+            <div class="out-of">empresas</div>
+            <div class="label">Validadas</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CONTENIDO ============ -->
+<div class="content">
+
+    <!-- Resumen Ejecutivo -->
+    <div class="executive-summary">
+        <h2>Resumen Ejecutivo</h2>
+        <p>
+            Este informe identifica <strong>10 empresas chilenas fabricantes o formuladoras de productos de aseo</strong> (segmento hogar e institucional: detergentes, desinfectantes, cloro, limpiapisos, sanitizantes, jabones) que constituyen potenciales socios para <strong>colaboracion y co-desarrollo de productos de aseo</strong>: maquila, marca propia, abastecimiento de formulaciones e I+D conjunta.
+        </p>
+        <p>
+            El criterio de seleccion priorizo <strong>fabricantes con planta o servicio de formulacion propio</strong> (no distribuidores puros), ubicados preferentemente en la <strong>Region Metropolitana</strong>, con un perfil de pyme y datos de contacto verificables. Durante la investigacion se descartaron varias empresas que aparecian en buscadores pero resultaron ser extranjeras (Mexico, Ecuador, Espana, Venezuela) o solo comercializadoras.
+        </p>
+        <p>
+            La oportunidad es clara: <strong>8 de las 10 empresas ofrecen explicitamente servicio de maquila o desarrollo a medida</strong>, lo que facilita una conversacion de colaboracion para Nitsche, cuyo negocio (refrigerantes, aditivos, aromatizantes y limpieza vehicular) es complementario a una linea de aseo hogar / institucional.
+        </p>
+
+        <div class="summary-scores">
+            <div class="summary-score-card">
+                <div class="score">10</div>
+                <div class="category">Fabricantes chilenos</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score good">8</div>
+                <div class="category">Ofrecen maquila</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score good">9</div>
+                <div class="category">En Region Metrop.</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score good">10</div>
+                <div class="category">Con marca propia</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 1: METODOLOGIA ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">Metodologia y Criterios</div>
+        </div>
+
+        <p>El listado se construyo a partir de busquedas dirigidas y verificacion individual de cada candidato (scraping de home, paginas de empresa y contacto). Se aplicaron los siguientes filtros:</p>
+        <ul>
+            <li><strong>Origen:</strong> empresa chilena (se descartaron casas matrices o sitios extranjeros).</li>
+            <li><strong>Rol:</strong> fabricante o formulador con capacidad productiva propia, no solo distribuidor.</li>
+            <li><strong>Segmento:</strong> productos de aseo hogar e institucional / industrial.</li>
+            <li><strong>Tamano:</strong> perfil pyme (se evitaron multinacionales como Diversey o Proquimia).</li>
+            <li><strong>Ubicacion:</strong> prioridad Region Metropolitana; se admiten regiones si el perfil es relevante.</li>
+            <li><strong>Contactabilidad:</strong> al menos un canal valido (telefono, email, formulario o WhatsApp).</li>
+        </ul>
+
+        <div class="alert alert-info">
+            <strong>Nota sobre Nitsche (benchmark)</strong>
+            Nitsche (nitsche.cl) es un fabricante chileno de productos quimicos automotrices: refrigerantes (Freezcar), aguas desmineralizadas, aditivos, aromatizantes y limpieza vehicular. Las empresas de esta lista comparten el "ADN quimico-formulador" pero enfocado en aseo hogar / institucional, lo que las hace complementarias para co-desarrollo.
+        </div>
+
+        <h3>Empresas evaluadas y descartadas</h3>
+        <table>
+            <thead>
+                <tr><th>Empresa</th><th>Motivo de descarte</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Prolimp</td><td>Empresa mexicana (no chilena)</td></tr>
+                <tr><td>SMACH</td><td>Empresa ecuatoriana (no chilena)</td></tr>
+                <tr><td>Quimidex</td><td>Empresa espanola (Barcelona)</td></tr>
+                <tr><td>Disvequim</td><td>Empresa venezolana (no chilena)</td></tr>
+                <tr><td>Industrel</td><td>Rubro principal es vestuario corporativo, no aseo</td></tr>
+                <tr><td>Asiaplas</td><td>Distribuidor de materias primas, no fabricante de aseo terminado</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ============ SECCION 2: TABLA RESUMEN ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">Tabla Resumen</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Empresa</th>
+                    <th>Ubicacion</th>
+                    <th>Foco</th>
+                    <th>Maquila</th>
+                    <th>Web</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Rinde Mas SpA (rindeMas)</td><td>San Miguel, RM</td><td>Limpieza biodegradable</td><td><span class="badge badge-ok">Si</span></td><td>rindemasdetergentes.cl</td></tr>
+                <tr><td>2</td><td>Marvelkleen SPA</td><td>Lampa, RM</td><td>Detergentes industriales</td><td><span class="badge badge-ok">Si</span></td><td>marvelkleen.cl</td></tr>
+                <tr><td>3</td><td>J&amp;P Quimicos</td><td>San Ramon, RM</td><td>Quimicos limpieza + insumos</td><td><span class="badge badge-medium">Parcial</span></td><td>jypquimicos.cl</td></tr>
+                <tr><td>4</td><td>Edeter SpA</td><td>San Joaquin, RM</td><td>Institucional + quimica</td><td><span class="badge badge-ok">Si</span></td><td>edeter.cl</td></tr>
+                <tr><td>5</td><td>Newchem Quimica Ltda</td><td>Santiago, RM</td><td>Higiene industrial (ISO 9001)</td><td><span class="badge badge-ok">Si</span></td><td>newchem.cl</td></tr>
+                <tr><td>6</td><td>Austral Chemicals Chile S.A.</td><td>Quinta Normal, RM</td><td>Toll manufacturing</td><td><span class="badge badge-ok">Si</span></td><td>austral-chem.cl</td></tr>
+                <tr><td>7</td><td>Econobel (Grupo Egle)</td><td>Quilicura, RM</td><td>Aseo industrial (reg. ISP)</td><td><span class="badge badge-ok">Si</span></td><td>econobel.cl</td></tr>
+                <tr><td>8</td><td>Sky Detergentes (Pinina)</td><td>San Joaquin, RM</td><td>Aseo biodegradable por mayor</td><td><span class="badge badge-ok">Si</span></td><td>skydetergentes.cl</td></tr>
+                <tr><td>9</td><td>Llabres Industrial</td><td>RM</td><td>Aseo hogar/industrial</td><td><span class="badge badge-medium">Parcial</span></td><td>llabres.cl</td></tr>
+                <tr><td>10</td><td>Pacific Chem Chile</td><td>Chile</td><td>Aseo industria alimentaria</td><td><span class="badge badge-ok">Si</span></td><td>pacificchem.cl</td></tr>
+            </tbody>
+        </table>
+        <div class="alert alert-warning">
+            <strong>Aviso</strong>
+            Edeter SpA y Sky Detergentes pertenecen al mismo grupo (Pinina, misma direccion en San Joaquin). Operan como marcas distintas con contactos propios, pero conviene tenerlo presente al priorizar.
+        </div>
+    </div>
+
+    <!-- ============ SECCION 3: FICHAS ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">Fichas de Empresa</div>
+        </div>
+
+        <!-- 1 rindeMas -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">1</div>
+                <div>
+                    <div class="ch-name">Rinde Mas SpA (rindeMas)</div>
+                    <div class="ch-web">rindemasdetergentes.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">Maquila</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Empresa chilena con mas de 10 anios fabricando productos de limpieza biodegradables de alto rendimiento. Opera 5 canales de negocio: marcas propias (GO+ y R+), <strong>maquila para terceros</strong>, ventas B2B, importacion y e-commerce, con locales en Santiago.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Aseo biodegradable</li>
+                            <li><span class="k">Trayectoria:</span> +10 anios</li>
+                            <li><span class="k">Maquila:</span> Si (explicita)</li>
+                            <li><span class="k">Marca propia:</span> GO+ / R+</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 9 3260 0929</li>
+                            <li><span class="k">Email:</span> contacto@rindemasdetergentes.cl</li>
+                            <li><span class="k">Dir:</span> Sebastopol 624, San Miguel</li>
+                            <li><span class="k">Redes:</span> IG @rindemasgo / LinkedIn</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Ofrece maquila para terceros como linea de negocio formal; candidato ideal para desarrollar una linea de aseo de marca propia complementaria al portafolio automotriz de Nitsche.</div>
+            </div>
+        </div>
+
+        <!-- 2 Marvelkleen -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">2</div>
+                <div>
+                    <div class="ch-name">Marvelkleen SPA</div>
+                    <div class="ch-web">marvelkleen.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">Maquila</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Fabricante de detergentes y productos de limpieza industrial <strong>desde 1977</strong>. Ofrece servicio de maquila completa (formula, fabrica, envasa y etiqueta). Cuenta con certificaciones SEREMI de Salud RM y CONAMA, y cobertura nacional con sucursales en el norte.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Detergentes industriales</li>
+                            <li><span class="k">Trayectoria:</span> Desde 1977</li>
+                            <li><span class="k">Maquila:</span> Si (completa)</li>
+                            <li><span class="k">Cert.:</span> SEREMI Salud, CONAMA</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 2730 1200</li>
+                            <li><span class="k">Email:</span> ventasweb@marvelkleen.cl</li>
+                            <li><span class="k">Dir:</span> Av. Don Luis 536, Valle Grande, Lampa</li>
+                            <li><span class="k">Sucur.:</span> Iquique, Antofagasta</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> 40+ anios de experiencia y maquila "llave en mano" certificada; socio robusto para escalar produccion y acceder al mercado minero del norte.</div>
+            </div>
+        </div>
+
+        <!-- 3 J&P -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">3</div>
+                <div>
+                    <div class="ch-name">J&amp;P Quimicos</div>
+                    <div class="ch-web">jypquimicos.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-medium">Maquila parcial</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Empresa con mas de 10 anios que <strong>fabrica e importa</strong> quimicos de limpieza industrial y <strong>materias primas para detergentes</strong>. Abastece a empresas en todo Chile con linea industrial propia y despacho en la provincia de Santiago.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Quimica limpieza + insumos</li>
+                            <li><span class="k">Trayectoria:</span> +10 anios</li>
+                            <li><span class="k">Maquila:</span> Parcial / fabricacion</li>
+                            <li><span class="k">Marca propia:</span> Linea industrial</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 9 8679 7865</li>
+                            <li><span class="k">Email:</span> ventas@jypquimicos.cl</li>
+                            <li><span class="k">Dir:</span> Rey Alberto 3884, San Miguel</li>
+                            <li><span class="k">Redes:</span> IG @jyp_quimicos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Acceso a materias primas y fabricacion en una sola contraparte; util tanto para co-desarrollo de formulaciones como para asegurar abastecimiento de insumos.</div>
+            </div>
+        </div>
+
+        <!-- 4 Edeter -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">4</div>
+                <div>
+                    <div class="ch-name">Edeter SpA</div>
+                    <div class="ch-web">edeter.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">Maquila</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Empresa quimica con una solida <strong>linea institucional</strong> (desinfectantes, detergentes neutros, lavalozas, limpiavidrios) y un <strong>servicio de maquila de productos quimicos</strong> que permite replicar una formula existente o desarrollar una nueva a medida.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Institucional / quimica</li>
+                            <li><span class="k">Maquila:</span> Si (replica o nueva)</li>
+                            <li><span class="k">Marca propia:</span> Si</li>
+                            <li><span class="k">Grupo:</span> Pinina (ver Sky)</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 2360 9604</li>
+                            <li><span class="k">Dir:</span> Alvarez de Toledo 617, San Joaquin</li>
+                            <li><span class="k">Redes:</span> IG @edeter_cl / LinkedIn</li>
+                            <li><span class="k">Web:</span> edeter.cl (formulario)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Maquila flexible (replica de formula o desarrollo nuevo) y fortaleza en el canal institucional; buen socio para entrar a clientes corporativos.</div>
+            </div>
+        </div>
+
+        <!-- 5 Newchem -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">5</div>
+                <div>
+                    <div class="ch-name">Newchem Quimica Ltda</div>
+                    <div class="ch-web">newchem.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">ISO 9001</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Empresa <strong>certificada ISO 9001</strong> dedicada al desarrollo, fabricacion y comercializacion de productos de limpieza y desinfectantes para higiene industrial, con sistemas de dosificacion, aplicacion y control. Publica fichas tecnicas de sus productos.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Higiene industrial</li>
+                            <li><span class="k">Cert.:</span> ISO 9001</li>
+                            <li><span class="k">Maquila:</span> Desarrollo a medida</li>
+                            <li><span class="k">Marca propia:</span> Si</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 2241 4000</li>
+                            <li><span class="k">Email:</span> info@newchem.cl</li>
+                            <li><span class="k">Ubic.:</span> Santiago, RM</li>
+                            <li><span class="k">Web:</span> newchem.cl</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Calidad certificada y capacidad de desarrollo tecnico; socio recomendado para una linea premium o productos con exigencias de calidad documentada.</div>
+            </div>
+        </div>
+
+        <!-- 6 Austral -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">6</div>
+                <div>
+                    <div class="ch-name">Austral Chemicals Chile S.A.</div>
+                    <div class="ch-web">austral-chem.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">Toll manuf.</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Compania quimica con servicio de <strong>toll manufacturing (maquila)</strong> capaz de producir todo tipo de formulaciones de higiene y limpieza: detergentes, desengrasantes, desincrustantes y jabones. Orientada a volumen y formulaciones especiales.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Quimica / maquila</li>
+                            <li><span class="k">Maquila:</span> Si (core del negocio)</li>
+                            <li><span class="k">Capacidad:</span> Volumen industrial</li>
+                            <li><span class="k">Productos:</span> Detergentes, jabones</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 2663 5300</li>
+                            <li><span class="k">Email:</span> info@austral-chem.cl</li>
+                            <li><span class="k">Dir:</span> Carrascal 3725, Quinta Normal</li>
+                            <li><span class="k">Web:</span> austral-chem.cl</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Maquila industrial de amplio espectro; ideal cuando se requiere volumen, formulaciones especiales o un fabricante de respaldo.</div>
+            </div>
+        </div>
+
+        <!-- 7 Econobel -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">7</div>
+                <div>
+                    <div class="ch-name">Econobel (Grupo Egle)</div>
+                    <div class="ch-web">econobel.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">Reg. ISP</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Empresa de <strong>aseo industrial</strong> (parte del Grupo Egle) con desinfectantes con <strong>registro ISP</strong>, detergentes y ceras, orientada a lineas de envasado, paredes y suelos. Enfoque en higiene de plantas e industria.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Aseo industrial</li>
+                            <li><span class="k">Registros:</span> ISP (desinfectantes)</li>
+                            <li><span class="k">Maquila:</span> Si / desarrollo</li>
+                            <li><span class="k">Grupo:</span> Egle</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 3233 2334</li>
+                            <li><span class="k">Email:</span> contacto@econobel.cl</li>
+                            <li><span class="k">Dir:</span> El Totoral 351, Quilicura</li>
+                            <li><span class="k">Web:</span> econobel.cl</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Productos con registro ISP (clave para desinfectantes y sanitizantes); util si la linea a co-desarrollar requiere registro sanitario.</div>
+            </div>
+        </div>
+
+        <!-- 8 Sky -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">8</div>
+                <div>
+                    <div class="ch-name">Sky Detergentes (grupo Pinina)</div>
+                    <div class="ch-web">skydetergentes.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">Marca propia</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Fabricante chileno de productos de aseo por mayor, <strong>biodegradables sin sal ni fosfato</strong>. Su modelo apunta a emprendedores y negocios que quieren iniciar o expandir su propia linea (compra por mayor / marca propia).</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Aseo biodegradable</li>
+                            <li><span class="k">Maquila:</span> Por mayor / marca propia</li>
+                            <li><span class="k">Marca propia:</span> Si</li>
+                            <li><span class="k">Grupo:</span> Pinina (ver Edeter)</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 2360 9606 / 9607</li>
+                            <li><span class="k">Email:</span> detergentes@pinina.cl</li>
+                            <li><span class="k">Dir:</span> Alvarez de Toledo 617, San Joaquin</li>
+                            <li><span class="k">Redes:</span> Facebook</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Bajo costo de entrada para una marca propia biodegradable; alternativa comercial al canal de maquila de su empresa hermana Edeter.</div>
+            </div>
+        </div>
+
+        <!-- 9 Llabres -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">9</div>
+                <div>
+                    <div class="ch-name">Llabres Industrial</div>
+                    <div class="ch-web">llabres.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-medium">Fab. + distrib.</span>
+                    <span class="badge badge-rm">RM</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Empresa de productos de limpieza para hogar e industria con una <strong>linea de fabricacion propia "Marca Llabres"</strong> (cloro, detergentes, lavalozas, antigrasa, limpiapisos). Combina fabricacion con un amplio canal de distribucion (detalle, mayorista y distribuidor).</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Aseo hogar / industrial</li>
+                            <li><span class="k">Maquila:</span> Parcial (marca propia)</li>
+                            <li><span class="k">Marca propia:</span> Marca Llabres</li>
+                            <li><span class="k">Canal:</span> Detalle + mayorista</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Tel:</span> +56 2 2690 8300</li>
+                            <li><span class="k">Cobertura:</span> RM (Americo Vespucio)</li>
+                            <li><span class="k">Web:</span> llabres.cl</li>
+                            <li><span class="k">Canal:</span> WhatsApp / tienda online</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> Fabricante-distribuidor con catalogo amplio; interesante si ademas de fabricar se busca un canal de distribucion ya establecido.</div>
+            </div>
+        </div>
+
+        <!-- 10 PacificChem -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">10</div>
+                <div>
+                    <div class="ch-name">Pacific Chem Chile</div>
+                    <div class="ch-web">pacificchem.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-ok">ISO / ISP / SAG</span>
+                    <span class="badge badge-none">Nacional</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Fabricante de <strong>detergentes y desinfectantes para la industria alimentaria y lechera</strong> (salas de ordeno, plantas), con productos con registro SAG e ISP. Cuenta con multiples certificaciones (ISO 9001:2015, SEREMI de Salud, SAG, Directemar) y colaboracion tecnica con universidades (PUC, U. Austral, U. de Concepcion).</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Rubro:</span> Aseo industria alimentaria</li>
+                            <li><span class="k">Cert.:</span> ISO 9001, ISP, SAG</li>
+                            <li><span class="k">Maquila:</span> Desarrollo tecnico</li>
+                            <li><span class="k">I+D:</span> Convenios universitarios</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto</h5>
+                        <ul>
+                            <li><span class="k">Web:</span> pacificchem.cl</li>
+                            <li><span class="k">Canal:</span> Formulario web</li>
+                            <li><span class="k">Ubic.:</span> Chile</li>
+                            <li><span class="k">Foco:</span> Food-grade / lecheria</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de colaboracion:</strong> I+D con respaldo universitario y multiples registros sanitarios; socio para productos tecnicos o food-grade donde la certificacion es diferenciador.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 4: PRIORIZACION ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">Priorizacion y Plan de Contacto</div>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-high">Prioridad alta - Contactar primero</span>
+            <p>Maquila explicita + RM + perfil solido. Son las conversaciones de colaboracion mas directas.</p>
+            <ul>
+                <li><strong>rindeMas</strong> - maquila como linea formal de negocio y orientacion biodegradable.</li>
+                <li><strong>Marvelkleen</strong> - maquila completa, 40+ anios y certificaciones.</li>
+                <li><strong>Austral Chemicals</strong> - toll manufacturing de amplio espectro para volumen.</li>
+                <li><strong>Edeter</strong> - maquila flexible (replica o desarrollo) y canal institucional.</li>
+            </ul>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-medium">Prioridad media</span>
+            <p>Fuerte capacidad tecnica o de insumos; requieren validar alcance de maquila.</p>
+            <ul>
+                <li><strong>Newchem Quimica</strong> - calidad ISO 9001, linea premium/tecnica.</li>
+                <li><strong>J&amp;P Quimicos</strong> - fabricacion + materias primas para detergentes.</li>
+                <li><strong>Econobel</strong> - desinfectantes con registro ISP.</li>
+            </ul>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-low">Prioridad exploratoria</span>
+            <p>Buenos perfiles con alguna salvedad (grupo comun, rol mixto o nicho especifico).</p>
+            <ul>
+                <li><strong>Sky Detergentes</strong> - mismo grupo que Edeter; evaluar para no duplicar.</li>
+                <li><strong>Llabres Industrial</strong> - mas orientada a distribucion; fabrica linea propia.</li>
+                <li><strong>Pacific Chem</strong> - nicho industria alimentaria/lechera; ideal si se busca food-grade.</li>
+            </ul>
+        </div>
+
+        <h3>Siguientes pasos sugeridos</h3>
+        <ol>
+            <li>Definir el tipo exacto de producto a co-desarrollar (linea hogar masiva, institucional, o tecnico/food-grade).</li>
+            <li>Enviar un correo de presentacion estandar a las 4 empresas de prioridad alta solicitando capacidades de maquila, minimos de produccion (MOQ) y tiempos.</li>
+            <li>Solicitar fichas tecnicas y, si aplica, registros ISP/SAG vigentes.</li>
+            <li>Agendar visita a planta de los 2-3 finalistas para evaluar capacidad real.</li>
+        </ol>
+    </div>
+
+    <div class="footer">
+        <p>Prospeccion de socios fabricantes de productos de aseo en Chile - Documento de inteligencia comercial</p>
+        <p>Datos extraidos de fuentes publicas (sitios web de las empresas) el 20 de junio de 2026. Los datos de contacto pueden cambiar; se recomienda confirmarlos al momento de contactar.</p>
+    </div>
+
+</div>
+</body>
+</html>
