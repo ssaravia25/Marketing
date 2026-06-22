@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospeccion de Clientes - Casa Gilda Comunicaciones</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f0c29;
+            --accent: #e94560;
+            --accent-light: #ff7f8f;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --comms: #302b63;
+            --comms-light: #5147a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ============ COVER ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 45%, #1a2a6c 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 25% 75%, rgba(233,69,96,0.18) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 25%, rgba(48,43,99,0.45) 0%, transparent 50%);
+        }
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+        .cover-logo {
+            font-size: 12px; letter-spacing: 7px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 38px;
+            position: relative; z-index: 1; font-weight: 700;
+        }
+        .cover h1 {
+            font-size: 46px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+        .cover-domain {
+            font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.5);
+            margin-bottom: 10px; position: relative; z-index: 1;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+        .cover-subtitle {
+            font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.65);
+            margin-bottom: 45px; position: relative; z-index: 1; max-width: 640px;
+        }
+        .cover-meta {
+            position: relative; z-index: 1;
+            display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+        }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.38); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 15px; font-weight: 600; }
+        .cover-score { margin-top: 45px; position: relative; z-index: 1; }
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid var(--accent);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; background: rgba(233,69,96,0.08);
+        }
+        .score-circle .number { font-size: 44px; font-weight: 900; color: var(--accent); line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.45); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+
+        /* ============ CONTENT ============ */
+        .content { max-width: 860px; margin: 0 auto; padding: 20px 10px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-top: 25px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 18px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; color: var(--accent); }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .score.warn { color: #e67e22; }
+        .summary-score-card .score.comms { color: var(--comms); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; padding-top: 5px; }
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 14px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-alta { background: #fde8ec; color: #c0392b; }
+        .badge-media-alta { background: #fff3e0; color: #e67e22; }
+        .badge-media { background: #fef9e7; color: #d4a017; }
+        .badge-baja { background: #f0f0f0; color: #888; }
+        .badge-ok { background: #e8f8f5; color: var(--success); }
+        .badge-none { background: #fde8ec; color: #c0392b; }
+        .badge-sector { background: #eef0ff; color: var(--comms); }
+        .badge-warn { background: #fff8e1; color: #e67e22; }
+
+        .alert {
+            padding: 15px 18px; border-radius: 9px; margin: 12px 0; font-size: 13px;
+        }
+        .alert-warning { background: #fff8e1; border-left: 4px solid #f39c12; color: #a04000; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #f0eeff; border-left: 4px solid var(--comms); color: #4a2d8a; }
+        .alert-danger { background: #fde8ec; border-left: 4px solid #c0392b; color: #922b21; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 24px; font-weight: 800; color: var(--primary); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 3px;
+        }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        /* ============ SECTOR VISUAL CARDS ============ */
+        .sector-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 14px; margin: 16px 0;
+        }
+        .sector-card {
+            border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+            background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .sector-card .sc-icon {
+            font-size: 22px; margin-bottom: 8px;
+        }
+        .sector-card .sc-name {
+            font-size: 13px; font-weight: 800; color: var(--primary); margin-bottom: 4px;
+        }
+        .sector-card .sc-count {
+            font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 6px;
+            line-height: 1;
+        }
+        .sector-card .sc-desc {
+            font-size: 11.5px; color: var(--text-light); line-height: 1.55; margin-bottom: 8px;
+        }
+        .sector-card .sc-top {
+            font-size: 11px; color: var(--comms); font-weight: 600; border-top: 1px solid var(--border);
+            padding-top: 7px; margin-top: 7px;
+        }
+
+        /* ============ COMPANY CARDS ============ */
+        .company {
+            border: 1px solid var(--border); border-radius: 12px;
+            padding: 0; margin: 18px 0; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+        .company-head {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
+            color: white; padding: 16px 20px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .company-rank {
+            width: 36px; height: 36px; border-radius: 9px;
+            background: var(--accent); color: white; font-weight: 800; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .company-head .ch-name { font-size: 17px; font-weight: 800; line-height: 1.2; }
+        .company-head .ch-web { font-size: 11px; color: rgba(255,255,255,0.5); font-family: monospace; margin-top: 2px; }
+        .company-head .ch-badges { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+        .company-body { padding: 16px 20px; }
+        .company-body p { font-size: 12.5px; margin-bottom: 10px; }
+        .company-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px;
+        }
+        .info-block h5 {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); margin-bottom: 6px; font-weight: 700;
+        }
+        .info-block ul { list-style: none; margin: 0; }
+        .info-block li { font-size: 12px; margin-bottom: 4px; color: var(--text); }
+        .info-block li span.k { color: var(--text-light); display: inline-block; min-width: 84px; }
+        .contact-block {
+            background: var(--bg-alt); border-radius: 9px; padding: 12px 14px;
+            border: 1px solid var(--border);
+        }
+        .angle {
+            background: #fef0f2; border-left: 4px solid var(--accent);
+            border-radius: 0 9px 9px 0; padding: 11px 15px; margin-top: 13px; font-size: 12.5px;
+        }
+        .angle strong { color: var(--accent); }
+
+        /* ============ COMPACT COMPANY CARD ============ */
+        .company-compact {
+            border: 1px solid var(--border); border-radius: 11px;
+            padding: 15px 18px; margin: 11px 0;
+            display: grid; grid-template-columns: 34px 1fr auto;
+            gap: 12px; align-items: start;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+            page-break-inside: avoid;
+        }
+        .company-compact .cc-rank {
+            width: 30px; height: 30px; border-radius: 7px;
+            background: var(--comms); color: white; font-weight: 800; font-size: 13px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .company-compact .cc-info { min-width: 0; }
+        .company-compact .cc-name { font-size: 14px; font-weight: 800; color: var(--primary); margin-bottom: 2px; }
+        .company-compact .cc-meta { font-size: 11px; color: var(--text-light); margin-bottom: 5px; }
+        .company-compact .cc-why { font-size: 12px; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+        .company-compact .cc-services { font-size: 11px; color: var(--comms); font-weight: 600; }
+        .company-compact .cc-badge { flex-shrink: 0; margin-top: 4px; }
+
+        /* ============ PRIORITY LABELS ============ */
+        .priority-section { margin-bottom: 22px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px;
+        }
+        .priority-alta { background: #c0392b; color: white; }
+        .priority-media-alta { background: #e67e22; color: white; }
+        .priority-media { background: #d4a017; color: white; }
+        .priority-low { background: #636e72; color: white; }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            text-align: center; padding: 30px; margin-top: 40px;
+            border-top: 2px solid var(--border); color: var(--text-light); font-size: 11px;
+        }
+
+        @media print {
+            .cover { margin: -15mm -12mm 0 -12mm; width: calc(100% + 24mm); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+    <div class="cover-logo">Casa Gilda Comunicaciones</div>
+    <h1>Prospeccion de <span>Clientes</span> Potenciales</h1>
+    <div class="cover-domain">casagildacomunicaciones.com</div>
+    <div class="cover-subtitle">28 empresas chilenas con necesidad activa o latente de comunicacion estrategica, posicionamiento, voceria y prensa — priorizadas por urgencia y alineamiento con los servicios de Casa Gilda</div>
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Fecha</div>
+            <div class="value">22 Junio 2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Prospectos</div>
+            <div class="value">28 empresas</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Sectores</div>
+            <div class="value">7 sectores</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Prioridad Alta</div>
+            <div class="value">16 empresas</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Sin agencia PR</div>
+            <div class="value">19 empresas</div>
+        </div>
+    </div>
+    <div class="cover-score">
+        <div class="score-circle">
+            <div class="number">87</div>
+            <div class="out-of">/100</div>
+            <div class="label">Oportunidad</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CONTENIDO ============ -->
+<div class="content">
+
+    <!-- Resumen Ejecutivo -->
+    <div class="executive-summary">
+        <h2>Resumen Ejecutivo</h2>
+        <p>
+            Este reporte identifica <strong>28 empresas y organizaciones chilenas</strong> con necesidad activa o latente de comunicacion estrategica profesional — el servicio core de Casa Gilda Comunicaciones. El analisis cubre 7 sectores de la economia chilena y prioriza prospectos segun tres factores: <strong>urgencia comunicacional</strong> (crisis, crecimiento, reposicionamiento), <strong>ausencia de agencia PR visible</strong> y <strong>alineamiento con los servicios de Casa Gilda</strong> (comunicacion estrategica, posicionamiento y prensa, voceria, comunicacion interna, branding).
+        </p>
+        <p>
+            El mercado chileno se encuentra en un momento historicamente favorable para agencias de comunicacion boutique: la <strong>reforma previsional</strong> mantiene en alerta permanente al sector seguros y AFP; la <strong>crisis de isapres</strong> exige comunicacion de crisis en el sector salud privado; el <strong>auge de startups y unicornios locales</strong> genera una primera generacion de empresas tecnologicas sin cultura de PR; y los <strong>gremios empresariales</strong> enfrentan la necesidad urgente de reconstruir su narrativa ante la opinion publica.
+        </p>
+        <p>
+            De las 28 empresas analizadas, <strong>19 no cuentan con agencia de comunicaciones externa visible</strong> y operan con equipos internos pequenos o sin soporte PR especializado — una ventana de entrada directa para Casa Gilda.
+        </p>
+        <div class="summary-scores">
+            <div class="summary-score-card">
+                <div class="score">28</div>
+                <div class="category">Prospectos Totales</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score">16</div>
+                <div class="category">Prioridad Alta</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score good">19</div>
+                <div class="category">Sin agencia PR</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score comms">7</div>
+                <div class="category">Sectores cubiertos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 1: METODOLOGIA ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">Metodologia y Criterios de Seleccion</div>
+        </div>
+
+        <p>El listado se construyo a partir de investigacion por sector en el mercado chileno, verificacion individual de cada prospecto (busqueda en medios, LinkedIn, sitio web y noticias recientes) y evaluacion de alineamiento con el portafolio de servicios de Casa Gilda. Se aplicaron los siguientes criterios:</p>
+        <ul>
+            <li><strong>Origen:</strong> empresas con operacion relevante en Chile (se priorizan empresas chilenas o con decision local autonoma).</li>
+            <li><strong>Necesidad comunicacional:</strong> detonante activo (crisis, expansion, reposicionamiento, rebranding, lanzamiento, reforma regulatoria) o necesidad latente clara.</li>
+            <li><strong>Ausencia o gap de PR:</strong> sin agencia externa visible o con equipo interno que no alcanza para la dimension del desafio.</li>
+            <li><strong>Fit de servicio:</strong> al menos uno de los servicios core de Casa Gilda (comunicacion estrategica, prensa, voceria, comunicacion interna, branding) se aplica directamente.</li>
+            <li><strong>Contactabilidad:</strong> existencia de un punto de entrada plausible (CEO, gerente de comunicaciones, LinkedIn, formulario web).</li>
+        </ul>
+
+        <div class="alert alert-info">
+            <strong>Nota metodologica</strong>
+            Las prioridades se asignaron en funcion del <strong>momento comunicacional</strong> de cada empresa, no de su tamano o facturacion. Una empresa mediana con crisis activa tiene mayor prioridad que una gran corporacion sin detonante identificado.
+        </div>
+
+        <h3>Distribucion por sector</h3>
+        <table>
+            <thead>
+                <tr><th>Sector</th><th>Empresas</th><th>Principales drivers</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Tecnologia / Fintech / Startups</td><td>8</td><td>Expansion, lanzamientos, competencia, sin PR</td></tr>
+                <tr><td>Seguros, AFP y Banca</td><td>6</td><td>Reforma previsional, crisis isapres, Openbank, MACH</td></tr>
+                <tr><td>Salud (clinicas y farmacias)</td><td>5</td><td>Crisis isapres, innovacion medica, regulacion</td></tr>
+                <tr><td>Energia y Mineria</td><td>5</td><td>Descarbonizacion, ESG, conflictos comunitarios</td></tr>
+                <tr><td>Gremios y Asociaciones</td><td>3</td><td>Nuevos presidentes, advocacy ante reformas</td></tr>
+                <tr><td>Retail y E-commerce</td><td>2</td><td>Reestructuracion, transformacion digital, Chek</td></tr>
+                <tr><td>Alimentos y Bebidas</td><td>2</td><td>Reputacion ESG, exportaciones, regulacion</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ============ SECCION 2: TABLA RESUMEN ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">Tabla de Prospectos</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Empresa</th>
+                    <th>Industria</th>
+                    <th>Prioridad</th>
+                    <th>Agencia PR actual</th>
+                    <th>Servicio de entrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Buk</td><td>HR Tech</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia</span></td><td>Voceria + Prensa (IA en RRHH)</td></tr>
+                <tr><td>2</td><td>SURA Chile</td><td>AFP / Seguros</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia local</span></td><td>Comun. estrategica (reforma previsional)</td></tr>
+                <tr><td>3</td><td>Consorcio Nacional</td><td>Seguros / Finanzas</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia</span></td><td>Voceria + Asuntos publicos</td></tr>
+                <tr><td>4</td><td>NotCo</td><td>FoodTech / Unicornio</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Posiblemente sin</span></td><td>Reposicionamiento + Voceria CEO</td></tr>
+                <tr><td>5</td><td>Fintual</td><td>Fintech / Robo-advisor</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia</span></td><td>Comun. estrategica + Prensa</td></tr>
+                <tr><td>6</td><td>Tenpo</td><td>Neobank / Billetera</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia PR</span></td><td>Posicionamiento y prensa</td></tr>
+                <tr><td>7</td><td>SOFOFA</td><td>Gremio Industrial</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo interno</span></td><td>Voceria nuevo presidente</td></tr>
+                <tr><td>8</td><td>CPC</td><td>Confederacion empresarial</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo interno</span></td><td>Comun. estrategica + Asuntos publicos</td></tr>
+                <tr><td>9</td><td>Engie Chile</td><td>Energia / Renovable</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia local</span></td><td>Posicionamiento descarbonizacion</td></tr>
+                <tr><td>10</td><td>Falabella</td><td>Retail / Corporativo</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo interno robusto</span></td><td>Voceria CEO + Comun. interna</td></tr>
+                <tr><td>11</td><td>Bupa Chile</td><td>Isapre / Salud</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo interno</span></td><td>Comun. de crisis isapres</td></tr>
+                <tr><td>12</td><td>Clinica Alemana</td><td>Salud privada</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia externa</span></td><td>Posicionamiento y prensa medica</td></tr>
+                <tr><td>13</td><td>MetLife Chile</td><td>Seguros de vida</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-none">Sin agencia local</span></td><td>Comun. estrategica (reforma SIS)</td></tr>
+                <tr><td>14</td><td>RedSalud (Banmedica)</td><td>Red clinicas privadas</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo corporativo</span></td><td>Comun. de crisis + Reputacion</td></tr>
+                <tr><td>15</td><td>Ripley Chile</td><td>Retail / Fintech</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo pequeno</span></td><td>Posicionamiento Chek / Banco Ripley</td></tr>
+                <tr><td>16</td><td>Codelco</td><td>Mineria (estatal)</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-warn">Equipo interno grande</span></td><td>Proyectos especificos (litio, Rajo Inca)</td></tr>
+                <tr><td>17</td><td>Xepelin</td><td>Fintech B2B / Factoring</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-none">Sin agencia</span></td><td>Reposicionamiento post-ajuste</td></tr>
+                <tr><td>18</td><td>Antofagasta Minerals</td><td>Mineria cobre (privada)</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-warn">Brunswick Group</span></td><td>Comun. comunitaria Los Pelambres</td></tr>
+                <tr><td>19</td><td>Colbun</td><td>Generacion electrica</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-none">Sin agencia permanente</span></td><td>Comun. estrategica (sequia/tarifas)</td></tr>
+                <tr><td>20</td><td>Clinica Las Condes</td><td>Salud privada</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-none">Sin agencia externa</span></td><td>Posicionamiento vs Alemana</td></tr>
+                <tr><td>21</td><td>Farmacias Ahumada</td><td>Farmacia Retail</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-none">Sin agencia PR</span></td><td>Posicionamiento servicios de salud</td></tr>
+                <tr><td>22</td><td>Acti Chile</td><td>Gremio Tecnologia</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-none">Sin agencia</span></td><td>Advocacy IA + Ley de Datos</td></tr>
+                <tr><td>23</td><td>Vina Concha y Toro</td><td>Alimentos / Exportaciones</td><td><span class="badge badge-media-alta">Media-Alta</span></td><td><span class="badge badge-warn">Equipo interno</span></td><td>Comunicacion cambio climatico / vino</td></tr>
+                <tr><td>24</td><td>Betterfly</td><td>Insurtech / Unicornio</td><td><span class="badge badge-media">Media</span></td><td><span class="badge badge-warn">Soporte parcial</span></td><td>Comun. interna (10 paises) + Voceria ESG</td></tr>
+                <tr><td>25</td><td>BCI / MACH</td><td>Banca / Fintech</td><td><span class="badge badge-media">Media</span></td><td><span class="badge badge-warn">Equipo interno</span></td><td>Posicionamiento MACH como marca</td></tr>
+                <tr><td>26</td><td>Santander Chile</td><td>Banca / Openbank</td><td><span class="badge badge-media">Media</span></td><td><span class="badge badge-warn">LLYC / Hill+Knowlton</span></td><td>Openbank lanzamiento Chile</td></tr>
+                <tr><td>27</td><td>Houm</td><td>Proptech</td><td><span class="badge badge-media">Media</span></td><td><span class="badge badge-none">Sin agencia</span></td><td>Reposicionamiento mercado arriendo</td></tr>
+                <tr><td>28</td><td>CCU</td><td>Alimentos / Bebidas</td><td><span class="badge badge-media">Media</span></td><td><span class="badge badge-warn">Equipo interno</span></td><td>Comunicacion sustentabilidad / agua</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ============ SECCION 3: FICHAS ALTA PRIORIDAD ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">Fichas Detalladas — Alta Prioridad</div>
+        </div>
+
+        <p>Las siguientes 12 fichas desarrollan en detalle los prospectos con mayor urgencia comunicacional y mejor alineamiento con los servicios de Casa Gilda. Para cada uno se incluye el detonante especifico que justifica el contacto ahora.</p>
+
+        <!-- 1 Buk -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">1</div>
+                <div>
+                    <div class="ch-name">Buk</div>
+                    <div class="ch-web">buk.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">HR Tech</span>
+                    <span class="badge badge-none">Sin agencia PR</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Plataforma de gestion de personas y RRHH con <strong>700-900 empleados</strong>, mas de 2.500 empresas clientes en LATAM y respaldo de Greenoaks Capital (Serie B USD 50M). Presencia en Chile, Colombia, Peru, Mexico, Ecuador, Bolivia y Costa Rica. CEO Jaime Arrieta es vocero frecuente en foros de innovacion (Endeavor, CORFO, G20 YEA) sin agenda de medios estructurada ni agencia de PR.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> HR Tech / Software RRHH</li>
+                            <li><span class="k">Empleados:</span> 700-900</li>
+                            <li><span class="k">Financiamiento:</span> Serie B USD 50M (Greenoaks)</li>
+                            <li><span class="k">Mercados:</span> 7 paises LATAM</li>
+                            <li><span class="k">Detonante:</span> Lanzamiento IA en RRHH 2025-2026</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">CEO:</span> Jaime Arrieta</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/in/jaime-arrieta</li>
+                            <li><span class="k">Web:</span> buk.cl / formulario contacto</li>
+                            <li><span class="k">Equipo:</span> Gerencia de Marketing</li>
+                            <li><span class="k">Rec. entrada:</span> Contacto directo al CEO</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> El lanzamiento de funcionalidades de IA en RRHH es el momento noticiable del ano en el sector de gestion de personas — requiere cobertura coordinada en 5 paises y un CEO entrenado para ser el vocero del debate sobre "el futuro del trabajo". Jaime Arrieta tiene carisma y vision publica pero sin estructura de apoyo: candidato ideal para un programa de voceria de 6 meses + agenda de medios LATAM.</div>
+            </div>
+        </div>
+
+        <!-- 2 SURA Chile -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">2</div>
+                <div>
+                    <div class="ch-name">SURA Chile (AFP SURA + Seguros SURA)</div>
+                    <div class="ch-web">sura.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">AFP / Seguros</span>
+                    <span class="badge badge-none">Sin agencia local</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Grupo financiero colombiano con operaciones en Chile como <strong>AFP SURA</strong>, <strong>Seguros SURA</strong> e <strong>Inversiones SURA</strong>. Aproximadamente 2.000 empleados en Chile. La coordinacion de comunicaciones se hace desde la regional en Colombia, generando <strong>brechas evidentes en la narrativa local</strong>. AFP SURA esta en el centro del debate de reforma previsional, el conflicto politico mas relevante del entorno empresarial chileno en 2025-2026.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> AFP / Seguros / Inversiones</li>
+                            <li><span class="k">Empleados:</span> ~2.000 (Chile)</li>
+                            <li><span class="k">Matriz:</span> Grupo SURA, Colombia (BCS)</li>
+                            <li><span class="k">Agencia:</span> Coordinacion regional desde Colombia</li>
+                            <li><span class="k">Detonante:</span> Reforma previsional Chile 2025-2026</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Gerente Comunicaciones Chile</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/sura-chile</li>
+                            <li><span class="k">Web:</span> sura.cl (formulario corporativo)</li>
+                            <li><span class="k">Angulo:</span> Proyecto especifico: voceria reforma AFP</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> AFP SURA necesita urgentemente una agencia chilena que entienda el contexto politico local — la coordinacion desde Colombia no tiene la velocidad ni el contexto para reaccionar a los debates en La Moneda, el Senado y los medios locales. Propuesta: piloto de 3 meses para comunicacion de crisis + voceria del gerente general en Chile ante reforma previsional.</div>
+            </div>
+        </div>
+
+        <!-- 3 Consorcio -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">3</div>
+                <div>
+                    <div class="ch-name">Consorcio Nacional de Seguros</div>
+                    <div class="ch-web">consorcio.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Seguros / Finanzas</span>
+                    <span class="badge badge-none">Sin agencia PR visible</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Uno de los grupos financieros privados mas grandes de Chile (Familia Said), con operaciones en seguros de vida, seguros generales, AFP e inversiones. Aproximadamente 3.000 empleados. Empresa de <strong>perfil publico deliberadamente bajo</strong> que enfrenta hoy el mayor desafio regulatorio de su historia: la reforma previsional transformara radicalmente su mercado core de seguros de invalidez y las rentas vitalicias.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Seguros vida / AFP / Inversiones</li>
+                            <li><span class="k">Empleados:</span> ~3.000</li>
+                            <li><span class="k">Estructura:</span> Empresa familiar (Said)</li>
+                            <li><span class="k">Agencia PR:</span> Sin agencia visible</li>
+                            <li><span class="k">Detonante:</span> Reforma previsional</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Subgerente Comunicaciones</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/consorcio-chile</li>
+                            <li><span class="k">Web:</span> consorcio.cl</li>
+                            <li><span class="k">Angulo:</span> Asuntos publicos + voceria ejecutivos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> Consorcio es el actor privado con mas en juego en la reforma previsional y no tiene voz publica articulada. La narrativa "privados responsables que cuidan las pensiones de los chilenos" es una historia potente y urgente que nadie esta contando hoy. Casa Gilda puede convertirse en el socio estrategico que construye esa voz desde adentro.</div>
+            </div>
+        </div>
+
+        <!-- 4 NotCo -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">4</div>
+                <div>
+                    <div class="ch-name">NotCo</div>
+                    <div class="ch-web">notco.com</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">FoodTech / Unicornio</span>
+                    <span class="badge badge-warn">Posible gap de agencia</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Startup chilena de alimentos de origen vegetal con inteligencia artificial (plataforma "Giuseppe"). Unicornio valorado en USD 1.5B (2021) con USD 357M levantados (Tiger Global, Bezos, SoftBank, Kaszek). <strong>Reduccion de personal ~30-40% en 2023</strong> genero una crisis de imagen que redujo drasticamente la presencia mediatica del CEO Matias Muchnick — antes uno de los emprendedores mas visibles de LATAM. Hoy en proceso de foco en mercados rentables (Chile, Brasil, EEUU).</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> FoodTech / Plant-based</li>
+                            <li><span class="k">Empleados:</span> 500-800 (post-ajuste)</li>
+                            <li><span class="k">Valoracion:</span> USD 1.5B (unicornio)</li>
+                            <li><span class="k">Detonante:</span> Reposicionamiento urgente</li>
+                            <li><span class="k">Agencia PR:</span> Posiblemente sin agencia activa</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">CEO:</span> Matias Muchnick</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/in/matias-muchnick</li>
+                            <li><span class="k">Web:</span> notco.com</li>
+                            <li><span class="k">Angulo:</span> Auditoria de reputacion como puerta entrada</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> NotCo tiene el activo narrativo mas potente del ecosistema tech chileno — "tecnologia que puede cambiar como comemos el mundo" — pero ese activo esta dormido. Muchnick necesita recuperar su posicion como referente de impacto y NotCo necesita demostrar que no es solo un unicornio de moda. Casa Gilda puede ofrecer una auditoria de reputacion gratuita como primera conversacion.</div>
+            </div>
+        </div>
+
+        <!-- 5 Fintual -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">5</div>
+                <div>
+                    <div class="ch-name">Fintual</div>
+                    <div class="ch-web">fintual.com</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Fintech / Inversion</span>
+                    <span class="badge badge-none">Sin agencia PR</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Robo-advisor y plataforma de inversion automatizada, egresado de Y Combinator (W18). Activos bajo gestion estimados en USD 800M+. Opera en Chile, Mexico y Colombia con licencias regulatorias simultaneas. Fundadores (Pedro Pineda, Omar Larre, Andres Marinkovic) son <strong>voces publicas muy activas en Twitter/X y LinkedIn</strong> con audiencias de decenas de miles pero sin estructura de PR que potencie esa visibilidad en medios tradicionales y especializados.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Fintech / Robo-advisor</li>
+                            <li><span class="k">Empleados:</span> ~150-200</li>
+                            <li><span class="k">AUM:</span> USD 800M+</li>
+                            <li><span class="k">Mercados:</span> Chile, Mexico, Colombia</li>
+                            <li><span class="k">Agencia PR:</span> Ninguna identificada</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Fundador:</span> Omar Larre (vocero principal)</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/in/omarlarre</li>
+                            <li><span class="k">Fundador:</span> Pedro Pineda</li>
+                            <li><span class="k">Email:</span> hola@fintual.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> Fintual tiene fundadores que ya son influencers financieros en redes sociales — el paso natural es traducir esa influencia digital en presencia en medios impresos, radio y TV donde aun no tienen estructura. Con expansion simultanea en 3 mercados, necesitan una narrativa institucional diferenciada por pais. Propuesta: programa de voceria multicanal + agenda de medios en Chile, Mexico y Colombia.</div>
+            </div>
+        </div>
+
+        <!-- 6 Tenpo -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">6</div>
+                <div>
+                    <div class="ch-name">Tenpo</div>
+                    <div class="ch-web">tenpo.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Neobank</span>
+                    <span class="badge badge-none">Sin agencia PR editorial</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Billetera digital y neobank con 1M+ usuarios activos, respaldado por Credicorp (Peru, cap. bursatil ~USD 10B). Ha lanzado creditos de consumo, seguros basicos e inversiones, consolidandose como un <strong>"neobank completo"</strong> en un mercado ultra-competitivo frente a MACH (BCI), Mercado Pago y el Banco Estado Digital. Su comunicacion hoy es 100% publicidad pagada sin presencia editorial estructurada en medios.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Fintech / Neobank</li>
+                            <li><span class="k">Usuarios:</span> 1M+ activos</li>
+                            <li><span class="k">Respaldo:</span> Credicorp (Peru)</li>
+                            <li><span class="k">Agencia PR:</span> Sin PR editorial</li>
+                            <li><span class="k">Detonante:</span> Expansion productos financieros</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Gerente de Marketing</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/tenpo</li>
+                            <li><span class="k">Web:</span> tenpo.cl (formulario contacto)</li>
+                            <li><span class="k">Angulo:</span> Pitch diferenciacion editorial vs publicidad</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> En un mercado de billeteras donde todos hacen lo mismo (cashback, intereses, sin comisiones), la diferenciacion no viene de la publicidad sino de quien cuenta mejor la historia. Tenpo puede ser "el neobank que educara financieramente a Chile" — esa es una narrativa poderosa y aun no la tiene nadie. KPI propuesto: 20 notas en medios especializados en 90 dias.</div>
+            </div>
+        </div>
+
+        <!-- 7 SOFOFA -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">7</div>
+                <div>
+                    <div class="ch-name">SOFOFA</div>
+                    <div class="ch-web">sofofa.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Gremio Industrial</span>
+                    <span class="badge badge-warn">Equipo interno</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Federacion de industrias de Chile, representa ~7.000 empresas del sector manufacturero e industrial. Nuevo presidente <strong>Richard von Appen</strong> desde 2024. SOFOFA enfrenta simultaneamente la implementacion de la ley de 40 horas, el debate del royalty minero, las reformas ambiental y tributaria, y la necesidad urgente de reposicionar la imagen del sector industrial ante la opinion publica chilena en un contexto politico complejo.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Tipo:</span> Federacion gremial</li>
+                            <li><span class="k">Representacion:</span> ~7.000 empresas</li>
+                            <li><span class="k">Presidente:</span> Richard von Appen (2024)</li>
+                            <li><span class="k">Detonante:</span> Nuevo liderazgo + multiples reformas</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Direccion de Comunicaciones</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/sofofa</li>
+                            <li><span class="k">Web:</span> sofofa.cl</li>
+                            <li><span class="k">Angulo:</span> Programa voceria nuevo presidente</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> Richard von Appen es el nuevo rostro de la industria chilena y necesita posicionarse como lider de opinion relevante en los proximos 12 meses — antes de que el espacio lo ocupen otros actores del mundo gremial. Propuesta: programa de posicionamiento del presidente + agenda de medios para el debate de reformas con KPIs de presencia mediatica mensual.</div>
+            </div>
+        </div>
+
+        <!-- 8 CPC -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">8</div>
+                <div>
+                    <div class="ch-name">CPC — Confederacion de la Produccion y el Comercio</div>
+                    <div class="ch-web">cpc.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Confederacion empresarial</span>
+                    <span class="badge badge-warn">Equipo interno</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Paraguas de las 6 ramas gremiales del empresariado chileno (SOFOFA, CChC, SNA, CCHM, ABIF, CNC). Nuevo presidente <strong>Ricardo Mewes</strong> desde 2024. La CPC carga con la mayor deuda de reputacion del empresariado chileno post-estallido social de 2019 y necesita construir una narrativa de "empresariado como motor de desarrollo y empleo" que perme a la opinion publica general, no solo al mundo de negocios.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Tipo:</span> Confederacion gremial (6 ramas)</li>
+                            <li><span class="k">Presidente:</span> Ricardo Mewes (2024)</li>
+                            <li><span class="k">Contexto:</span> Reputacion del empresariado en minimos</li>
+                            <li><span class="k">Detonante:</span> Nuevo liderazgo + reformas estructurales</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Gerente Comunicaciones CPC</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/cpc-chile</li>
+                            <li><span class="k">Web:</span> cpc.cl</li>
+                            <li><span class="k">Angulo:</span> Reconstruccion narrativa empresariado</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> La CPC tiene el mayor desafio de comunicacion estrategica en el empresariado chileno: reconstruir la legitimidad del sector privado ante la ciudadania. Ricardo Mewes es el nuevo presidente con el mandato de lograrlo — necesita un socio estrategico que piense narrativa de largo plazo, no solo respuesta a contingencias. Casa Gilda encaja perfectamente por su DNA de comunicacion estrategica (no solo prensa reactiva).</div>
+            </div>
+        </div>
+
+        <!-- 9 Engie Chile -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">9</div>
+                <div>
+                    <div class="ch-name">Engie Chile</div>
+                    <div class="ch-web">engie-energia.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Energia / Renovable</span>
+                    <span class="badge badge-none">Sin agencia local permanente</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Filial chilena de Engie global (Paris, ENGI.PA), con ~1.000 empleados y ~2.200 MW de capacidad instalada. <strong>Lider en descarbonizacion del sistema electrico nacional</strong>: fue la primera en cerrar centrales de carbon y hoy desarrolla el proyecto de hidrogeno verde mas avanzado de Chile. Sin embargo, esta historia transformadora no llega a los medios chilenos con la fuerza que merece. La coordinacion de comunicaciones viene de Paris.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Generacion / Energia renovable</li>
+                            <li><span class="k">Empleados:</span> ~1.000 en Chile</li>
+                            <li><span class="k">Capacidad:</span> ~2.200 MW instalados</li>
+                            <li><span class="k">Agencia:</span> Sin agencia chilena permanente</li>
+                            <li><span class="k">Detonante:</span> Hidrogeno verde + descarbonizacion SEN</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Gerente Comunicaciones Chile</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/engie-chile</li>
+                            <li><span class="k">Web:</span> engie-energia.cl</li>
+                            <li><span class="k">Angulo:</span> Posicionamiento CEO como voz descarbonizacion</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> El pitch es tan claro que casi se escribe solo: "Engie lideró la descarbonizacion mas rapida de la historia de Chile — y nadie lo sabe." El CEO de Engie Chile deberia ser el vocero #1 del debate de transicion energetica en el pais, con agenda en CNN Chile, La Tercera y El Mercurio. Esa historia esta disponible para quien quiera contarla primero.</div>
+            </div>
+        </div>
+
+        <!-- 10 Falabella -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">10</div>
+                <div>
+                    <div class="ch-name">Falabella</div>
+                    <div class="ch-web">falabella.com</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Retail / Corporativo</span>
+                    <span class="badge badge-warn">Equipo interno + necesidad extra</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Conglomerado retail con ~60.000 empleados, ingresos ~USD 5-6B, presencia en 8 paises y cotizacion en BCS. Desde 2023 ejecuta la <strong>reestructuracion mas profunda de su historia</strong>: cierre de tiendas en Colombia y Argentina, ajuste de la division e-commerce (Falabella.com reporto perdidas), nuevo CEO y cambio de directorio. La comunicacion interna hacia 60.000 personas y la narrativa de transformacion hacia mercados de capitales son los dos frentes criticos.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Retail / Servicios financieros / RE</li>
+                            <li><span class="k">Empleados:</span> ~60.000 en LATAM</li>
+                            <li><span class="k">Ingresos:</span> ~USD 5-6B anuales</li>
+                            <li><span class="k">Detonante:</span> Reestructuracion masiva 2023-2026</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Gerencia Comunicaciones Corp.</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/falabella</li>
+                            <li><span class="k">Angulo:</span> Apoyo especializado a equipo interno</li>
+                            <li><span class="k">Rec.:</span> Proyecto especifico (no retainer inicial)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> Falabella tiene equipo interno robusto pero esta sobrepasado por la dimension del cambio: reestructuracion, nuevo CEO, ajuste en 3 paises simultaneamente. La entrada ideal es un proyecto especifico: programa de voceria del nuevo CEO (narrativa de transformacion) o plan de comunicacion interna para los 60.000 colaboradores. Pequeno proyecto que puede escalar.</div>
+            </div>
+        </div>
+
+        <!-- 11 Bupa Chile -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">11</div>
+                <div>
+                    <div class="ch-name">Bupa Chile</div>
+                    <div class="ch-web">bupa.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Isapre / Salud</span>
+                    <span class="badge badge-warn">Equipo interno bajo presion</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Isapre privada y red de salud con ~2.500 empleados en Chile, propiedad de Bupa global (britanica, privada). El sistema de isapres en Chile atraviesa la <strong>crisis mas grave de su historia</strong>: sentencias de la Corte Suprema, deficit millonario del sistema y debate sobre posibles rescates del Estado. Bupa es una de las isapres con mayor solidez financiera (respaldo de matriz), pero la crisis del sistema arrastra a todas por igual en la percepcion publica.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Isapre / Salud privada</li>
+                            <li><span class="k">Empleados:</span> ~2.500 en Chile</li>
+                            <li><span class="k">Matriz:</span> Bupa global (Reino Unido)</li>
+                            <li><span class="k">Detonante:</span> Crisis existencial sistema isapres</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Gerente Comunicaciones Bupa Chile</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/bupa-chile</li>
+                            <li><span class="k">Web:</span> bupa.cl</li>
+                            <li><span class="k">Angulo:</span> Diferenciacion "Bupa es distinta a las otras"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> Bupa necesita separar su narrativa del resto del sistema: "Bupa tiene el respaldo de una compania global que ha sobrevivido crisis de salud en 190 paises — su isapre no esta en riesgo." Esa diferenciacion requiere comunicacion de crisis sofisticada y voceros bien entrenados. Casa Gilda puede ofrecer un programa de crisis communications de 6 meses con KPIs de percepcion.</div>
+            </div>
+        </div>
+
+        <!-- 12 Clinica Alemana -->
+        <div class="company">
+            <div class="company-head">
+                <div class="company-rank">12</div>
+                <div>
+                    <div class="ch-name">Clinica Alemana de Santiago</div>
+                    <div class="ch-web">clinicaalemana.cl</div>
+                </div>
+                <div class="ch-badges">
+                    <span class="badge badge-alta">Alta Prioridad</span>
+                    <span class="badge badge-sector">Salud privada</span>
+                    <span class="badge badge-none">Sin agencia PR externa</span>
+                </div>
+            </div>
+            <div class="company-body">
+                <p>Una de las dos clinicas privadas de mayor prestigio en Chile, con ~5.000 empleados y modelo de fundacion sin fines de lucro. Cuenta con historia de innovacion en medicina de precision, genomica y telemedicina que <strong>rara vez llega a los medios masivos</strong>. La crisis del sistema de isapres, paradojicamente, es una oportunidad: muchos pacientes buscan certezas y Clinica Alemana puede ser el ancla de confianza en salud privada en Chile.</p>
+                <div class="company-grid">
+                    <div class="info-block">
+                        <h5>Perfil</h5>
+                        <ul>
+                            <li><span class="k">Sector:</span> Salud privada (fundacion)</li>
+                            <li><span class="k">Empleados:</span> ~5.000</li>
+                            <li><span class="k">Modelo:</span> Sin fines de lucro</li>
+                            <li><span class="k">Agencia PR:</span> Sin agencia externa permanente</li>
+                            <li><span class="k">Detonante:</span> Crisis isapres + competencia</li>
+                        </ul>
+                    </div>
+                    <div class="info-block contact-block">
+                        <h5>Contacto Sugerido</h5>
+                        <ul>
+                            <li><span class="k">Entrada:</span> Departamento Comunicaciones</li>
+                            <li><span class="k">LinkedIn:</span> linkedin.com/company/clinica-alemana</li>
+                            <li><span class="k">Web:</span> clinicaalemana.cl</li>
+                            <li><span class="k">Angulo:</span> Historia innovacion medica en medios</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="angle"><strong>Angulo de entrada para Casa Gilda:</strong> Clinica Alemana realiza procedimientos pioneros en Chile que nunca llegan a los medios porque no tienen un equipo de PR que los procese. Un solo caso de medicina de precision bien contado en La Tercera o El Mercurio Salud vale mas que meses de publicidad. Propuesta: programa de voceria medica + agenda editorial de innovacion en salud.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 4: FICHAS COMPACTAS ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">Fichas Compactas — Alta, Media-Alta y Media</div>
+        </div>
+
+        <h3>Prioridad Alta — Fichas complementarias (#13 al #16)</h3>
+
+        <!-- 13 MetLife Chile -->
+        <div class="company-compact">
+            <div class="cc-rank">13</div>
+            <div class="cc-info">
+                <div class="cc-name">MetLife Chile</div>
+                <div class="cc-meta">Seguros de vida e invalidez — Filial MetLife global (NYSE: MET) — ~500-800 empleados Chile</div>
+                <div class="cc-why">Reforma previsional transforma radicalmente su mercado core: el seguro de invalidez y sobrevivencia (SIS) que licita el Estado. Como multinacional coordinada desde Nueva York, no tiene agencia chilena con contexto politico local — brecha critica en el debate mas importante de la decada para el sector seguros.</div>
+                <div class="cc-services">Servicios: Comunicacion estrategica (reforma SIS) · Voceria ejecutivos Chile · Asuntos publicos</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-alta">Alta</span></div>
+        </div>
+
+        <!-- 14 RedSalud -->
+        <div class="company-compact">
+            <div class="cc-rank">14</div>
+            <div class="cc-info">
+                <div class="cc-name">RedSalud (Grupo Banmedica / UnitedHealth)</div>
+                <div class="cc-meta">Red de clinicas privadas (Clinica Tabancura, Santa Maria, Bicentenario) — ~8.000 empleados</div>
+                <div class="cc-why">Crisis de isapres impacta directamente al grupo (Banmedica tiene isapre propia). Demandas de pacientes, conflictos con la Superintendencia de Salud y ajuste de coberturas generan exposicion mediatica constante. La narrativa de "red de calidad que cuida a sus pacientes incluso en crisis del sistema" requiere soporte profesional urgente.</div>
+                <div class="cc-services">Servicios: Comunicacion de crisis · Posicionamiento y prensa · Voceria directores medicos</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-alta">Alta</span></div>
+        </div>
+
+        <!-- 15 Ripley -->
+        <div class="company-compact">
+            <div class="cc-rank">15</div>
+            <div class="cc-info">
+                <div class="cc-name">Ripley Chile (Banco Ripley + Chek)</div>
+                <div class="cc-meta">Retail + Servicios financieros — Familia Calderon — ~15.000 empleados — Cotiza en BCS</div>
+                <div class="cc-why">Ripley vive una transformacion silenciosa: el Banco Ripley ya supera a las tiendas fisicas en ingresos, y Chek es la app de pagos con mayor crecimiento del retail financiero chileno. Pero nadie cuenta esa historia. La narrativa "Ripley ya no es solo el retail — es una empresa de servicios financieros con 15M de clientes" aun no existe en los medios.</div>
+                <div class="cc-services">Servicios: Posicionamiento y prensa (Chek / Banco Ripley) · Comunicacion estrategica · Voceria CEO</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-alta">Alta</span></div>
+        </div>
+
+        <!-- 16 Codelco -->
+        <div class="company-compact">
+            <div class="cc-rank">16</div>
+            <div class="cc-info">
+                <div class="cc-name">Codelco</div>
+                <div class="cc-meta">Mineria del cobre — Empresa publica del Estado — ~27.000 empleados directos — Mayor productor de cobre del mundo</div>
+                <div class="cc-why">Nuevo rol en litio (asignado para administrar SQM), crisis de produccion consecutiva y cambio de CEO en 2024 generan tres frentes comunicacionales activos. Su gerencia de comunicaciones interna es grande pero en momentos de alto impacto (licitaciones, conflictos laborales, proyectos de expansion) contratan apoyo externo especializado.</div>
+                <div class="cc-services">Servicios: Comunicacion estrategica (proyecto litio) · Voceria · Comunicacion comunitaria Rajo Inca</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-alta">Alta</span></div>
+        </div>
+
+        <h3>Prioridad Media-Alta (#17 al #23)</h3>
+
+        <!-- 17 Xepelin -->
+        <div class="company-compact">
+            <div class="cc-rank">17</div>
+            <div class="cc-info">
+                <div class="cc-name">Xepelin</div>
+                <div class="cc-meta">Fintech B2B — Factoring y capital de trabajo para PYMES — Serie B USD 111M — ~400 empleados (post-ajuste)</div>
+                <div class="cc-why">Reestructuracion de equipo en 2023 afecto imagen de empresa. Hoy en modo de consolidacion y busqueda de rentabilidad, con Mexico como mercado prioritario. Preparacion para posible nueva ronda o evento de liquidez — donde la reputacion institucional es prerequisito. Sin agencia PR identificada.</div>
+                <div class="cc-services">Servicios: Reposicionamiento post-ajuste · Comunicacion estrategica · Voceria fundadores</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <!-- 18 Antofagasta Minerals -->
+        <div class="company-compact">
+            <div class="cc-rank">18</div>
+            <div class="cc-info">
+                <div class="cc-name">Antofagasta Minerals (Grupo Luksic)</div>
+                <div class="cc-meta">Mineria cobre privada — Cotiza en Londres (ANTO.L) — ~5.000 empleados — Minas Los Pelambres, Centinela, Antucoya</div>
+                <div class="cc-why">Expansion de Los Pelambres (Segunda Fase) requiere comunicacion con comunidades del Valle del Choapa, una zona sensible historicamente. Brunswick Group maneja IR en Londres pero la comunicacion comunitaria en Chile requiere una agencia con enfoque local y narrativa en espanol para stakeholders rurales y municipios.</div>
+                <div class="cc-services">Servicios: Comunicacion comunitaria Los Pelambres · Asuntos corporativos ESG · Posicionamiento y prensa</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <!-- 19 Colbun -->
+        <div class="company-compact">
+            <div class="cc-rank">19</div>
+            <div class="cc-info">
+                <div class="cc-name">Colbun</div>
+                <div class="cc-meta">Generacion electrica (hidro, solar, eolica) — Grupo Matte — Cotiza en BCS — ~1.200 empleados</div>
+                <div class="cc-why">Sequias severas han golpeado la generacion hidroelectrica y el alza de tarifas electrica pone a Colbun regularmente en los medios en una posicion defensiva. Expansion en renovables y almacenamiento de energia son historias positivas que no estan siendo contadas. Sin agencia permanente visible.</div>
+                <div class="cc-services">Servicios: Comunicacion estrategica · Posicionamiento y prensa · Voceria CEO en debate energetico</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <!-- 20 Clinica Las Condes -->
+        <div class="company-compact">
+            <div class="cc-rank">20</div>
+            <div class="cc-info">
+                <div class="cc-name">Clinica Las Condes</div>
+                <div class="cc-meta">Salud privada universitaria — ~4.000 empleados — Asociada a investigacion U. de Chile</div>
+                <div class="cc-why">Competencia directa con Clinica Alemana: sin diferenciacion comunicacional clara, ambas pelean por el mismo paciente de alto poder adquisitivo. CLC tiene una linea de investigacion clinica e innovacion medica potente que no se esta comunicando. Crisis de isapres genera un contexto donde la comunicacion de calidad y confianza es critica.</div>
+                <div class="cc-services">Servicios: Posicionamiento y prensa · Voceria especialistas medicos · Comunicacion institucional</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <!-- 21 FASA -->
+        <div class="company-compact">
+            <div class="cc-rank">21</div>
+            <div class="cc-info">
+                <div class="cc-name">Farmacias Ahumada (FASA) — Grupo Femsa</div>
+                <div class="cc-meta">Farmacia retail — 500+ locales — ~8.000 empleados — Grupo Femsa (NYSE: FMX)</div>
+                <div class="cc-why">El debate sobre precios de medicamentos en Chile es permanente y las cadenas de farmacias estan siempre en el ojo del huracan. FASA necesita una narrativa que las repositione como "punto de salud accesible" (teleconsulta, vacunas, dermofarmacia) y no solo como punto de venta de remedios. Grupo Femsa tiene agenda ESG global que requiere adaptacion local.</div>
+                <div class="cc-services">Servicios: Posicionamiento y prensa · Comunicacion estrategica · Branding de servicios de salud</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <!-- 22 Acti Chile -->
+        <div class="company-compact">
+            <div class="cc-rank">22</div>
+            <div class="cc-info">
+                <div class="cc-name">Acti Chile (Asociacion Chilena de Empresas de Tecnologia)</div>
+                <div class="cc-meta">Gremio tecnologico — ~100 empresas miembro (Microsoft, IBM, SAP + tech chilenas) — Presidenta Bernardita Agurto</div>
+                <div class="cc-why">La nueva Ley de Proteccion de Datos Personales y la irrupcion de la IA generativa ponen a Acti en el mejor momento de su historia para ser LA voz del sector tech en Chile ante gobierno, medios y ciudadania. Bernardita Agurto como nueva presidenta necesita posicionamiento como lider de opinion desde cero. Sin agencia PR permanente.</div>
+                <div class="cc-services">Servicios: Comunicacion estrategica · Voceria presidenta · Asuntos publicos (IA y datos)</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <!-- 23 Vina Concha y Toro -->
+        <div class="company-compact">
+            <div class="cc-rank">23</div>
+            <div class="cc-info">
+                <div class="cc-name">Vina Concha y Toro</div>
+                <div class="cc-meta">Alimentos / Vitivinicultura — Cotiza en BCS y NYSE — ~4.500 empleados — Exporta a 150 paises</div>
+                <div class="cc-why">El cambio climatico esta modificando la viticultura chilena — Concha y Toro adapta sus vinoedos a nuevas condiciones y esa historia de sostenibilidad e innovacion enologica tiene audiencias en medios internacionales. La narrativa de "vino chileno ante el cambio climatico" es un tema de primera plana en medios especializados globales que requiere soporte comunicacional profesional.</div>
+                <div class="cc-services">Servicios: Posicionamiento y prensa ESG · Comunicacion cambio climatico · Voceria enologos y sostenibilidad</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media-alta">Media-Alta</span></div>
+        </div>
+
+        <h3>Prioridad Media — Seguimiento (#24 al #28)</h3>
+
+        <!-- 24 Betterfly -->
+        <div class="company-compact">
+            <div class="cc-rank">24</div>
+            <div class="cc-info">
+                <div class="cc-name">Betterfly</div>
+                <div class="cc-meta">Insurtech / Bienestar corporativo — Unicornio USD 1B — ~1.000 empleados — 10 paises (Chile a Espana)</div>
+                <div class="cc-why">Unicornio con expansion en Europa (Espana y Portugal) y 1.000+ personas en 10 paises. Comunicacion interna a esa escala y diversidad geografica es un desafio de primer orden. CEO Eduardo della Maggiora es vocero ESG de perfil alto en LATAM pero con agenda desordenada. Preparacion narrativa para eventual IPO.</div>
+                <div class="cc-services">Servicios: Comunicacion interna multinacional · Voceria CEO en agenda ESG · Comunicacion estrategica</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media">Media</span></div>
+        </div>
+
+        <!-- 25 BCI / MACH -->
+        <div class="company-compact">
+            <div class="cc-rank">25</div>
+            <div class="cc-info">
+                <div class="cc-name">BCI (Banco de Credito e Inversiones) / MACH</div>
+                <div class="cc-meta">Banca — Familia Yarur — ~14.000 empleados — MACH: 5M+ usuarios, la billetera digital mas grande de Chile</div>
+                <div class="cc-why">MACH es la billetera digital mas exitosa de Chile pero su comunicacion es 100% publicidad pagada. Una estrategia editorial propia (educacion financiera, historias de uso real, posicionamiento de marca) diferenciaria a MACH de Tenpo y Mercado Pago de forma mas sostenible que la guerra de cashback.</div>
+                <div class="cc-services">Servicios: Posicionamiento MACH como marca editorial · Comunicacion estrategica · Branding</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media">Media</span></div>
+        </div>
+
+        <!-- 26 Santander Chile -->
+        <div class="company-compact">
+            <div class="cc-rank">26</div>
+            <div class="cc-info">
+                <div class="cc-name">Santander Chile (Openbank / GetNet)</div>
+                <div class="cc-meta">Banca — Filial Santander global — ~9.000 empleados — Cotiza en BCS</div>
+                <div class="cc-why">Santander tiene agencias globales (LLYC, Hill+Knowlton) para la marca corporativa, pero el lanzamiento de Openbank (neobank digital de Santander en Chile, 2024-2025) y la construccion de marca GetNet (adquirencia digital) requieren comunicacion diferenciada y agil que las agencias globales no pueden proveer con la velocidad que exige el mercado fintech chileno.</div>
+                <div class="cc-services">Servicios: Posicionamiento Openbank · Branding GetNet · Comunicacion estrategica proyectos digitales</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media">Media</span></div>
+        </div>
+
+        <!-- 27 Houm -->
+        <div class="company-compact">
+            <div class="cc-rank">27</div>
+            <div class="cc-info">
+                <div class="cc-name">Houm</div>
+                <div class="cc-meta">Proptech — Plataforma de arriendo y compraventa — Serie A USD 35M (Headline, Kaszek) — Chile + Colombia</div>
+                <div class="cc-why">Mercado de arriendos en auge historico en Chile por caida de compraventa (tasas altas) y Houm es el referente digital del sector pero no tiene voz editorial clara. La narrativa "el mercado de arriendos nunca fue tan grande y Houm lo esta modernizando" es una oportunidad para posicionarse como lider de opinion en proptech chileno. Sin agencia PR identificada.</div>
+                <div class="cc-services">Servicios: Posicionamiento y prensa · Comunicacion estrategica · Branding como lider proptech</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media">Media</span></div>
+        </div>
+
+        <!-- 28 CCU -->
+        <div class="company-compact">
+            <div class="cc-rank">28</div>
+            <div class="cc-info">
+                <div class="cc-name">CCU (Compania Cervecerias Unidas)</div>
+                <div class="cc-meta">Alimentos / Bebidas — Cotiza en BCS y NYSE — ~10.000 empleados — Operacion en Chile, Argentina, Bolivia, Uruguay, Paraguay</div>
+                <div class="cc-why">CCU enfrenta regulacion sobre contenido de alcohol en publicidad, agenda de sustentabilidad de agua (sus procesos son intensivos en uso de agua en zonas de estres hidrico) y comunicacion ante consumidores de nuevas generaciones que prefieren bebidas sin alcohol. La narrativa ESG y de responsabilidad hidrica de CCU requiere soporte profesional para medios.</div>
+                <div class="cc-services">Servicios: Comunicacion sustentabilidad / agua · Posicionamiento y prensa ESG · Comunicacion estrategica</div>
+            </div>
+            <div class="cc-badge"><span class="badge badge-media">Media</span></div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 5: ANALISIS POR SECTOR ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">Analisis por Sector</div>
+        </div>
+
+        <p>Cada sector presenta un driver comunicacional distinto que define el tipo de servicio que Casa Gilda debe proponer como "primer conversacion". El score de oportunidad refleja la urgencia + el gap de PR + el alineamiento con el portafolio de servicios.</p>
+
+        <div class="sector-grid">
+            <div class="sector-card">
+                <div class="sc-icon">💡</div>
+                <div class="sc-name">Tecnologia / Fintech / Startups</div>
+                <div class="sc-count">8</div>
+                <div class="sc-desc">Primera generacion de unicornios chilenos sin cultura de PR. Expuestos a competencia intensa y contexto regulatorio cambiante. Fundadores con alta visibilidad digital sin respaldo de medios tradicionales.</div>
+                <div class="sc-top">Top prospecto: Buk (IA en RRHH) · Fintual (expansion 3 paises) · NotCo (reposicionamiento)</div>
+            </div>
+            <div class="sector-card">
+                <div class="sc-icon">🏛️</div>
+                <div class="sc-name">Seguros, AFP y Banca</div>
+                <div class="sc-count">6</div>
+                <div class="sc-desc">Sector bajo la mayor presion regulatoria y publica de los ultimos 20 anos: reforma previsional + crisis de isapres. Comunicacion de crisis es urgente y permanente. Las multinacionales del sector no tienen agencias locales con contexto politico chileno.</div>
+                <div class="sc-top">Top prospecto: SURA Chile (reforma AFP) · Consorcio (narrativa privados) · MetLife (SIS)</div>
+            </div>
+            <div class="sector-card">
+                <div class="sc-icon">🏥</div>
+                <div class="sc-name">Salud (Clinicas y Farmacias)</div>
+                <div class="sc-count">5</div>
+                <div class="sc-desc">Crisis del sistema de isapres obliga a clinicas privadas a diferenciarse y a las isapres a comunicar solidez. Innovacion medica (precision, genomica, telemedicina) son historias editoriales de primer orden que nadie esta contando profesionalmente.</div>
+                <div class="sc-top">Top prospecto: Bupa Chile (crisis isapres) · Clinica Alemana (innovacion medica) · RedSalud</div>
+            </div>
+            <div class="sector-card">
+                <div class="sc-icon">⚡</div>
+                <div class="sc-name">Energia y Mineria</div>
+                <div class="sc-count">5</div>
+                <div class="sc-desc">Transicion energetica y auge del litio posicionan a Chile como protagonista de la narrativa global de descarbonizacion — pero las empresas del sector no tienen comunicacion a la altura de su rol. Conflictos comunitarios requieren comunicacion estrategica local.</div>
+                <div class="sc-top">Top prospecto: Engie Chile (hidrogeno verde) · Codelco (litio) · Colbun (sequia/tarifas)</div>
+            </div>
+            <div class="sector-card">
+                <div class="sc-icon">🤝</div>
+                <div class="sc-name">Gremios y Asociaciones</div>
+                <div class="sc-count">3</div>
+                <div class="sc-desc">Nuevos presidentes en SOFOFA y CPC (2024) buscan reposicionar el empresariado ante la opinion publica post-estallido. Acti tiene el mejor momento de su historia para ser la voz tech de Chile ante gobierno y ciudadania. Sin agencias PR en ningun caso.</div>
+                <div class="sc-top">Top prospecto: CPC (reputacion empresariado) · SOFOFA (nuevo presidente) · Acti (IA)</div>
+            </div>
+            <div class="sector-card">
+                <div class="sc-icon">🛍️</div>
+                <div class="sc-name">Retail, Alimentos y Otros</div>
+                <div class="sc-count">7</div>
+                <div class="sc-desc">Retail en reestructuracion (Falabella, Ripley) necesita narrativa de transformacion. Alimentos (Concha y Toro, CCU) enfrentan agenda ESG y sostenibilidad. Proptech (Houm) tiene una oportunidad editorial en el mercado de arriendos historicamente alto.</div>
+                <div class="sc-top">Top prospecto: Falabella (nuevo CEO) · Ripley/Chek (neofinance) · Vina Concha y Toro (ESG)</div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Insight estrategico para Casa Gilda</strong>
+            El mercado chileno de comunicaciones estrategicas esta en un momento de demanda alta — pero la mayoria de las empresas aun no lo sabe. El rol de Casa Gilda no es solo responder a quien pida ayuda, sino <strong>activar la demanda latente</strong> mostrando a estos prospectos el costo de no comunicar estrategicamente hoy.
+        </div>
+    </div>
+
+    <!-- ============ SECCION 6: PLAN DE CONTACTO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            <div class="section-title">Plan de Contacto Priorizado</div>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-alta">Fase 1 — Semanas 1-4: Alta Prioridad, Contacto Inmediato</span>
+            <p>Empresas con detonante activo hoy. Entrar con una propuesta especifica, no un catalogo de servicios.</p>
+            <ul>
+                <li><strong>Buk:</strong> Propuesta de voceria + agenda de medios en contexto de lanzamiento IA. Contacto: CEO Jaime Arrieta via LinkedIn.</li>
+                <li><strong>SURA Chile:</strong> Piloto de 3 meses comunicacion de crisis + voceria local ante reforma previsional. Contacto: Gerente Comunicaciones Chile.</li>
+                <li><strong>NotCo:</strong> Ofrecer auditoria de reputacion gratuita como puerta de entrada. Contacto: CEO Matias Muchnick via LinkedIn.</li>
+                <li><strong>Fintual:</strong> Programa de voceria multicanal + agenda de medios LATAM. Contacto: Omar Larre / Pedro Pineda via LinkedIn o email hola@fintual.com.</li>
+                <li><strong>Engie Chile:</strong> Pitch especifico: "Engie lideró la descarbonizacion mas rapida de Chile y nadie lo sabe". Contacto: Gerente Comunicaciones.</li>
+                <li><strong>SOFOFA / CPC:</strong> Programa de posicionamiento del nuevo presidente (6 meses). Contactar ambos por separado en semanas consecutivas.</li>
+                <li><strong>Consorcio:</strong> Propuesta de asuntos publicos + voceria ante reforma previsional. Contacto: Subgerente Comunicaciones.</li>
+                <li><strong>Bupa Chile:</strong> Programa de crisis communications + diferenciacion ante otras isapres. Contacto: Gerente Comunicaciones.</li>
+            </ul>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-media-alta">Fase 2 — Semanas 5-8: Media-Alta, Prospecto Activo</span>
+            <p>Empresas con necesidad identificada pero sin urgencia inmediata. Contactar con propuestas de proyecto especifico.</p>
+            <ul>
+                <li><strong>Tenpo:</strong> Pitch: "Tu marca vale mas que tu cashback." Propuesta de posicionamiento editorial.</li>
+                <li><strong>Clinica Alemana:</strong> Propuesta de programa de voceria medica + agenda editorial de innovacion en salud.</li>
+                <li><strong>MetLife Chile / Falabella / RedSalud:</strong> Contactar gerencias de comunicaciones con propuesta de proyectos especificos complementarios al equipo interno.</li>
+                <li><strong>Xepelin:</strong> Reposicionamiento narrativo post-ajuste + preparacion para nueva ronda.</li>
+                <li><strong>Acti Chile:</strong> Programa de advocacy IA + Ley de Datos Personales para nueva presidenta.</li>
+                <li><strong>Antofagasta Minerals:</strong> Propuesta especifica de comunicacion comunitaria Los Pelambres (complementa a Brunswick Group).</li>
+            </ul>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-media">Fase 3 — Mes 2-3: Media, Seguimiento Progresivo</span>
+            <p>Empresas con oportunidad latente que puede madurar en los proximos meses. Mantener presencia sin presionar.</p>
+            <ul>
+                <li><strong>Ripley Chile / BCI-MACH:</strong> Propuesta de posicionamiento de marca digital (Chek o MACH como marca editorial).</li>
+                <li><strong>Colbun / Codelco:</strong> Propuesta de proyecto especifico: voceria en debate energetico / comunicacion proyecto litio.</li>
+                <li><strong>Vina Concha y Toro / CCU:</strong> Propuesta de programa ESG y sustentabilidad para medios especializados.</li>
+                <li><strong>Betterfly / Houm:</strong> Propuesta de comunicacion interna o posicionamiento de CEO.</li>
+            </ul>
+        </div>
+
+        <h3>Angulos de pitch por tipo de empresa</h3>
+        <table>
+            <thead>
+                <tr><th>Tipo de empresa</th><th>Mensaje de apertura recomendado</th><th>Primer servicio</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Startups y unicornios sin agencia</td>
+                    <td>"Tienen el producto — nosotros les damos la narrativa que abre puertas que el producto solo no puede abrir."</td>
+                    <td>Programa voceria CEO</td>
+                </tr>
+                <tr>
+                    <td>Unicornios en reposicionamiento</td>
+                    <td>"Una auditoria gratuita de reputacion para identificar la brecha entre como los ven y como deberian verlos."</td>
+                    <td>Auditoria de reputacion</td>
+                </tr>
+                <tr>
+                    <td>Empresas en crisis activa</td>
+                    <td>"No podemos elegir cuando vienen las crisis — pero si podemos elegir como llegar a ellas preparados."</td>
+                    <td>Plan de crisis communications</td>
+                </tr>
+                <tr>
+                    <td>Gremios con nuevo liderazgo</td>
+                    <td>"El primer ano de un presidente gremial define como lo recordara el sector por los proximos tres. Construyamos esa narrativa juntos."</td>
+                    <td>Programa posicionamiento presidencial</td>
+                </tr>
+                <tr>
+                    <td>Energia y mineria</td>
+                    <td>"Hay una historia que Chile necesita escuchar sobre lo que ustedes estan haciendo — y el momento de contarla es ahora."</td>
+                    <td>Posicionamiento y prensa especializada</td>
+                </tr>
+                <tr>
+                    <td>Grandes empresas con equipo interno</td>
+                    <td>"Somos el soporte estrategico que complementa a su equipo en los momentos donde la velocidad y el pensamiento externo marcan la diferencia."</td>
+                    <td>Proyecto especifico como piloto</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Siguientes pasos operativos</h3>
+        <ol>
+            <li>Priorizar 5 prospectos de Fase 1 y preparar propuestas personalizadas (una pagina) para cada uno con KPIs especificos y precio estimado de piloto.</li>
+            <li>Activar presencia en LinkedIn de Casa Gilda con contenido de valor para los sectores identificados (posts sobre reforma previsional, IA en RRHH, descarbonizacion) que generen inbound antes del contacto outbound.</li>
+            <li>Preparar un deck de "casos de negocio" para cada sector que muestre el costo de no comunicar estrategicamente (perdida de oportunidades narrativas, cobertura mediatica negativa, credibilidad erosionada).</li>
+            <li>Establecer un protocolo de seguimiento de 6 semanas para cada prospecto contactado: 1er contacto → propuesta → seguimiento → decision.</li>
+            <li>Revisar este pipeline mensualmente y actualizar prioridades segun cambios de contexto (nuevas reformas, elecciones, lanzamientos, crisis).</li>
+        </ol>
+
+        <div class="alert alert-success">
+            <strong>Oportunidad de mercado: score 87/100</strong>
+            El mercado chileno de comunicacion estrategica esta en un punto de inflexion. La concentracion de crisis regulatorias simultaneas (reforma previsional + sistema isapres + ley 40 horas + nueva ley de datos), el boom de startups con fundadores-influencers sin estructura de PR, y la necesidad de gremios empresariales de reconstruir narrativa publica configuran la tormenta perfecta para una agencia boutique de comunicacion estrategica como Casa Gilda.
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Prospeccion de clientes potenciales para Casa Gilda Comunicaciones — casagildacomunicaciones.com</p>
+        <p>Datos compilados a partir de investigacion de fuentes publicas, medios de prensa chilenos y plataformas profesionales al 22 de junio de 2026. La presencia o ausencia de agencia PR de cada empresa debe verificarse antes del contacto, ya que las relaciones comerciales pueden haber cambiado. Los datos de contacto son referencias sugeridas y deben confirmarse al momento de iniciar el acercamiento comercial.</p>
+    </div>
+
+</div>
+</body>
+</html>
