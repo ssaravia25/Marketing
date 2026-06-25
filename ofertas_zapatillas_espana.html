@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ofertas Zapatillas Deportivas - Espana - Junio 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #1a1a2e; }
+
+/* PORTADA */
+.cover {
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #fff;
+  padding: 3rem 2rem 4rem;
+  text-align: center;
+}
+.cover .badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #e65100, #ff8a50);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .4rem 1.2rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+.cover h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: .8rem;
+}
+.cover h1 span { color: #ff8a50; }
+.cover p.sub { font-size: 1rem; color: #90a4ae; margin-bottom: 2.5rem; }
+.criteria-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .8rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.crit-chip {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: .7rem 1.2rem;
+  font-size: .88rem;
+}
+.crit-chip strong { display: block; font-size: .7rem; color: #ff8a50; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; }
+
+/* CONTAINER */
+.container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+/* STATS BAR */
+.stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.stat-card {
+  flex: 1;
+  min-width: 140px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  text-align: center;
+}
+.stat-card .num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #e65100;
+  line-height: 1;
+  margin-bottom: .3rem;
+}
+.stat-card .lbl { font-size: .78rem; color: #64748b; text-transform: uppercase; letter-spacing: .06em; }
+
+/* DISCLAIMER */
+.disclaimer {
+  background: #fff3e0;
+  border-left: 4px solid #ff8a50;
+  border-radius: 8px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2rem;
+  font-size: .87rem;
+  color: #6d4c41;
+}
+.disclaimer strong { color: #e65100; }
+
+/* SECCION */
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #e65100 0%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* TABLA MAESTRA */
+.table-wrap { overflow-x: auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); margin-bottom: 2.5rem; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 820px; }
+th {
+  background: #1a1a2e;
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 1rem 1.2rem;
+  text-align: left;
+}
+th:first-child { border-radius: 16px 0 0 0; }
+th:last-child { border-radius: 0 16px 0 0; }
+td { padding: .9rem 1.2rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafbfc; }
+
+.tienda-badge {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: .25rem .7rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.t-jd    { background: #fff0e6; color: #e65100; }
+.t-fl    { background: #e8f4fd; color: #1565c0; }
+.t-courir { background: #e8f5e9; color: #2e7d32; }
+.t-nb    { background: #f3e5f5; color: #7b1fa2; }
+.t-dec   { background: #e0f2f1; color: #00695c; }
+
+.marca-modelo { font-weight: 600; color: #1a1a2e; display: block; }
+.sub-info { font-size: .78rem; color: #64748b; margin-top: .15rem; }
+
+.precio-orig { text-decoration: line-through; color: #94a3b8; font-size: .88rem; }
+.precio-oferta { font-weight: 700; font-size: 1.05rem; color: #1a1a2e; }
+
+.badge-desc {
+  display: inline-block;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: .3rem .7rem;
+  border-radius: 8px;
+  color: #fff;
+}
+.desc-high  { background: #c62828; } /* 55%+ */
+.desc-mid   { background: #e65100; } /* 40-54% */
+.desc-low   { background: #f57c00; } /* 25-39% */
+.desc-ok    { background: #388e3c; } /* <25% */
+
+.color-dot {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid #cbd5e1;
+  margin-right: .3rem;
+  vertical-align: middle;
+}
+.c-blanco { background: #fff; }
+.c-gris   { background: #90a4ae; border-color: #90a4ae; }
+.c-cream  { background: #f5f0e8; }
+
+.talla-ok   { color: #2e7d32; font-weight: 600; font-size: .82rem; }
+.talla-prob { color: #f57c00; font-weight: 600; font-size: .82rem; }
+
+.btn-link {
+  display: inline-block;
+  background: linear-gradient(90deg, #e65100, #ff8a50);
+  color: #fff;
+  text-decoration: none;
+  font-size: .78rem;
+  font-weight: 600;
+  padding: .4rem .9rem;
+  border-radius: 7px;
+  white-space: nowrap;
+  transition: opacity .2s;
+}
+.btn-link:hover { opacity: .85; }
+
+/* SECCION TIENDAS */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+.store-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  border-left: 4px solid #e65100;
+}
+.store-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .3rem; }
+.store-card p { font-size: .85rem; color: #64748b; margin-bottom: .8rem; line-height: 1.5; }
+.store-card a { font-size: .82rem; color: #e65100; font-weight: 600; text-decoration: none; }
+.store-card a:hover { text-decoration: underline; }
+.store-meta { font-size: .75rem; color: #94a3b8; margin-top: .5rem; }
+.store-meta span { font-weight: 700; color: #475569; }
+
+/* CONSEJO */
+.tip-box {
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+.tip-box h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #ff8a50; }
+.tip-box ul { padding-left: 1.2rem; }
+.tip-box li { font-size: .9rem; color: #cfd8dc; margin-bottom: .5rem; line-height: 1.5; }
+.tip-box li strong { color: #fff; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: .78rem;
+  color: #94a3b8;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .cover { padding: 2rem 1rem 3rem; }
+  .cover h1 { font-size: 1.6rem; }
+  .container { padding: 1.5rem 1rem; }
+  .stats-bar { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div class="badge">Cazador de Ofertas · Espana</div>
+  <h1>Zapatillas Deportivas<br><span>Ofertas &amp; Rebajas</span></h1>
+  <p class="sub">Busqueda de descuentos reales en tiendas online que envian a Espana</p>
+  <div class="criteria-grid">
+    <div class="crit-chip"><strong>Tipo</strong>Zapatillas deportivas / sneakers</div>
+    <div class="crit-chip"><strong>Talla</strong>10 US &mdash; 43 EU</div>
+    <div class="crit-chip"><strong>Colores</strong>Blancas · Grises</div>
+    <div class="crit-chip"><strong>Mercado</strong>Espana (envio nacional)</div>
+    <div class="crit-chip"><strong>Fecha</strong>25 de junio de 2026</div>
+    <div class="crit-chip"><strong>Tiendas</strong>9 tiendas revisadas</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="num">19</div>
+      <div class="lbl">Ofertas encontradas</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">67%</div>
+      <div class="lbl">Maximo descuento</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">40€</div>
+      <div class="lbl">Precio minimo</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">5</div>
+      <div class="lbl">Tiendas con stock</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">42%</div>
+      <div class="lbl">Descuento promedio</div>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>Aviso importante:</strong> Precios obtenidos por scraping web el 25 de junio de 2026. Los precios y disponibilidades pueden cambiar. <strong>Verifica siempre la disponibilidad de talla 43 y el precio final antes de comprar.</strong> Las tiendas con "talla probable" tienen stock en ese rango segun catalogo general, pero confirma en la pagina del producto.
+  </div>
+
+  <!-- TABLA MAESTRA -->
+  <div class="section-title">Todas las ofertas &mdash; ordenadas por mayor descuento</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tienda</th>
+          <th>Marca / Modelo</th>
+          <th>Color</th>
+          <th>Precio orig.</th>
+          <th>Precio oferta</th>
+          <th>Descuento</th>
+          <th>Talla 43</th>
+          <th>Ver oferta</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- 67% -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Adidas Originals Samba 62</span>
+            <span class="sub-info">Lifestyle · Cuero</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">120,00 &euro;</span></td>
+          <td><span class="precio-oferta">40,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-67%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/marca/adidas/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 64% -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Adidas Climacool 1</span>
+            <span class="sub-info">Running · Malla transpirable</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris</td>
+          <td><span class="precio-orig">140,00 &euro;</span></td>
+          <td><span class="precio-oferta">50,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-64%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/marca/adidas/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 60% -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Nike Air Force 1 GORE-TEX</span>
+            <span class="sub-info">Lifestyle · Gore-Tex impermeabilidad</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">150,00 &euro;</span></td>
+          <td><span class="precio-oferta">60,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-60%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 59% -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Adidas Originals Gazelle OG</span>
+            <span class="sub-info">Lifestyle clasico · Cuero gamuza</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris</td>
+          <td><span class="precio-orig">110,00 &euro;</span></td>
+          <td><span class="precio-oferta">45,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-59%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/marca/adidas/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 55% -->
+        <tr>
+          <td><span class="tienda-badge t-fl">Foot Locker</span></td>
+          <td>
+            <span class="marca-modelo">Nike Tennis Classic</span>
+            <span class="sub-info">Lifestyle · Cuero clasico</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">99,99 &euro;</span></td>
+          <td><span class="precio-oferta">45,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-55%</span></td>
+          <td><span class="talla-prob">Probable</span></td>
+          <td><a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 52% -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">New Balance ABZORB 2000</span>
+            <span class="sub-info">Running · Amortiguacion ABZORB</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris</td>
+          <td><span class="precio-orig">200,00 &euro;</span></td>
+          <td><span class="precio-oferta">95,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-52%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 50% -->
+        <tr>
+          <td><span class="tienda-badge t-fl">Foot Locker</span></td>
+          <td>
+            <span class="marca-modelo">Reebok ATR Chill</span>
+            <span class="sub-info">Running / Casual · Ligera</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">79,99 &euro;</span></td>
+          <td><span class="precio-oferta">40,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-50%</span></td>
+          <td><span class="talla-prob">Probable</span></td>
+          <td><a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 50% Adidas Samba -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Adidas Originals Samba OG</span>
+            <span class="sub-info">Lifestyle clasico · Gamuza + cuero</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris</td>
+          <td><span class="precio-orig">120,00 &euro;</span></td>
+          <td><span class="precio-oferta">60,00 &euro;</span></td>
+          <td><span class="badge-desc desc-high">-50%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/marca/adidas/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 46% Campus -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Adidas Originals Campus 00s</span>
+            <span class="sub-info">Lifestyle · Retro campus</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">120,00 &euro;</span></td>
+          <td><span class="precio-oferta">65,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-46%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/marca/adidas/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 45% NB9060 -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">New Balance 9060</span>
+            <span class="sub-info">Lifestyle · Chunky dad shoe</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris / Blanco</td>
+          <td><span class="precio-orig">190,00 &euro;</span></td>
+          <td><span class="precio-oferta">105,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-45%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 44% Reebok -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Reebok NPC II</span>
+            <span class="sub-info">Lifestyle clasico · Cuero</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">80,00 &euro;</span></td>
+          <td><span class="precio-oferta">45,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-44%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 43% ASICS -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">ASICS GEL-NYC</span>
+            <span class="sub-info">Running lifestyle · GEL amortiguacion</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris / Crema</td>
+          <td><span class="precio-orig">150,00 &euro;</span></td>
+          <td><span class="precio-oferta">85,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-43%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 42% AF1 -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Nike Air Force 1 Low</span>
+            <span class="sub-info">Lifestyle clasico · Cuero</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">130,00 &euro;</span></td>
+          <td><span class="precio-oferta">75,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-42%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 42% Superstar -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Adidas Originals Superstar</span>
+            <span class="sub-info">Lifestyle clasico · Shell toe</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">120,00 &euro;</span></td>
+          <td><span class="precio-oferta">70,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-42%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/marca/adidas/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 42% Air Max Tuned 7 -->
+        <tr>
+          <td><span class="tienda-badge t-fl">Foot Locker</span></td>
+          <td>
+            <span class="marca-modelo">Nike Air Max Tuned 7</span>
+            <span class="sub-info">Running / Lifestyle · Tubelar Air</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">189,99 &euro;</span></td>
+          <td><span class="precio-oferta">110,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-42%</span></td>
+          <td><span class="talla-prob">Probable</span></td>
+          <td><a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 42% NB740 -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">New Balance 740</span>
+            <span class="sub-info">Running · Clasico Y2K</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris / Blanco</td>
+          <td><span class="precio-orig">120,00 &euro;</span></td>
+          <td><span class="precio-oferta">70,00 &euro;</span></td>
+          <td><span class="badge-desc desc-mid">-42%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 37% AF1 07 -->
+        <tr>
+          <td><span class="tienda-badge t-jd">JD Sports</span></td>
+          <td>
+            <span class="marca-modelo">Nike Air Force 1 '07</span>
+            <span class="sub-info">Lifestyle · Cuero premium</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">120,00 &euro;</span></td>
+          <td><span class="precio-oferta">75,00 &euro;</span></td>
+          <td><span class="badge-desc desc-low">-37%</span></td>
+          <td><span class="talla-ok">Confirmada</span></td>
+          <td><a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 33% Pegasus 41 -->
+        <tr>
+          <td><span class="tienda-badge t-fl">Foot Locker</span></td>
+          <td>
+            <span class="marca-modelo">Nike Pegasus 41</span>
+            <span class="sub-info">Running · Air Zoom reactivo</span>
+          </td>
+          <td><span class="color-dot c-blanco"></span> Blanco</td>
+          <td><span class="precio-orig">149,99 &euro;</span></td>
+          <td><span class="precio-oferta">100,00 &euro;</span></td>
+          <td><span class="badge-desc desc-low">-33%</span></td>
+          <td><span class="talla-prob">Probable</span></td>
+          <td><a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+        <!-- 29% P6000 -->
+        <tr>
+          <td><span class="tienda-badge t-fl">Foot Locker</span></td>
+          <td>
+            <span class="marca-modelo">Nike P-6000</span>
+            <span class="sub-info">Lifestyle retro · Anos 2000</span>
+          </td>
+          <td><span class="color-dot c-gris"></span> Gris / Plata</td>
+          <td><span class="precio-orig">119,99 &euro;</span></td>
+          <td><span class="precio-oferta">85,00 &euro;</span></td>
+          <td><span class="badge-desc desc-low">-29%</span></td>
+          <td><span class="talla-prob">Probable</span></td>
+          <td><a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" class="btn-link" target="_blank">Ver</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCION TIENDAS -->
+  <div class="section-title">Tiendas revisadas</div>
+  <div class="store-grid">
+
+    <div class="store-card">
+      <h3>JD Sports Espana</h3>
+      <p>La mayor variedad de ofertas encontrada. 684 productos en oferta en calzado de hombre. Talla 43 confirmada en Nike blancas y Adidas. Descuentos de 35% a 67%.</p>
+      <a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" target="_blank">Ver todas las ofertas &rarr;</a>
+      <p class="store-meta">Marcas: <span>Nike, Adidas, New Balance, Reebok, Jordan, ASICS</span></p>
+      <p class="store-meta">Envio: <span>Gratis desde 30€</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #1565c0;">
+      <h3>Foot Locker Spain</h3>
+      <p>1.702 resultados en seccion de rebajas. Buenas ofertas en Nike con hasta 55% de descuento. Especialmente fuerte en modelos de running y Air Max.</p>
+      <a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" target="_blank">Ver rebajas de hombre &rarr;</a>
+      <p class="store-meta">Marcas: <span>Nike, Adidas, Reebok, PUMA</span></p>
+      <p class="store-meta">Envio: <span>Gratis desde 50€</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #2e7d32;">
+      <h3>Courir Espana</h3>
+      <p>348 productos Nike en rebajas con descuentos de -20% a -60%. Modelos destacados: Air Force 1, P-6000, Dunk Low, Zoom Vomero. Amplia seleccion en blanco y gris.</p>
+      <a href="https://www.courir.es/es/c/rebajas/marca/nike/" target="_blank">Ver rebajas Nike &rarr;</a>
+      <p class="store-meta">Marcas: <span>Nike (principal), Adidas, New Balance</span></p>
+      <p class="store-meta">Envio: <span>Gratis en pedidos +90€</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #00695c;">
+      <h3>Decimas Espana</h3>
+      <p>Rebajas de verano activas del 18/06/2026 al 06/08/2026. Hasta 50% de descuento en Nike, Adidas y Puma. Filtrar por talla 43 en su sitio web.</p>
+      <a href="https://www.decimas.com/es-es/rebajas-zapatillas-hombre" target="_blank">Ver rebajas de hombre &rarr;</a>
+      <p class="store-meta">Periodo de rebajas: <span>18 jun – 6 ago 2026</span></p>
+      <p class="store-meta">Envio: <span>Gratis desde 50€</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #7b1fa2;">
+      <h3>About You</h3>
+      <p>Seccion de rebajas en zapatillas deportivas de hombre con envio gratis y devolucion gratuita. Buena seleccion de marcas lifestyle y running.</p>
+      <a href="https://www.aboutyou.es/c/hombre/rebajas/zapatos/zapatillas-de-deporte-32647" target="_blank">Ver zapatillas en rebaja &rarr;</a>
+      <p class="store-meta">Envio: <span>Gratis · Devolucion gratuita</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #f57c00;">
+      <h3>Zalando Espana</h3>
+      <p>Rebajas activas en zapatillas blancas y grises talla 43. Bloqueo anti-scraping activo — navegar directamente con los filtros de talla y color para ver ofertas actualizadas.</p>
+      <a href="https://www.zalando.es/zapatillas-hombre-rebajas/_blanco_talla-43/" target="_blank">Rebajas blancas T43 &rarr;</a>
+      <p class="store-meta">Envio: <span>Gratis · Devolucion gratuita 100 dias</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #546e7a;">
+      <h3>Sprinter</h3>
+      <p>Gran catalogo de zapatillas deportivas talla 43. Web con proteccion anti-bot activa &mdash; consultar directamente en la tienda online. Buenas ofertas en marcas tecnicas.</p>
+      <a href="https://www.sprintersports.com/vb/zapatillas-deportivas-talla-43" target="_blank">Ver talla 43 en Sprinter &rarr;</a>
+      <p class="store-meta">Envio: <span>Consultar</span></p>
+    </div>
+
+    <div class="store-card" style="border-left-color: #c62828;">
+      <h3>Decathlon Espana</h3>
+      <p>Web con proteccion anti-bot. Precios muy competitivos en marcas propias (Kalenji, Newfeel). Buscar directamente filtrando por color blanco/gris y talla 43.</p>
+      <a href="https://www.decathlon.es/es/hombre/zapatillas-deportivas" target="_blank">Ir a zapatillas &rarr;</a>
+      <p class="store-meta">Envio: <span>Gratis en tienda · Desde 3,99€ a domicilio</span></p>
+    </div>
+
+  </div>
+
+  <!-- CONSEJOS -->
+  <div class="tip-box">
+    <h3>Consejos para comprar</h3>
+    <ul>
+      <li><strong>Equivalencia de talla:</strong> 10 US equivale a 43 EU en Nike y Adidas. New Balance puede variar &mdash; confirmar con su tabla de tallas.</li>
+      <li><strong>Mejor momento:</strong> Las rebajas de verano 2026 estan activas ahora mismo (junio&ndash;agosto). Los mayores descuentos suelen ser en las primeras semanas.</li>
+      <li><strong>JD Sports</strong> es la tienda con mas variedad de ofertas activas verificadas (684 productos). Usar el filtro de talla 43 para afinar resultados.</li>
+      <li><strong>Foot Locker</strong> tiene la seccion de rebajas mas grande (1.702 resultados). Buenos precios en Nike running.</li>
+      <li><strong>Devoluciones:</strong> Zalando y About You ofrecen devolucion gratuita, ideal para probar talla.</li>
+      <li><strong>Alerta de precio:</strong> Usa Chollometro (chollometro.com/categorias/zapatillas) para recibir alertas de nuevas ofertas en tiempo real.</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Reporte generado el 25 de junio de 2026 &middot; Busqueda realizada con WebSearch + WebFetch en tiendas online de Espana<br>
+    Precios sujetos a disponibilidad y cambios. Verificar siempre antes de comprar.<br>
+    <br>
+    <strong>Fuentes:</strong>
+    <a href="https://www.jdsports.es/hombre/calzado-de-hombre/ofertas/" target="_blank">JD Sports</a> &middot;
+    <a href="https://www.footlocker.es/es/category/sale/hombre/zapatillas.html" target="_blank">Foot Locker</a> &middot;
+    <a href="https://www.courir.es/es/c/rebajas/marca/nike/" target="_blank">Courir</a> &middot;
+    <a href="https://www.decimas.com/es-es/rebajas-zapatillas-hombre" target="_blank">Decimas</a> &middot;
+    <a href="https://www.zalando.es/zapatillas-hombre-rebajas/_blanco_talla-43/" target="_blank">Zalando</a> &middot;
+    <a href="https://www.aboutyou.es/c/hombre/rebajas/zapatos/zapatillas-de-deporte-32647" target="_blank">About You</a>
+  </div>
+
+</div>
+</body>
+</html>
