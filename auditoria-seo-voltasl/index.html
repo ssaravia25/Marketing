@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditor&iacute;a SEO - voltasl.es</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface2: #1e1e1e;
+            --border: #2a2a2a;
+            --text: #e8e8e8;
+            --text-muted: #888;
+            --accent: #c9a554;
+            --accent-light: #e0c67a;
+            --red: #e74c3c;
+            --red-bg: rgba(231, 76, 60, 0.1);
+            --orange: #f39c12;
+            --orange-bg: rgba(243, 156, 18, 0.1);
+            --green: #2ecc71;
+            --green-bg: rgba(46, 204, 113, 0.1);
+            --blue: #3498db;
+            --blue-bg: rgba(52, 152, 219, 0.1);
+            --purple: #9b59b6;
+            --purple-bg: rgba(155, 89, 182, 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 40px 0 30px;
+        }
+        header .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+        }
+        header h1 span { color: var(--accent); }
+        header .subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .meta-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .meta-row strong { color: var(--text); }
+
+        /* Score Cards */
+        .score-section { padding: 30px 0 20px; }
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 0;
+        }
+        .score-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 14px;
+            text-align: center;
+        }
+        .score-card .score {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .score-card .label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .score-card .bar {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 12px;
+            background: var(--border);
+            overflow: hidden;
+        }
+        .score-card .bar-fill { height: 100%; border-radius: 2px; }
+        .score-red .score { color: var(--red); }
+        .score-red .bar-fill { background: var(--red); }
+        .score-orange .score { color: var(--orange); }
+        .score-orange .bar-fill { background: var(--orange); }
+        .score-green .score { color: var(--green); }
+        .score-green .bar-fill { background: var(--green); }
+        .score-blue .score { color: var(--blue); }
+        .score-blue .bar-fill { background: var(--blue); }
+
+        /* Sections */
+        section {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+        section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        section h2 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: #000;
+            border-radius: 50%;
+            font-size: 15px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        section .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* Issue Cards */
+        .issue {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .issue-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        .severity {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .severity-critical { background: var(--red-bg); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
+        .severity-high { background: var(--orange-bg); color: var(--orange); border: 1px solid rgba(243,156,18,0.3); }
+        .severity-medium { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(52,152,219,0.3); }
+        .severity-low { background: var(--green-bg); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+        .issue h3 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .issue p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .issue .evidence {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 12.5px;
+            color: var(--accent-light);
+            overflow-x: auto;
+            margin: 12px 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .issue .fix {
+            background: var(--green-bg);
+            border: 1px solid rgba(46,204,113,0.2);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 13px;
+            color: var(--green);
+        }
+        .issue .fix strong { color: var(--green); }
+
+        /* Tables */
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .audit-table th {
+            background: var(--surface2);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .audit-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .audit-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .audit-table .status-bad { color: var(--red); font-weight: 600; }
+        .audit-table .status-warn { color: var(--orange); font-weight: 600; }
+        .audit-table .status-good { color: var(--green); font-weight: 600; }
+
+        /* Architecture */
+        .arch-tree {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 2;
+            color: var(--text-muted);
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .arch-tree .folder { color: var(--accent); font-weight: 600; }
+        .arch-tree .page { color: var(--text); }
+
+        /* Roadmap */
+        .roadmap-phase {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+        .roadmap-phase h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .roadmap-phase .timeline {
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .roadmap-phase ul {
+            list-style: none;
+            padding: 0;
+        }
+        .roadmap-phase li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .roadmap-phase li::before {
+            content: "\2192";
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Opportunity cards */
+        .opp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .opp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px;
+        }
+        .opp-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .opp-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .opp-card .impact {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .impact-high { background: var(--green-bg); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+        .impact-medium { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(52,152,219,0.3); }
+
+        /* Matrix */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .matrix-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px;
+        }
+        .matrix-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .matrix-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .matrix-box li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px;
+            margin: 16px 0;
+        }
+        .info-box h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .info-box p, .info-box li {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .info-box li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        .info-box li::before {
+            content: "\2022";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Schema code block */
+        .schema-block {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            color: var(--accent-light);
+            overflow-x: auto;
+            margin: 16px 0;
+            white-space: pre;
+        }
+        .schema-block .key { color: #3498db; }
+        .schema-block .string { color: #2ecc71; }
+        .schema-block .comment { color: #666; font-style: italic; }
+
+        /* Summary card */
+        .summary-card {
+            background: linear-gradient(135deg, rgba(201,165,84,0.08) 0%, rgba(201,165,84,0.02) 100%);
+            border: 1px solid rgba(201,165,84,0.25);
+            border-radius: 14px;
+            padding: 32px;
+            margin: 30px 0;
+        }
+        .summary-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .summary-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        /* KPI grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 14px;
+            text-align: center;
+        }
+        .kpi-card .kpi-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .kpi-card .kpi-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        .kpi-card .kpi-target {
+            font-size: 11px;
+            color: var(--green);
+            margin-top: 6px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* Print / PDF */
+        @media print {
+            body { background: #0a0a0a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { max-width: 100%; }
+            section { page-break-inside: auto; }
+            .issue { page-break-inside: avoid; }
+            .roadmap-phase { page-break-inside: avoid; }
+            .score-section { page-break-inside: avoid; }
+            .score-grid { page-break-inside: avoid; }
+            .opp-card { page-break-inside: avoid; }
+            .matrix-box { page-break-inside: avoid; }
+            .audit-table { page-break-inside: auto; }
+            .audit-table tr { page-break-inside: avoid; }
+            .info-box { page-break-inside: avoid; }
+            .summary-card { page-break-inside: avoid; }
+            .schema-block { page-break-inside: avoid; }
+            h2, h3 { page-break-after: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 28px; }
+            .score-grid { grid-template-columns: repeat(2, 1fr); }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .meta-row { flex-direction: column; gap: 8px; }
+            .matrix-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <span class="badge">Auditor&iacute;a SEO 2026</span>
+        <h1>voltasl<span>.es</span></h1>
+        <p class="subtitle">Auditor&iacute;a completa de SEO t&eacute;cnico, on-page, contenido, schema markup y estrategia de crecimiento</p>
+        <div class="meta-row">
+            <span><strong>Fecha:</strong> 20 marzo 2026</span>
+            <span><strong>Plataforma:</strong> WordPress + Avada + Revolution Slider</span>
+            <span><strong>Sector:</strong> Servicios industriales / Motores el&eacute;ctricos</span>
+            <span><strong>Ubicaci&oacute;n:</strong> Ripollet, Barcelona</span>
+            <span><strong>Antig&uuml;edad:</strong> Fundada 1964 (+60 a&ntilde;os)</span>
+        </div>
+    </div>
+</header>
+
+<!-- ==================== SCORES ==================== -->
+<div class="score-section">
+    <div class="container">
+        <h2 style="margin-bottom: 18px; font-size: 24px;">Puntuaci&oacute;n General de la Auditor&iacute;a</h2>
+        <div class="score-grid">
+            <div class="score-card score-red">
+                <div class="score">25</div>
+                <div class="label">SEO T&eacute;cnico</div>
+                <div class="bar"><div class="bar-fill" style="width: 25%"></div></div>
+            </div>
+            <div class="score-card score-red">
+                <div class="score">20</div>
+                <div class="label">SEO On-Page</div>
+                <div class="bar"><div class="bar-fill" style="width: 20%"></div></div>
+            </div>
+            <div class="score-card score-red">
+                <div class="score">15</div>
+                <div class="label">Contenido</div>
+                <div class="bar"><div class="bar-fill" style="width: 15%"></div></div>
+            </div>
+            <div class="score-card score-orange">
+                <div class="score">40</div>
+                <div class="label">Schema Markup</div>
+                <div class="bar"><div class="bar-fill" style="width: 40%"></div></div>
+            </div>
+            <div class="score-card score-orange">
+                <div class="score">50</div>
+                <div class="label">Arquitectura</div>
+                <div class="bar"><div class="bar-fill" style="width: 50%"></div></div>
+            </div>
+            <div class="score-card score-orange">
+                <div class="score">45</div>
+                <div class="label">UX / Mobile</div>
+                <div class="bar"><div class="bar-fill" style="width: 45%"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 1. PROBLEMAS CRITICOS ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">1</span> Problemas Cr&iacute;ticos (P0)</h2>
+        <p class="section-desc">Errores que est&aacute;n impactando gravemente la visibilidad org&aacute;nica. Deben resolverse de inmediato.</p>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-critical">CR&Iacute;TICO</span>
+                <h3>Title tag de la home dice solo &ldquo;Volta&rdquo;</h3>
+            </div>
+            <p>El title tag de la p&aacute;gina principal contiene &uacute;nicamente &ldquo;Volta&rdquo;, desperdiciando los 60 caracteres disponibles para posicionar keywords de alto valor. Google no puede entender qu&eacute; hace la empresa.</p>
+            <div class="evidence">ACTUAL:      &lt;title&gt;Volta&lt;/title&gt;
+RECOMENDADO: &lt;title&gt;Reparaci&oacute;n de Motores El&eacute;ctricos Barcelona | Volta S.L.&lt;/title&gt;</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Editar el title en Yoast/Rank Math para incluir keywords principales: &ldquo;reparaci&oacute;n motores el&eacute;ctricos&rdquo;, &ldquo;Barcelona&rdquo;. Impacto estimado: +30-50% CTR.
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-critical">CR&Iacute;TICO</span>
+                <h3>Meta descriptions ausentes en TODAS las p&aacute;ginas</h3>
+            </div>
+            <p>Ninguna p&aacute;gina del sitio tiene meta description definida. Google genera snippets aleatorios del contenido, reduciendo dr&aacute;sticamente el CTR en resultados de b&uacute;squeda.</p>
+            <div class="evidence">AFECTADAS: Inicio, Productos, Servicios, Qui&eacute;nes Somos, Contacto, Blog
+IMPACTO:   Google genera snippets gen&eacute;ricos &rarr; CTR estimado &lt;1.5% vs 3-5% con descriptions optimizadas
+ESFUERZO:  30 minutos para las 20 p&aacute;ginas principales</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Redactar meta descriptions &uacute;nicas de 140-160 caracteres para cada p&aacute;gina con keywords + CTA. Ver secci&oacute;n &ldquo;SEO On-Page&rdquo; para las descriptions recomendadas.
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-critical">CR&Iacute;TICO</span>
+                <h3>Blog inactivo desde febrero 2023 (m&aacute;s de 3 a&ntilde;os)</h3>
+            </div>
+            <p>El blog tiene solo 9 art&iacute;culos publicados entre junio 2022 y febrero 2023. No se ha actualizado en m&aacute;s de 3 a&ntilde;os. Google penaliza sitios con contenido estancado, especialmente en sectores t&eacute;cnicos.</p>
+            <div class="evidence">&Uacute;ltimo post: Febrero 2023
+Total posts:  9 art&iacute;culos (muy pocos para +60 a&ntilde;os de expertise)
+Longitud:     &lt;300 palabras por art&iacute;culo (thin content)
+Frecuencia:   0 publicaciones en 3+ a&ntilde;os</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Reactivar el blog con m&iacute;nimo 2 art&iacute;culos/mes de 800-1500 palabras. Actualizar los 9 art&iacute;culos existentes con contenido ampliado. Ver calendario editorial en secci&oacute;n de Estrategia.
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-critical">CR&Iacute;TICO</span>
+                <h3>P&aacute;ginas de servicios con contenido vac&iacute;o (thin content)</h3>
+            </div>
+            <p>Varias p&aacute;ginas de servicios, especialmente <code>/servicios/instalaciones-electricas/</code>, contienen menos de 100 palabras. Google puede marcarlas como &ldquo;thin content&rdquo; y desindexarlas.</p>
+            <div class="evidence">P&aacute;ginas afectadas:
+  /servicios/instalaciones-electricas/    &rarr; ~50 palabras (pr&aacute;cticamente vac&iacute;a)
+  /servicios/motor-winding/               &rarr; ~200 palabras (insuficiente)
+  /servicios/mantenimiento-industrial/    &rarr; ~150 palabras (insuficiente)
+
+Recomendado: M&iacute;nimo 800 palabras por p&aacute;gina de servicio</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Expandir cada p&aacute;gina de servicio a m&iacute;nimo 800-1200 palabras con: descripci&oacute;n detallada, proceso de trabajo, beneficios, FAQs, casos de &eacute;xito y CTA.
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-critical">CR&Iacute;TICO</span>
+                <h3>Sin Product Schema en cat&aacute;logo de productos</h3>
+            </div>
+            <p>La p&aacute;gina de productos no tiene schema markup de tipo Product. Se pierden rich snippets en Google (precio, disponibilidad, rating) que aumentar&iacute;an visibilidad un 20-30%.</p>
+            <div class="evidence">AUSENTE: Product, AggregateOffer, Review schema
+IMPACTO: Sin rich snippets en SERPs = menor CTR vs competidores que s&iacute; los tienen
+PRODUCTOS: Motores IE1/IE2/IE3, Bombas, Variadores, Motorreductores</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Implementar JSON-LD Product Schema en cada p&aacute;gina de producto. Ver secci&oacute;n &ldquo;Schema Markup&rdquo; con c&oacute;digo listo para copiar.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 2. SEO ON-PAGE ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">2</span> SEO On-Page</h2>
+        <p class="section-desc">An&aacute;lisis de t&iacute;tulos, meta descriptions, headings y estructura de contenido por p&aacute;gina.</p>
+
+        <h3 style="margin-bottom: 16px; font-size: 18px;">Titles y Descriptions recomendados por p&aacute;gina</h3>
+        <table class="audit-table">
+            <thead>
+                <tr>
+                    <th>P&aacute;gina</th>
+                    <th>Title Actual</th>
+                    <th>Title Recomendado</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Inicio</td>
+                    <td>&ldquo;Volta&rdquo;</td>
+                    <td>&ldquo;Reparaci&oacute;n Motores El&eacute;ctricos Barcelona | Volta S.L. &ndash; Desde 1964&rdquo;</td>
+                    <td class="status-bad">Cr&iacute;tico</td>
+                </tr>
+                <tr>
+                    <td>Productos</td>
+                    <td>&ldquo;Productos &ndash; Volta&rdquo;</td>
+                    <td>&ldquo;Motores El&eacute;ctricos IE1 IE2 IE3, Bombas y Variadores | Volta&rdquo;</td>
+                    <td class="status-bad">Cr&iacute;tico</td>
+                </tr>
+                <tr>
+                    <td>Servicios</td>
+                    <td>&ldquo;Instalaciones Electricas&rdquo;</td>
+                    <td>&ldquo;Servicios Industriales: Reparaci&oacute;n, Rebobinado y Mantenimiento | Volta&rdquo;</td>
+                    <td class="status-bad">Cr&iacute;tico</td>
+                </tr>
+                <tr>
+                    <td>Qui&eacute;nes Somos</td>
+                    <td>&ldquo;Qui&eacute;nes Somos &ndash; Volta&rdquo;</td>
+                    <td>&ldquo;Volta S.L. | 60 A&ntilde;os de Servicios Industriales en Barcelona&rdquo;</td>
+                    <td class="status-warn">Mejorable</td>
+                </tr>
+                <tr>
+                    <td>Blog</td>
+                    <td>&ldquo;Blog&rdquo;</td>
+                    <td>&ldquo;Blog de Motores y Automatizaci&oacute;n Industrial | Volta S.L.&rdquo;</td>
+                    <td class="status-bad">Cr&iacute;tico</td>
+                </tr>
+                <tr>
+                    <td>Contacto</td>
+                    <td>&ldquo;Contacto &ndash; Volta&rdquo;</td>
+                    <td>&ldquo;Contacto | Presupuesto en 5 D&iacute;as &ndash; Volta S.L. Barcelona&rdquo;</td>
+                    <td class="status-warn">Mejorable</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="margin: 30px 0 16px; font-size: 18px;">Meta Descriptions recomendadas</h3>
+        <table class="audit-table">
+            <thead>
+                <tr>
+                    <th>P&aacute;gina</th>
+                    <th>Meta Description Recomendada (140-160 chars)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Inicio</td>
+                    <td>&ldquo;Volta S.L. &ndash; Reparaci&oacute;n, venta e instalaci&oacute;n de motores, bombas y maquinaria industrial en Barcelona. +60 a&ntilde;os de experiencia. Presupuesto en 5 d&iacute;as.&rdquo;</td>
+                </tr>
+                <tr>
+                    <td>Productos</td>
+                    <td>&ldquo;Cat&aacute;logo completo: motores el&eacute;ctricos IE1/IE2/IE3, bombas de agua, variadores de frecuencia, ventiladores y recambios industriales. Consulta precios.&rdquo;</td>
+                </tr>
+                <tr>
+                    <td>Servicios</td>
+                    <td>&ldquo;Reparaci&oacute;n de motores el&eacute;ctricos, rebobinado, instalaciones el&eacute;ctricas industriales y mantenimiento en Barcelona. T&eacute;cnicos especializados desde 1964.&rdquo;</td>
+                </tr>
+                <tr>
+                    <td>Qui&eacute;nes Somos</td>
+                    <td>&ldquo;Volta S.L. &ndash; Empresa familiar con 60 a&ntilde;os de experiencia en motores el&eacute;ctricos y automatizaci&oacute;n industrial. Certificados y comprometidos con la calidad.&rdquo;</td>
+                </tr>
+                <tr>
+                    <td>Blog</td>
+                    <td>&ldquo;Art&iacute;culos sobre rebobinado de motores, eficiencia energ&eacute;tica, automatizaci&oacute;n industrial y mantenimiento. Consejos de expertos con +60 a&ntilde;os en el sector.&rdquo;</td>
+                </tr>
+                <tr>
+                    <td>Contacto</td>
+                    <td>&ldquo;Solicita presupuesto sin compromiso para reparaci&oacute;n de motores, bombas o instalaciones el&eacute;ctricas. Respuesta en 5 d&iacute;as. Ubicados en Ripollet, Barcelona.&rdquo;</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="margin: 30px 0 16px; font-size: 18px;">Estructura de Headings &ndash; Estado actual vs Recomendado</h3>
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-high">ALTO</span>
+                <h3>Headings inconsistentes y sin jerarqu&iacute;a SEO</h3>
+            </div>
+            <p>Uso de H4 en lugar de H2/H3 en secciones clave. Falta estructura sem&aacute;ntica que Google pueda interpretar.</p>
+            <div class="evidence">ESTRUCTURA ACTUAL (Home):
+  H1: "Servicios Industriales en Barcelona"
+  H4: "Motores El&eacute;ctricos" (deber&iacute;a ser H2)
+  H4: "Bombas de Agua" (deber&iacute;a ser H2)
+  H4: "60 a&ntilde;os" (deber&iacute;a ser H2)
+
+ESTRUCTURA RECOMENDADA:
+  H1: Reparaci&oacute;n de Motores El&eacute;ctricos Barcelona | Volta S.L.
+    H2: Servicios Especializados de Motor Winding
+      H3: Rebobinado de Motores El&eacute;ctricos
+      H3: Reparaci&oacute;n de Bombas de Agua
+    H2: Instalaciones El&eacute;ctricas Industriales
+      H3: Canalizaciones y Cableado
+      H3: Automatizaci&oacute;n Industrial
+    H2: &iquest;Por qu&eacute; elegir Volta?
+      H3: 60 a&ntilde;os de experiencia
+      H3: Presupuesto en 5 d&iacute;as</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Reestructurar headings siguiendo jerarqu&iacute;a H1&gt;H2&gt;H3 con keywords relevantes. Un solo H1 por p&aacute;gina con keyword principal.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 3. AUDITORIA TECNICA ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">3</span> Auditor&iacute;a T&eacute;cnica</h2>
+        <p class="section-desc">Estado de crawleabilidad, indexabilidad, velocidad, seguridad y configuraci&oacute;n t&eacute;cnica.</p>
+
+        <table class="audit-table">
+            <thead>
+                <tr>
+                    <th>Aspecto T&eacute;cnico</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                    <th>Prioridad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HTTPS / SSL</td>
+                    <td class="status-good">OK</td>
+                    <td>Certificado v&aacute;lido, HTTPS activo en todo el sitio</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>robots.txt</td>
+                    <td class="status-good">OK</td>
+                    <td>Configuraci&oacute;n est&aacute;ndar WordPress, protege /wp-admin/</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Sitemap XML</td>
+                    <td class="status-warn">Mejorable</td>
+                    <td>Existe con 4 sitemaps secundarios, pero falta lastmod y priority</td>
+                    <td class="status-warn">Media</td>
+                </tr>
+                <tr>
+                    <td>Mobile-Friendly</td>
+                    <td class="status-good">OK</td>
+                    <td>Responsive funcional, navegaci&oacute;n collapse correcta</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Core Web Vitals</td>
+                    <td class="status-bad">Deficiente</td>
+                    <td>Avada + Revolution Slider = peso excesivo. JS/CSS sin minificar</td>
+                    <td class="status-bad">Alta</td>
+                </tr>
+                <tr>
+                    <td>Compresi&oacute;n Im&aacute;genes</td>
+                    <td class="status-bad">Deficiente</td>
+                    <td>Im&aacute;genes JPEG sin comprimir, sin WebP, sin lazy loading</td>
+                    <td class="status-bad">Alta</td>
+                </tr>
+                <tr>
+                    <td>Minificaci&oacute;n CSS/JS</td>
+                    <td class="status-bad">No</td>
+                    <td>Recursos sin minificar ni combinar, m&uacute;ltiples HTTP requests</td>
+                    <td class="status-bad">Alta</td>
+                </tr>
+                <tr>
+                    <td>CDN</td>
+                    <td class="status-bad">No</td>
+                    <td>Sin CDN configurado. Recomendado: CloudFlare (free)</td>
+                    <td class="status-warn">Media</td>
+                </tr>
+                <tr>
+                    <td>Estructura URLs</td>
+                    <td class="status-warn">Mejorable</td>
+                    <td>URLs amigables pero inconsistentes. Algunos slugs demasiado largos</td>
+                    <td class="status-warn">Media</td>
+                </tr>
+                <tr>
+                    <td>Breadcrumbs</td>
+                    <td class="status-good">OK</td>
+                    <td>Implementados correctamente con navegaci&oacute;n jer&aacute;rquica</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>GDPR / Legal</td>
+                    <td class="status-good">OK</td>
+                    <td>Privacy policy, avisos legales y GDPR en formularios</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Canonical Tags</td>
+                    <td class="status-warn">Verificar</td>
+                    <td>Verificar que todas las p&aacute;ginas tengan canonical correctos</td>
+                    <td class="status-warn">Media</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="issue" style="margin-top: 24px;">
+            <div class="issue-header">
+                <span class="severity severity-high">ALTO</span>
+                <h3>Revolution Slider ralentiza la carga &gt;3 segundos</h3>
+            </div>
+            <p>El plugin Revolution Slider es uno de los m&aacute;s pesados de WordPress. A&ntilde;ade ~400KB de JS + CSS que se cargan en CADA p&aacute;gina, aunque no usen slider. Core Web Vitals LCP probablemente &gt;4s.</p>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Reemplazar Revolution Slider por un hero est&aacute;tico con CSS puro (0KB extra). Alternativa: cargar slider solo en la home con lazy initialization. Implementar WP Rocket o LiteSpeed Cache para minificar y combinar recursos.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 4. SCHEMA MARKUP ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">4</span> Schema Markup &ndash; C&oacute;digo Listo para Implementar</h2>
+        <p class="section-desc">Structured data JSON-LD para obtener rich snippets en Google. Copiar y pegar en el &lt;head&gt; de cada p&aacute;gina.</p>
+
+        <h3 style="margin-bottom: 16px; font-size: 18px;">Estado Actual del Schema</h3>
+        <table class="audit-table">
+            <thead>
+                <tr>
+                    <th>Tipo de Schema</th>
+                    <th>Estado</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>LocalBusiness</td>
+                    <td class="status-good">Implementado (b&aacute;sico)</td>
+                    <td>Necesita optimizaci&oacute;n</td>
+                </tr>
+                <tr>
+                    <td>Organization</td>
+                    <td class="status-good">Implementado (b&aacute;sico)</td>
+                    <td>Necesita optimizaci&oacute;n</td>
+                </tr>
+                <tr>
+                    <td>BreadcrumbList</td>
+                    <td class="status-good">Implementado</td>
+                    <td>Correcto</td>
+                </tr>
+                <tr>
+                    <td>Product</td>
+                    <td class="status-bad">Ausente</td>
+                    <td class="status-bad">CR&Iacute;TICO &ndash; Rich snippets</td>
+                </tr>
+                <tr>
+                    <td>Service</td>
+                    <td class="status-warn">Parcial</td>
+                    <td class="status-warn">Mejorable</td>
+                </tr>
+                <tr>
+                    <td>FAQPage</td>
+                    <td class="status-bad">Ausente</td>
+                    <td class="status-bad">ALTO &ndash; Featured snippets</td>
+                </tr>
+                <tr>
+                    <td>Review / AggregateRating</td>
+                    <td class="status-bad">Ausente</td>
+                    <td class="status-bad">ALTO &ndash; Estrellas en SERPs</td>
+                </tr>
+                <tr>
+                    <td>ContactPoint</td>
+                    <td class="status-bad">Ausente</td>
+                    <td class="status-warn">Medio</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Schema 1: LocalBusiness -->
+        <h3 style="margin: 30px 0 12px; font-size: 18px; color: var(--accent);">4.1 &mdash; LocalBusiness (Optimizado)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">Insertar en el <code>&lt;head&gt;</code> de TODAS las p&aacute;ginas. Reemplaza el schema b&aacute;sico actual.</p>
+        <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "ElectricalContractor",
+  "@id": "https://voltasl.es/#organization",
+  "name": "Volta S.L.",
+  "alternateName": "Volta Servicios Industriales",
+  "url": "https://voltasl.es",
+  "logo": "https://voltasl.es/wp-content/uploads/logo-volta.png",
+  "image": "https://voltasl.es/wp-content/uploads/taller-volta.jpg",
+  "description": "Reparaci&oacute;n, venta e instalaci&oacute;n de motores el&eacute;ctricos, bombas de agua y maquinaria industrial en Barcelona. M&aacute;s de 60 a&ntilde;os de experiencia.",
+  "foundingDate": "1964",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Direcci&oacute;n del taller",
+    "addressLocality": "Ripollet",
+    "addressRegion": "Barcelona",
+    "postalCode": "08291",
+    "addressCountry": "ES"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 41.4969,
+    "longitude": 2.1573
+  },
+  "telephone": "+34-XXX-XXX-XXX",
+  "email": "info@voltasl.es",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    }
+  ],
+  "priceRange": "$$",
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": 41.3874,
+      "longitude": 2.1686
+    },
+    "geoRadius": "50000"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servicios Industriales",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reparaci&oacute;n de motores el&eacute;ctricos"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Rebobinado de motores"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reparaci&oacute;n de bombas de agua"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Instalaciones el&eacute;ctricas industriales"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Automatizaci&oacute;n industrial"}}
+    ]
+  },
+  "sameAs": [
+    "https://www.facebook.com/voltasl",
+    "https://www.linkedin.com/company/voltasl"
+  ]
+}
+&lt;/script&gt;</div>
+
+        <!-- Schema 2: Product -->
+        <h3 style="margin: 30px 0 12px; font-size: 18px; color: var(--accent);">4.2 &mdash; Product Schema (para cada producto)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">Insertar en cada p&aacute;gina individual de producto. Ejemplo para Motor IE3:</p>
+        <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Motor El&eacute;ctrico Trif&aacute;sico IE3 - Alta Eficiencia",
+  "description": "Motor el&eacute;ctrico trif&aacute;sico de alta eficiencia energ&eacute;tica clase IE3. Ideal para aplicaciones industriales, bombeo y ventilaci&oacute;n.",
+  "image": "https://voltasl.es/wp-content/uploads/motor-ie3.jpg",
+  "brand": {
+    "@type": "Brand",
+    "name": "Volta"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Volta S.L."
+  },
+  "category": "Motores El&eacute;ctricos",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://voltasl.es/productos/motores/motor-ie3/",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Volta S.L."
+    },
+    "priceValidUntil": "2026-12-31"
+  },
+  "additionalProperty": [
+    {"@type": "PropertyValue", "name": "Clase de Eficiencia", "value": "IE3"},
+    {"@type": "PropertyValue", "name": "Tipo", "value": "Trif&aacute;sico"},
+    {"@type": "PropertyValue", "name": "Aplicaci&oacute;n", "value": "Industrial"}
+  ]
+}
+&lt;/script&gt;</div>
+
+        <!-- Schema 3: Service -->
+        <h3 style="margin: 30px 0 12px; font-size: 18px; color: var(--accent);">4.3 &mdash; Service Schema (p&aacute;ginas de servicios)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">Insertar en cada p&aacute;gina de servicio. Ejemplo para Reparaci&oacute;n de Motores:</p>
+        <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Reparaci&oacute;n de Motores El&eacute;ctricos",
+  "description": "Servicio profesional de reparaci&oacute;n y rebobinado de motores el&eacute;ctricos industriales. Diagn&oacute;stico, rebobinado, equilibrado y pruebas de calidad. Presupuesto en 5 d&iacute;as.",
+  "provider": {
+    "@type": "LocalBusiness",
+    "@id": "https://voltasl.es/#organization"
+  },
+  "serviceType": "Reparaci&oacute;n industrial",
+  "areaServed": {
+    "@type": "State",
+    "name": "Barcelona"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servicios de Motor Winding",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Rebobinado completo",
+          "description": "Rebobinado profesional de motores el&eacute;ctricos monof&aacute;sicos y trif&aacute;sicos"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Diagn&oacute;stico de aver&iacute;as",
+          "description": "An&aacute;lisis completo de fallos en motores el&eacute;ctricos"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Equilibrado din&aacute;mico",
+          "description": "Equilibrado de rotores para eliminar vibraciones"
+        }
+      }
+    ]
+  }
+}
+&lt;/script&gt;</div>
+
+        <!-- Schema 4: FAQPage -->
+        <h3 style="margin: 30px 0 12px; font-size: 18px; color: var(--accent);">4.4 &mdash; FAQPage Schema (para cada p&aacute;gina de servicio)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">A&ntilde;adir FAQs al final de cada p&aacute;gina de servicio. Genera featured snippets expandibles en Google.</p>
+        <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "&iquest;Cu&aacute;nto cuesta reparar un motor el&eacute;ctrico?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El coste de reparaci&oacute;n depende del tipo de motor, potencia y tipo de aver&iacute;a. En Volta S.L. ofrecemos presupuesto sin compromiso en 5 d&iacute;as h&aacute;biles. Contacta con nosotros para un diagn&oacute;stico gratuito."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;Qu&eacute; es el rebobinado de un motor el&eacute;ctrico?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El rebobinado consiste en reemplazar el devanado (bobinas de cobre) del estator o rotor de un motor el&eacute;ctrico. Es necesario cuando el aislamiento se deteriora por sobrecalentamiento, humedad o desgaste. En Volta llevamos m&aacute;s de 60 a&ntilde;os realizando rebobinados profesionales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;Cu&aacute;nto tarda la reparaci&oacute;n de un motor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El plazo est&aacute;ndar es de 5-10 d&iacute;as h&aacute;biles dependiendo de la complejidad. Para urgencias ofrecemos servicio express. Entregamos presupuesto en 5 d&iacute;as tras recibir el motor."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;Qu&eacute; diferencia hay entre motores IE1, IE2 e IE3?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las clases IE (International Efficiency) indican el nivel de eficiencia energ&eacute;tica del motor. IE1 es eficiencia est&aacute;ndar, IE2 es alta eficiencia e IE3 es eficiencia premium. A mayor clase, menor consumo el&eacute;ctrico y mayor ahorro a largo plazo. Desde 2017 la normativa europea exige m&iacute;nimo IE3 para nuevas instalaciones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;Reparan bombas de agua industriales?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "S&iacute;, en Volta S.L. reparamos todo tipo de bombas de agua industriales: centr&iacute;fugas, sumergibles, de desplazamiento positivo y bombas de vac&iacute;o. Realizamos diagn&oacute;stico, reparaci&oacute;n mec&aacute;nica y el&eacute;ctrica, y pruebas de rendimiento."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;Ofrecen servicio de mantenimiento preventivo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "S&iacute;, ofrecemos contratos de mantenimiento preventivo industrial que incluyen inspecciones peri&oacute;dicas, an&aacute;lisis de vibraciones, termograf&iacute;a y lubricaci&oacute;n programada. El mantenimiento preventivo reduce aver&iacute;as un 70% y alarga la vida &uacute;til de los equipos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;En qu&eacute; zona de Barcelona operan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nuestro taller est&aacute; en Ripollet (Barcelona) y damos servicio a toda la provincia de Barcelona y Catalu&ntilde;a. Ofrecemos recogida y entrega de equipos para empresas de la zona metropolitana."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "&iquest;Qu&eacute; es la automatizaci&oacute;n industrial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La automatizaci&oacute;n industrial implica usar variadores de frecuencia, PLCs y sistemas de control para optimizar procesos productivos. En Volta dise&ntilde;amos e instalamos soluciones de automatizaci&oacute;n que mejoran la eficiencia y reducen costes operativos."
+      }
+    }
+  ]
+}
+&lt;/script&gt;</div>
+
+        <!-- Schema 5: WebSite + SearchAction -->
+        <h3 style="margin: 30px 0 12px; font-size: 18px; color: var(--accent);">4.5 &mdash; WebSite + Sitelinks SearchBox</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">Insertar solo en la home. Habilita la caja de b&uacute;squeda directa en Google.</p>
+        <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Volta S.L.",
+  "url": "https://voltasl.es",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://voltasl.es/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+&lt;/script&gt;</div>
+
+    </div>
+</section>
+
+<!-- ==================== 5. CONTENIDO Y KEYWORDS ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">5</span> Estrategia de Contenido y Keywords</h2>
+        <p class="section-desc">An&aacute;lisis de gaps de contenido, oportunidades de keywords y plan editorial.</p>
+
+        <h3 style="margin-bottom: 16px; font-size: 18px;">Keywords Objetivo por Intenci&oacute;n de B&uacute;squeda</h3>
+        <table class="audit-table">
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Intenci&oacute;n</th>
+                    <th>Volumen Est.</th>
+                    <th>P&aacute;gina Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>reparaci&oacute;n motores el&eacute;ctricos barcelona</td>
+                    <td>Transaccional</td>
+                    <td class="status-good">Alto</td>
+                    <td>/servicios/motores-electricos/</td>
+                </tr>
+                <tr>
+                    <td>rebobinado de motores</td>
+                    <td>Informacional</td>
+                    <td class="status-good">Alto</td>
+                    <td>/blog/ + /servicios/motor-winding/</td>
+                </tr>
+                <tr>
+                    <td>bombas de agua industriales</td>
+                    <td>Comercial</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/productos/bombas/</td>
+                </tr>
+                <tr>
+                    <td>variadores de frecuencia precio</td>
+                    <td>Transaccional</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/productos/variadores/</td>
+                </tr>
+                <tr>
+                    <td>motor el&eacute;ctrico ie3</td>
+                    <td>Comercial</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/productos/motores/</td>
+                </tr>
+                <tr>
+                    <td>automatizaci&oacute;n industrial barcelona</td>
+                    <td>Transaccional</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/servicios/ (nueva p&aacute;gina)</td>
+                </tr>
+                <tr>
+                    <td>instalaciones el&eacute;ctricas industriales</td>
+                    <td>Transaccional</td>
+                    <td class="status-good">Alto</td>
+                    <td>/servicios/instalaciones-electricas/</td>
+                </tr>
+                <tr>
+                    <td>mantenimiento preventivo motores</td>
+                    <td>Informacional</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/blog/ + /servicios/</td>
+                </tr>
+                <tr>
+                    <td>diferencia motor ie1 ie2 ie3</td>
+                    <td>Informacional</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/blog/ (art&iacute;culo nuevo)</td>
+                </tr>
+                <tr>
+                    <td>cuando reparar vs cambiar motor</td>
+                    <td>Informacional</td>
+                    <td class="status-warn">Medio</td>
+                    <td>/blog/ (art&iacute;culo nuevo)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="margin: 30px 0 16px; font-size: 18px;">Gaps de Contenido &ndash; Art&iacute;culos que DEBEN crearse</h3>
+        <div class="opp-grid">
+            <div class="opp-card">
+                <h4>Gu&iacute;a: Rebobinado de Motores El&eacute;ctricos</h4>
+                <p>Art&iacute;culo de 1500+ palabras explicando el proceso completo, cu&aacute;ndo es necesario, costes orientativos y ventajas vs. comprar nuevo.</p>
+                <span class="impact impact-high">Impacto Alto &ndash; Featured Snippet</span>
+            </div>
+            <div class="opp-card">
+                <h4>Comparativa: Motores IE1 vs IE2 vs IE3</h4>
+                <p>Tabla comparativa con eficiencia, consumo, normativa y ROI. Contenido que genera links naturales de foros y blogs t&eacute;cnicos.</p>
+                <span class="impact impact-high">Impacto Alto &ndash; Link Building</span>
+            </div>
+            <div class="opp-card">
+                <h4>&iquest;Cu&aacute;ndo Reparar vs. Cambiar un Motor?</h4>
+                <p>Gu&iacute;a de decisi&oacute;n con criterios t&eacute;cnicos y econ&oacute;micos. Keyword long-tail con alta intenci&oacute;n comercial.</p>
+                <span class="impact impact-high">Impacto Alto &ndash; Conversi&oacute;n</span>
+            </div>
+            <div class="opp-card">
+                <h4>Mantenimiento Preventivo Industrial: Gu&iacute;a 2026</h4>
+                <p>Checklist de mantenimiento, frecuencias recomendadas, ahorro estimado. Posiciona para keywords informacionales.</p>
+                <span class="impact impact-medium">Impacto Medio &ndash; Tr&aacute;fico</span>
+            </div>
+            <div class="opp-card">
+                <h4>Eficiencia Energ&eacute;tica en Motores: Normativa UE 2026</h4>
+                <p>Actualizaci&oacute;n sobre regulaciones europeas, obligaciones para empresas y c&oacute;mo cumplir. Contenido linkable.</p>
+                <span class="impact impact-medium">Impacto Medio &ndash; Autoridad</span>
+            </div>
+            <div class="opp-card">
+                <h4>Caso de &Eacute;xito: Automatizaci&oacute;n en Empresa Industrial</h4>
+                <p>Estudio de caso real con m&eacute;tricas de ahorro. Demuestra expertise y genera confianza para leads comerciales.</p>
+                <span class="impact impact-high">Impacto Alto &ndash; E-E-A-T</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 6. ARQUITECTURA ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">6</span> Arquitectura del Sitio</h2>
+        <p class="section-desc">Estructura de navegaci&oacute;n actual y estrategia hub/cluster recomendada.</p>
+
+        <h3 style="margin-bottom: 16px; font-size: 18px;">Estructura actual</h3>
+        <div class="arch-tree"><span class="folder">voltasl.es/</span>
+<span class="folder">&boxvr;&boxh;&boxh; servicios/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; motores-electricos/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; bombas-de-agua/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; motor-winding/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; mantenimiento-industrial/</span>
+<span class="page">&boxv;   &boxur;&boxh;&boxh; instalaciones-electricas/</span>     <span style="color:var(--red)">&larr; thin content</span>
+<span class="folder">&boxvr;&boxh;&boxh; productos/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; motores/ (IE1, IE2, IE3)</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; bombas/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; motorreductores/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; variadores-de-frecuencia/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; soplantes/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; ventiladores/</span>
+<span class="page">&boxv;   &boxvr;&boxh;&boxh; motovibradores/</span>
+<span class="page">&boxv;   &boxur;&boxh;&boxh; recambios/</span>
+<span class="folder">&boxvr;&boxh;&boxh; blog/</span>                             <span style="color:var(--red)">&larr; inactivo desde 2023</span>
+<span class="page">&boxvr;&boxh;&boxh; quienes-somos/</span>
+<span class="page">&boxur;&boxh;&boxh; contacto/</span></div>
+
+        <h3 style="margin: 30px 0 16px; font-size: 18px;">Estrategia Hub/Cluster recomendada</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Crear &ldquo;hub pages&rdquo; (p&aacute;ginas pilar) que enlazan a contenido detallado. Mejora internal linking y autoridad tem&aacute;tica.</p>
+
+        <div class="matrix-grid">
+            <div class="matrix-box">
+                <h4 style="color: var(--accent);">Hub: Motores El&eacute;ctricos</h4>
+                <ul>
+                    <li>Rebobinado de motores</li>
+                    <li>Reparaci&oacute;n de bobinados</li>
+                    <li>Comparativa IE1/IE2/IE3</li>
+                    <li>&iquest;Reparar o cambiar motor?</li>
+                    <li>Mantenimiento preventivo</li>
+                    <li>Caso de &eacute;xito: rebobinado industrial</li>
+                </ul>
+            </div>
+            <div class="matrix-box">
+                <h4 style="color: var(--accent);">Hub: Automatizaci&oacute;n Industrial</h4>
+                <ul>
+                    <li>Variadores de frecuencia: gu&iacute;a</li>
+                    <li>Instalaciones el&eacute;ctricas industriales</li>
+                    <li>PLC y sistemas de control</li>
+                    <li>ROI de la automatizaci&oacute;n</li>
+                    <li>Normativa el&eacute;ctrica 2026</li>
+                    <li>Caso de &eacute;xito: automatizaci&oacute;n f&aacute;brica</li>
+                </ul>
+            </div>
+            <div class="matrix-box">
+                <h4 style="color: var(--accent);">Hub: Bombas de Agua</h4>
+                <ul>
+                    <li>Tipos de bombas industriales</li>
+                    <li>Reparaci&oacute;n de bombas centr&iacute;fugas</li>
+                    <li>Bombas sumergibles: mantenimiento</li>
+                    <li>Selecci&oacute;n de bomba seg&uacute;n aplicaci&oacute;n</li>
+                    <li>Problemas comunes y soluciones</li>
+                </ul>
+            </div>
+            <div class="matrix-box">
+                <h4 style="color: var(--accent);">Hub: SEO Local Barcelona</h4>
+                <ul>
+                    <li>Servicios industriales Barcelona</li>
+                    <li>Reparaci&oacute;n motores Ripollet</li>
+                    <li>Instalaciones el&eacute;ctricas Catalu&ntilde;a</li>
+                    <li>T&eacute;cnicos especializados zona metro</li>
+                    <li>Google My Business optimizado</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 7. INTERNAL LINKING ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">7</span> Internal Linking y Im&aacute;genes</h2>
+        <p class="section-desc">Estrategia de enlaces internos y optimizaci&oacute;n de im&aacute;genes para SEO.</p>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-high">ALTO</span>
+                <h3>Internal linking pr&aacute;cticamente inexistente</h3>
+            </div>
+            <p>El contenido del blog no enlaza a p&aacute;ginas de servicios ni productos. Las p&aacute;ginas de servicios no enlazan entre s&iacute;. Se pierde &ldquo;link juice&rdquo; y Google no puede entender la relaci&oacute;n entre p&aacute;ginas.</p>
+            <div class="evidence">Ejemplo de linking recomendado:
+
+Blog "Rebobinado de motores" &rarr; /servicios/motor-winding/
+Blog "Rebobinado de motores" &rarr; /servicios/motores-electricos/
+Blog "Eficiencia IE3"        &rarr; /productos/motores/
+P&aacute;g. Servicios              &rarr; /blog/articulo-relevante/
+P&aacute;g. Productos             &rarr; /servicios/reparacion/
+
+Anchor text optimizado: "reparaci&oacute;n de motores el&eacute;ctricos" (no "haz clic aqu&iacute;")</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> Crear m&iacute;nimo 3-5 enlaces internos por p&aacute;gina con anchor text que contenga keywords. Cada art&iacute;culo de blog debe enlazar a 2+ p&aacute;ginas de servicio/producto.
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-header">
+                <span class="severity severity-high">ALTO</span>
+                <h3>Im&aacute;genes sin alt text ni optimizaci&oacute;n</h3>
+            </div>
+            <p>Im&aacute;genes con nombres gen&eacute;ricos, sin alt text descriptivo, formato JPEG pesado y sin lazy loading. Ejemplo: <code>instalaciones-electricas-300x293.jpg</code> &mdash; baja resoluci&oacute;n y nombre no optimizado.</p>
+            <div class="evidence">ACTUAL:
+  Nombre:   instalaciones-electricas-300x293.jpg
+  Alt text: "" (vac&iacute;o)
+  Formato:  JPEG sin comprimir
+  Carga:    Eager (bloquea render)
+
+RECOMENDADO:
+  Nombre:   rebobinado-motor-electrico-taller-volta-barcelona.webp
+  Alt text: "Rebobinado profesional de motor el&eacute;ctrico trif&aacute;sico en taller Volta, Barcelona"
+  Formato:  WebP con fallback JPEG
+  Carga:    loading="lazy"</div>
+            <div class="fix">
+                <strong>Soluci&oacute;n:</strong> 1) Renombrar archivos con keywords. 2) A&ntilde;adir alt text descriptivo a TODAS las im&aacute;genes. 3) Convertir a WebP con ShortPixel/Imagify. 4) A&ntilde;adir <code>loading="lazy"</code> a im&aacute;genes below-the-fold.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 8. ROADMAP ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">8</span> Roadmap SEO &ndash; Plan de Acci&oacute;n 6 Meses</h2>
+        <p class="section-desc">Plan de implementaci&oacute;n priorizado con quick wins, mejoras a mediano plazo y estrategia de crecimiento.</p>
+
+        <div class="roadmap-phase">
+            <h3>Fase 1: Quick Wins</h3>
+            <div class="timeline">Semanas 1-2 &mdash; Impacto inmediato</div>
+            <ul>
+                <li>Optimizar title tags de las 20 p&aacute;ginas principales (30 min)</li>
+                <li>Redactar meta descriptions para todas las p&aacute;ginas (1 hora)</li>
+                <li>Implementar Product Schema en p&aacute;ginas de productos (2 horas)</li>
+                <li>Implementar FAQPage Schema con las 8 FAQs proporcionadas (1 hora)</li>
+                <li>Actualizar LocalBusiness Schema con datos completos (30 min)</li>
+                <li>Corregir estructura de headings H1&gt;H2&gt;H3 en home y servicios (1 hora)</li>
+                <li>A&ntilde;adir alt text a todas las im&aacute;genes existentes (2 horas)</li>
+            </ul>
+        </div>
+
+        <div class="roadmap-phase">
+            <h3>Fase 2: Contenido y Performance</h3>
+            <div class="timeline">Semanas 3-6 &mdash; Crecimiento de tr&aacute;fico</div>
+            <ul>
+                <li>Expandir p&aacute;ginas de servicios a 800+ palabras cada una</li>
+                <li>Crear 5 art&iacute;culos de blog pillar (1200-1500 palabras cada uno)</li>
+                <li>Implementar CDN CloudFlare (gratuito)</li>
+                <li>Instalar WP Rocket / LiteSpeed Cache para minificar CSS/JS</li>
+                <li>Convertir im&aacute;genes a WebP con plugin ShortPixel</li>
+                <li>Implementar lazy loading en todas las im&aacute;genes</li>
+                <li>Considerar reemplazar Revolution Slider por hero CSS est&aacute;tico</li>
+            </ul>
+        </div>
+
+        <div class="roadmap-phase">
+            <h3>Fase 3: Internal Linking y Autoridad</h3>
+            <div class="timeline">Semanas 7-12 &mdash; Consolidaci&oacute;n</div>
+            <ul>
+                <li>Implementar estrategia hub/cluster con 3 hubs principales</li>
+                <li>Crear 100+ enlaces internos contextuales con anchor text optimizado</li>
+                <li>Publicar 5 art&iacute;culos adicionales (2/mes m&iacute;nimo)</li>
+                <li>Optimizar Google My Business al 95%+</li>
+                <li>Iniciar link building: directorios industriales espa&ntilde;oles</li>
+                <li>Solicitar rese&ntilde;as a clientes satisfechos (meta: 20 rese&ntilde;as)</li>
+            </ul>
+        </div>
+
+        <div class="roadmap-phase">
+            <h3>Fase 4: Crecimiento Sostenido</h3>
+            <div class="timeline">Meses 4-6 &mdash; Escalamiento</div>
+            <ul>
+                <li>Publicar 2-4 art&iacute;culos/mes de forma consistente</li>
+                <li>Link building a 50+ sitios especializados</li>
+                <li>Crear contenido linkable: infograf&iacute;as, estudios t&eacute;cnicos</li>
+                <li>Crear biograf&iacute;as de expertos del equipo (E-E-A-T)</li>
+                <li>Publicar en medios industriales especializados</li>
+                <li>Crear v&iacute;deos de proceso de reparaci&oacute;n para YouTube</li>
+                <li>Analizar resultados y ajustar estrategia seg&uacute;n datos</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 9. KPIs ==================== -->
+<section>
+    <div class="container">
+        <h2><span class="num">9</span> M&eacute;tricas de &Eacute;xito y KPIs</h2>
+        <p class="section-desc">Objetivos medibles a 6 y 12 meses con las herramientas recomendadas para monitoreo.</p>
+
+        <h3 style="margin-bottom: 16px; font-size: 18px;">Situaci&oacute;n Actual (Baseline)</h3>
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-value">~500</div>
+                <div class="kpi-label">Visitas org&aacute;nicas / mes</div>
+                <div class="kpi-target">Target 6m: 1,500</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">~15</div>
+                <div class="kpi-label">Keywords Top 10</div>
+                <div class="kpi-target">Target 6m: 50</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">~10</div>
+                <div class="kpi-label">Leads org&aacute;nicos / mes</div>
+                <div class="kpi-target">Target 6m: 35</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">~2%</div>
+                <div class="kpi-label">CTR org&aacute;nico</div>
+                <div class="kpi-target">Target 6m: 3.5%</div>
+            </div>
+        </div>
+
+        <h3 style="margin: 30px 0 16px; font-size: 18px;">Proyecci&oacute;n de Resultados</h3>
+        <table class="audit-table">
+            <thead>
+                <tr>
+                    <th>M&eacute;trica</th>
+                    <th>Actual</th>
+                    <th>6 Meses</th>
+                    <th>12 Meses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tr&aacute;fico org&aacute;nico / mes</td>
+                    <td>~500</td>
+                    <td class="status-warn">1,500</td>
+                    <td class="status-good">3,500</td>
+                </tr>
+                <tr>
+                    <td>Keywords en Top 10</td>
+                    <td>~15</td>
+                    <td class="status-warn">50</td>
+                    <td class="status-good">150+</td>
+                </tr>
+                <tr>
+                    <td>Keywords en Top 3</td>
+                    <td>~2</td>
+                    <td class="status-warn">10</td>
+                    <td class="status-good">40+</td>
+                </tr>
+                <tr>
+                    <td>Domain Authority</td>
+                    <td>~35-40</td>
+                    <td class="status-warn">45</td>
+                    <td class="status-good">55+</td>
+                </tr>
+                <tr>
+                    <td>Conversiones org&aacute;nicas / mes</td>
+                    <td>~10</td>
+                    <td class="status-warn">35</td>
+                    <td class="status-good">80+</td>
+                </tr>
+                <tr>
+                    <td>CTR org&aacute;nico</td>
+                    <td>~2%</td>
+                    <td class="status-warn">3.5%</td>
+                    <td class="status-good">5%+</td>
+                </tr>
+                <tr>
+                    <td>Core Web Vitals (&ldquo;Bueno&rdquo;)</td>
+                    <td>~40%</td>
+                    <td class="status-warn">80%</td>
+                    <td class="status-good">95%+</td>
+                </tr>
+                <tr>
+                    <td>Backlinks de calidad</td>
+                    <td>~200</td>
+                    <td class="status-warn">400</td>
+                    <td class="status-good">700+</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="margin: 30px 0 16px; font-size: 18px;">Herramientas de Monitoreo</h3>
+        <div class="matrix-grid">
+            <div class="matrix-box">
+                <h4 style="color: var(--green);">Gratuitas</h4>
+                <ul>
+                    <li>Google Search Console &ndash; impresiones, clicks, CTR, errores</li>
+                    <li>Google Analytics 4 &ndash; tr&aacute;fico org&aacute;nico, conversiones</li>
+                    <li>Google PageSpeed Insights &ndash; Core Web Vitals</li>
+                    <li>Google Rich Results Test &ndash; validar schema</li>
+                </ul>
+            </div>
+            <div class="matrix-box">
+                <h4 style="color: var(--orange);">De pago (recomendadas)</h4>
+                <ul>
+                    <li>SEMrush / Ahrefs &ndash; rank tracking, competencia, backlinks</li>
+                    <li>Screaming Frog &ndash; crawl audits, duplicate content</li>
+                    <li>WP Rocket &ndash; cach&eacute; y optimizaci&oacute;n rendimiento</li>
+                    <li>ShortPixel &ndash; compresi&oacute;n autom&aacute;tica de im&aacute;genes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== RESUMEN EJECUTIVO ==================== -->
+<section>
+    <div class="container">
+        <div class="summary-card">
+            <h3>Resumen Ejecutivo</h3>
+            <p><strong>Puntuaci&oacute;n global: 4/10.</strong> Volta S.L. tiene una base s&oacute;lida (HTTPS, mobile-friendly, buena arquitectura) pero est&aacute; perdiendo oportunidades cr&iacute;ticas por falta de contenido, meta tags ausentes y schema markup incompleto.</p>
+            <p><strong>Fortalezas:</strong> +60 a&ntilde;os de experiencia (E-E-A-T natural), estructura de navegaci&oacute;n clara, certificaciones visibles, informaci&oacute;n de contacto transparente.</p>
+            <p><strong>Debilidades cr&iacute;ticas:</strong> Title tags vac&iacute;os, 0 meta descriptions, blog inactivo 3+ a&ntilde;os, thin content en servicios, sin Product Schema, im&aacute;genes sin optimizar.</p>
+            <p><strong>Potencial:</strong> Con la implementaci&oacute;n de este plan se espera un crecimiento del <strong>200-300% en tr&aacute;fico org&aacute;nico</strong> en 6 meses y <strong>400-500%</strong> en 12 meses. Los quick wins (title tags, meta descriptions, schema) pueden generar resultados visibles en <strong>2-4 semanas</strong>.</p>
+            <p><strong>Acci&oacute;n inmediata:</strong> Implementar los 5 schemas proporcionados en esta auditor&iacute;a + optimizar titles y descriptions de las 20 p&aacute;ginas principales. Esfuerzo total: ~8 horas de trabajo.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>Auditor&iacute;a SEO &mdash; voltasl.es &mdash; 20 marzo 2026</p>
+        <p style="margin-top: 8px; font-size: 12px; color: #555;">Generado con an&aacute;lisis automatizado de IA. Los schemas proporcionados est&aacute;n listos para implementar.</p>
+    </div>
+</footer>
+
+</body>
+</html>

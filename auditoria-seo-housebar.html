@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria SEO - housebar.cl</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f2027;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --critical: #d63031;
+            --steel: #37474f;
+            --steel-light: #546e7a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ============ COVER ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(230,81,0,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(44,83,100,0.3) 0%, transparent 50%);
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+
+        .cover-logo {
+            font-size: 13px; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 40px;
+            position: relative; z-index: 1; font-weight: 600;
+        }
+
+        .cover h1 {
+            font-size: 48px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+
+        .cover-domain {
+            font-size: 26px; font-weight: 300; color: rgba(255,255,255,0.55);
+            margin-bottom: 8px; position: relative; z-index: 1;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+
+        .cover-subtitle {
+            font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.65);
+            margin-bottom: 45px; position: relative; z-index: 1;
+        }
+
+        .cover-meta {
+            position: relative; z-index: 1;
+            display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+        }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.4); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 15px; font-weight: 600; }
+
+        .cover-score { margin-top: 45px; position: relative; z-index: 1; }
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid #f39c12;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; background: rgba(243,156,18,0.08);
+        }
+        .score-circle .number { font-size: 44px; font-weight: 900; color: #f39c12; line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
+        /* ============ CONTENT ============ */
+        .content { max-width: 860px; margin: 0 auto; padding: 20px 10px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+            page-break-after: always;
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-top: 25px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 18px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; }
+        .summary-score-card .score.critical { color: var(--critical); }
+        .summary-score-card .score.low { color: #e67e22; }
+        .summary-score-card .score.mid { color: #f39c12; }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; page-break-inside: avoid; padding-top: 5px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+        .section-score {
+            margin-left: auto; background: var(--bg-alt); padding: 6px 14px;
+            border-radius: 8px; font-weight: 700; font-size: 15px;
+        }
+        .section-score.low { color: var(--critical); background: #ffeef0; }
+        .section-score.mid { color: #e67e22; background: #fef9e7; }
+        .section-score.good { color: var(--success); background: #e8f8f5; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 14px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-critical { background: #ffeef0; color: var(--critical); }
+        .badge-high { background: #fff3e0; color: #e67e22; }
+        .badge-medium { background: #fef9e7; color: #f39c12; }
+        .badge-low { background: #e8f8f5; color: #27ae60; }
+        .badge-ok { background: #e8f8f5; color: var(--success); }
+        .badge-none { background: #f0f0f0; color: #999; }
+
+        .alert {
+            padding: 15px 18px; border-radius: 9px; margin: 12px 0; font-size: 13px;
+        }
+        .alert-critical { background: #ffeef0; border-left: 4px solid var(--critical); color: #c0392b; }
+        .alert-warning { background: #fff8e1; border-left: 4px solid #f39c12; color: #e67e22; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #eef2ff; border-left: 4px solid #5b6abf; color: #3949ab; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .code-block {
+            background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11px;
+            line-height: 1.7; overflow-x: auto; margin: 12px 0; white-space: pre-wrap;
+        }
+        .code-block .comment { color: #6c7086; }
+        .code-block .tag { color: #f38ba8; }
+        .code-block .attr { color: #a6e3a1; }
+        .code-block .value { color: #f9e2af; }
+
+        .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+        .rec-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+        .rec-card h4 { margin: 0 0 6px; font-size: 13px; }
+        .rec-card p { font-size: 12px; color: var(--text-light); margin: 0; }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        .action-plan { page-break-before: always; padding-top: 10px; }
+        .priority-section { margin-bottom: 24px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px;
+        }
+        .priority-critical { background: var(--critical); color: white; }
+        .priority-high { background: #e67e22; color: white; }
+        .priority-medium { background: #f39c12; color: white; }
+        .priority-low { background: var(--success); color: white; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 22px; font-weight: 800; color: var(--primary); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 3px;
+        }
+
+        .competitor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+        .competitor-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            border: 1px solid var(--border);
+        }
+        .competitor-card .name { font-weight: 700; color: var(--primary); margin-bottom: 3px; font-size: 13px; }
+        .competitor-card .url { font-size: 11px; color: var(--accent); margin-bottom: 4px; font-family: monospace; }
+        .competitor-card .strength { font-size: 12px; color: var(--text-light); }
+
+        .keyword-table td:first-child { font-weight: 600; color: var(--primary); }
+
+        .tree-structure {
+            background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11.5px;
+            line-height: 1.8; margin: 12px 0;
+        }
+        .tree-structure .folder { color: #89b4fa; }
+        .tree-structure .file { color: #cdd6f4; }
+        .tree-structure .warning { color: #f38ba8; }
+        .tree-structure .ok { color: #a6e3a1; }
+        .tree-structure .dim { color: #6c7086; }
+
+        .timeline { margin: 16px 0; }
+        .timeline-item {
+            display: flex; gap: 16px; margin-bottom: 16px;
+            padding-left: 20px; border-left: 3px solid var(--border);
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            width: 12px; height: 12px; border-radius: 50%;
+            position: absolute; left: -7.5px; top: 4px;
+        }
+        .timeline-item.phase1::before { background: var(--critical); }
+        .timeline-item.phase2::before { background: #e67e22; }
+        .timeline-item.phase3::before { background: #f39c12; }
+        .timeline-item.phase4::before { background: var(--success); }
+        .timeline-content { flex: 1; }
+        .timeline-label { font-weight: 700; font-size: 14px; color: var(--primary); margin-bottom: 4px; }
+        .timeline-desc { font-size: 12px; color: var(--text-light); }
+
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .kpi-card {
+            background: white; border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .kpi-card .kpi-value { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .kpi-card .kpi-label {
+            font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+            color: var(--text-light); margin-top: 2px;
+        }
+        .kpi-card .kpi-target { font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 3px; }
+
+        .footer {
+            text-align: center; padding: 30px; margin-top: 40px;
+            border-top: 2px solid var(--border); color: var(--text-light); font-size: 11px;
+        }
+
+        @media print {
+            .cover { margin: -15mm -12mm 0 -12mm; width: calc(100% + 24mm); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+    <div class="cover-logo">Auditoria SEO Profesional</div>
+    <h1>Auditoria <span>SEO</span></h1>
+    <div class="cover-domain">housebar.cl</div>
+    <div class="cover-subtitle">Tienda Online de Vinos, Licores y Bebidas Premium</div>
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Fecha</div>
+            <div class="value">08 Julio 2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Productos</div>
+            <div class="value">895+ SKUs</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">CMS</div>
+            <div class="value">VTEX (Store Framework)</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Industria</div>
+            <div class="value">Licoreria E-commerce</div>
+        </div>
+    </div>
+    <div class="cover-score">
+        <div class="score-circle">
+            <div class="number">50</div>
+            <div class="out-of">/ 100</div>
+            <div class="label">Score SEO</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CONTENIDO ============ -->
+<div class="content">
+
+    <!-- Resumen Ejecutivo -->
+    <div class="executive-summary">
+        <h2>Resumen Ejecutivo</h2>
+        <p>
+            <strong>housebar.cl</strong> es un e-commerce de bebidas alcoholicas premium (vinos, whisky, licores, cervezas, espumantes y pisco) construido sobre <strong>VTEX</strong>, una plataforma de comercio enterprise. El sitio tiene un catalogo amplio de <strong>895+ productos</strong> indexables via sitemap XML, organizados en categorias y sub-categorias bien estructuradas (whisky, vinos, licores, cerveza, pisco, espumantes, coctel).
+        </p>
+        <p>
+            La base tecnica es <strong>solida en lo fundamental</strong>: sitemap XML valido y actualizado diariamente, robots.txt configurado, HTTPS activo con redireccion correcta desde HTTP, schema markup (Product, WebSite, Organization) presente, y paginas de producto muy bien optimizadas (canonical correcto, breadcrumbs, meta tags ricos, precio y disponibilidad en schema). Sin embargo, se detectaron <strong>errores tecnicos puntuales pero reales</strong>: un canonical mal configurado en la pagina "Sobre Nosotros" (apunta al home en lugar de a si misma), un certificado SSL que no coincide con el dominio en la variante sin "www" (housebar.cl), y URLs de busqueda facetada enlazadas directamente desde el home sin bloqueo en robots.txt, lo que abre riesgo de contenido duplicado.
+        </p>
+        <p>
+            El area mas debil es <strong>Off-Page y SEO Local</strong>: solo 2 redes sociales activas (Facebook e Instagram, sin LinkedIn, YouTube ni TikTok), sin evidencia de Google Business Profile, sin schema LocalBusiness, un typo en la direccion del footer ("Region Metroplitana"), y un dominio de correo de soporte (desa.cl) distinto al dominio de la marca (housebar.cl). El sitio tampoco cuenta con blog o contenido informacional, pese a que ya tiene una seccion de preguntas frecuentes con buen potencial para schema FAQPage.
+        </p>
+        <p>
+            Con las correcciones tecnicas priorizadas y el fortalecimiento de contenido y presencia local, el sitio tiene una base solida (VTEX + catalogo grande) para crecer significativamente en trafico organico en 3-6 meses.
+        </p>
+
+        <div class="summary-scores">
+            <div class="summary-score-card">
+                <div class="score mid">58</div>
+                <div class="category">SEO Tecnico</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score good">60</div>
+                <div class="category">On-Page</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score mid">52</div>
+                <div class="category">Contenido</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score low">28</div>
+                <div class="category">Off-Page / Local</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 1: SEO TECNICO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">SEO Tecnico</div>
+            <div class="section-score mid">58/100</div>
+        </div>
+
+        <h3>1.1 Infraestructura del Sitio</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">VTEX</div>
+                <div class="metric-label">Plataforma (Render Server 8.180.1)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">CLP / es-CL</div>
+                <div class="metric-label">Moneda e Idioma</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">895+</div>
+                <div class="metric-label">URLs de Producto en Sitemap</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SSL/HTTPS (www)</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Certificado valido, TLS 1.3, redireccion HTTP a HTTPS+www correcta</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>SSL/HTTPS (sin www)</td>
+                    <td><span class="badge badge-critical">Error</span></td>
+                    <td>https://housebar.cl (sin www) sirve un certificado de *.cloudns.net que no coincide con el dominio</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Robots.txt</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Bloquea /account/, /login/, /checkout/, /busca/, /quick-view/, /espiar/</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Directiva "Noindex" en robots.txt</td>
+                    <td><span class="badge badge-medium">Invalido</span></td>
+                    <td>"Noindex: /buscapagina/*" no es una directiva soportada por Google desde 2019</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Sitemap XML</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Sitemap index con brand-0.xml, category-0.xml y product-0.xml, actualizado el 07 Jul 2026</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Canonical Homepage</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Autoreferenciado correctamente a https://www.housebar.cl/</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Canonical "Sobre Nosotros"</td>
+                    <td><span class="badge badge-critical">Error</span></td>
+                    <td>La pagina /sobre-nosotros tiene canonical apuntando al home en vez de a si misma</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Canonical Productos</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Autoreferenciado correctamente en las fichas de producto verificadas</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Schema Markup (Home)</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>Tipos detectados: Product, WebSite, Organization</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Schema Markup (Productos)</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>Meta tags product:price, product:brand, product:availability, product:sku</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Google Site Verification</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Meta tag configurado en todas las paginas revisadas</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>URLs de busqueda facetada</td>
+                    <td><span class="badge badge-high">Riesgo</span></td>
+                    <td>El home enlaza URLs con ?initialMap=&map=&query= sin bloqueo en robots.txt</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Viewport Meta</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Responsive configurado</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Certificado SSL invalido en housebar.cl (sin www)</strong>
+            Al conectar via HTTPS directo a <code>https://housebar.cl/</code> (sin el subdominio www), el servidor responde con un certificado emitido para <code>*.cloudns.net</code>, que no coincide con el hostname solicitado. Cualquier navegador, bot o enlace externo que apunte a esta variante exacta del dominio via HTTPS vera un error de seguridad en lugar de una redireccion. La variante HTTP (sin cifrar) si redirige correctamente a https://www.housebar.cl/, por lo que el impacto practico es acotado, pero debe corregirse para evitar errores si algun backlink externo o campana usa la URL HTTPS sin www.
+        </div>
+
+        <div class="alert alert-critical">
+            <strong>Canonical incorrecto en "Sobre Nosotros"</strong>
+            La pagina <code>https://www.housebar.cl/sobre-nosotros</code> declara como canonical <code>https://www.housebar.cl/</code> (el home), en lugar de autoreferenciarse. Esto le indica a Google que el contenido de "Sobre Nosotros" es una copia del home y puede excluirla del indice, perdiendo la oportunidad de posicionar para busquedas de marca/confianza como "housebar quienes somos" o "distribucion y excelencia sa".
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>URLs de busqueda facetada enlazadas sin control de indexacion</strong>
+            El bloque de texto SEO del home enlaza directamente URLs como <code>/licores/?initialMap=c&amp;initialQuery=licores&amp;map=category-1,category-2&amp;query=/licores/pack-licores&amp;searchState</code> y <code>/bebidas?initialMap=c&amp;...</code>. Estas URLs parametrizadas generan variantes casi identicas a las paginas de categoria limpias y no estan bloqueadas en robots.txt (solo se bloquea /busca/*). Recomendacion: usar rel=canonical hacia la URL limpia de categoria en estas variantes, o evitar enlazarlas directamente desde contenido indexable.
+        </div>
+
+        <h3>1.2 Estructura de URLs</h3>
+
+        <div class="tree-structure">
+<span class="folder">housebar.cl/</span>
+├── <span class="ok">whisky/</span> <span class="dim">- con sub-categorias: tennessee-whiskey-y-bourbon, whisky-escoces, whisky-irlandes</span>
+├── <span class="ok">vinos/</span> <span class="dim">- con sub-categorias: tinto, blanco, pack-vinos (por cepa: carmenere, malbec, etc)</span>
+├── <span class="ok">licores/</span> <span class="dim">- gin, vodka, ron, tequila, pisco, fernet, brandy, cachaza</span>
+├── <span class="ok">espumantes/</span> <span class="dim">- champagne, asti, prosecco, cava, brut, brut-rose</span>
+├── <span class="ok">cerveza/</span> <span class="dim">- cerveza-premium, cerveza-super-premium</span>
+├── <span class="ok">pisco/</span>
+├── <span class="ok">coctel/</span> <span class="dim">- coctel-sour, mixed-drink, exotic-cocktail</span>
+├── <span class="ok">bebidas/premium-mixers/</span> <span class="dim">- agua-tonica, ginger-beer</span>
+├── <span class="folder">[marca]/</span> <span class="dim">- paginas por marca: jack-daniels, hendricks, glenfiddich, campari, etc</span>
+├── <span class="ok">nuestras-marcas</span>
+├── <span class="ok">sobre-nosotros</span> <span class="warning">- canonical apunta al home (bug)</span>
+├── <span class="ok">terminos-y-condiciones</span>
+├── <span class="ok">politicas/politica-devolucion</span>
+├── <span class="ok">politicas/politica-despacho</span>
+├── <span class="ok">preguntas-frecuentes</span>
+├── <span class="ok">cotizaciones</span> <span class="dim">- cotizacion al por mayor / eventos</span>
+├── <span class="warning">?initialMap=&amp;map=&amp;query=</span> <span class="dim">- URLs de busqueda facetada enlazadas desde el home, sin bloqueo</span>
+└── <span class="dim">[producto]/p</span> <span class="dim">- 895+ fichas de producto individuales</span>
+        </div>
+
+        <h3>1.3 Sitemap y Rastreo</h3>
+        <p>El sitemap principal es un <code>sitemapindex</code> que referencia tres sitemaps segmentados: <code>brand-0.xml</code>, <code>category-0.xml</code> y <code>product-0.xml</code>, todos con fecha de actualizacion 07 de julio de 2026 (un dia antes de esta auditoria), lo que indica que VTEX regenera el sitemap dinamicamente. El sitemap de productos contiene mas de 895 URLs en un unico archivo, lo cual esta dentro del limite tecnico de 50.000 URLs por sitemap.</p>
+
+        <ul>
+            <li>No se detecta version paginada del sitemap de productos (product-1.xml, product-2.xml), lo que sugiere que el catalogo indexable actual cabe en un solo archivo</li>
+            <li>El robots.txt referencia correctamente la ubicacion del sitemap</li>
+            <li>Recomendacion: enviar el sitemap manualmente en Google Search Console y monitorear la cobertura de indexacion mensualmente</li>
+        </ul>
+    </div>
+
+    <!-- ============ SECCION 2: SEO ON-PAGE ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">SEO On-Page</div>
+            <div class="section-score good">60/100</div>
+        </div>
+
+        <h3>2.1 Meta Tags y Titles</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pagina</th>
+                    <th>Title</th>
+                    <th>Evaluacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homepage</td>
+                    <td>HOUSEBAR: Bebidas Alcoholicas Premium para Tu Mejor Ocasion</td>
+                    <td><span class="badge badge-ok">Bueno</span></td>
+                </tr>
+                <tr>
+                    <td>Sobre Nosotros</td>
+                    <td>Housebar - Distribucion y excelencia de vinos y licores</td>
+                    <td><span class="badge badge-ok">Bueno</span></td>
+                </tr>
+                <tr>
+                    <td>Categoria Whisky</td>
+                    <td>Whisky - Housebar</td>
+                    <td><span class="badge badge-medium">Mejorable</span></td>
+                </tr>
+                <tr>
+                    <td>Producto (Jack Daniel's 750cc)</td>
+                    <td>Whiskey Jack Daniel's Old No 7 750cc</td>
+                    <td><span class="badge badge-ok">Bueno</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-info">
+            <strong>Titles de categoria muy genericos</strong>
+            El title de la pagina de categoria Whisky es simplemente "Whisky - Housebar". Agregar diferenciadores mejora el CTR en buscadores: por ejemplo <em>"Whisky Premium Online: Escoces, Bourbon y Tennessee | Housebar"</em>.
+        </div>
+
+        <h3>2.2 Meta Descriptions</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pagina</th>
+                    <th>Meta Description</th>
+                    <th>Evaluacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homepage</td>
+                    <td>En Housebar.cl, llevamos mas de 5 anos ofreciendo la mejor seleccion de licores premium en Chile con envios rapidos y seguros a todo el pais.</td>
+                    <td><span class="badge badge-ok">Buena</span></td>
+                </tr>
+                <tr>
+                    <td>Categoria Whisky</td>
+                    <td>Compra los mejores whiskys de distintas marcas y caracteristicas en Housebar. Encuentra tus favoritos y disfruta de despacho gratis en compras sobre $60.000.</td>
+                    <td><span class="badge badge-ok">Buena</span></td>
+                </tr>
+                <tr>
+                    <td>Producto (Jack Daniel's 750cc)</td>
+                    <td>Descubre el iconico sabor y la tradicion de Jack Daniel's n7, elaborado con amor en Tennessee.</td>
+                    <td><span class="badge badge-ok">Buena</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>2.3 Inconsistencia de Antiguedad de la Empresa (E-E-A-T)</h3>
+        <div class="alert alert-warning">
+            <strong>Mensajes contradictorios sobre la antiguedad de la empresa</strong>
+            El home afirma "llevamos mas de 5 anos ofreciendo la mejor seleccion de licores premium en Chile", mientras que la pagina "Sobre Nosotros" indica que "DISTRIBUCION Y EXCELENCIA S.A. es una distribuidora que nacio en 1990" (36+ anos) y su meta description dice "Con mas de 30 anos en el rubro". Esta inconsistencia entre paginas puede confundir tanto a usuarios como a los sistemas de evaluacion de confianza (E-E-A-T) de Google. Se recomienda unificar el mensaje: aclarar si "5 anos" se refiere a la tienda online Housebar.cl especificamente y "30+ anos" a la empresa matriz Distribucion y Excelencia S.A., dejandolo explicito en ambos textos.
+        </div>
+
+        <h3>2.4 Estructura de Encabezados (Homepage)</h3>
+
+        <div class="code-block">
+<span class="tag">&lt;h1&gt;</span> HOUSEBAR: BEBIDAS ALCOHOLICAS PREMIUM PARA TU MEJOR OCASION <span class="comment">-- OK, unico</span>
+<span class="tag">&lt;h2&gt;</span> SELECCIONA TU REGION <span class="comment">-- UI de despacho, no aporta SEO</span>
+<span class="tag">&lt;h2&gt;</span> COMPRA SEGURA <span class="comment">-- Trust badge, no keyword-rich</span>
+<span class="tag">&lt;h2&gt;</span> CAMBIOS Y DEVOLUCIONES <span class="comment">-- Trust badge</span>
+<span class="tag">&lt;h2&gt;</span> DESPACHO GRATIS <span class="comment">-- Trust badge</span>
+<span class="tag">&lt;h2&gt;</span> Tus favoritos <span class="comment">-- Carrusel merchandising, no keyword-rich</span>
+<span class="tag">&lt;h2&gt;</span> Mejores Ofertas <span class="comment">-- Carrusel merchandising</span>
+<span class="tag">&lt;h2&gt;</span> Nuevo en Housebar <span class="comment">-- Carrusel merchandising</span>
+<span class="tag">&lt;h2&gt;</span> Preguntas frecuentes <span class="comment">-- OK, buen candidato a FAQPage schema</span>
+<span class="tag">&lt;h3&gt;</span> Region Metropolitana / Valparaiso / Tarapaca / ... <span class="comment">-- 9 regiones, selector de despacho</span>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>H2 dominados por UI y trust badges, no por keywords</strong>
+            De los 8 H2 detectados en el home, 6 corresponden a elementos de interfaz (selector de region, badges de confianza, carruseles de merchandising) y solo "Preguntas frecuentes" tiene valor semantico para SEO. Se recomienda que el bloque de texto SEO existente al pie del home (que ya menciona categorias y marcas) incluya al menos un H2 o H3 keyword-rich, por ejemplo "Por que comprar licores online en Housebar".
+        </div>
+
+        <h3>2.5 Imagenes y Alt Text</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">50</div>
+                <div class="metric-label">Imagenes en Homepage (aprox.)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">OK</div>
+                <div class="metric-label">Alt en Imagenes de Producto Verificadas</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">--</div>
+                <div class="metric-label">Iconos/Banners: Sin Verificar</div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Alt text: buen patron en fichas de producto, banners sin verificar</strong>
+            En la muestra de paginas de producto revisada, el alt text de la imagen principal replica el nombre del producto (ej: "Whiskey Jack Daniel's Old No 7 750cc"), lo cual es un patron correcto aunque podria enriquecerse agregando la categoria (ej. "Whiskey Jack Daniel's Old No 7 750cc - Tennessee Whiskey"). Los iconos de trust badges y banners promocionales del home (COMPRA SEGURA, CAMBIOS Y DEVOLUCIONES, DESPACHO GRATIS, banners de "Grants hasta 30% OFF") requieren una revision manual especifica de alt text, ya que no fue posible confirmarlo de forma automatizada con fiabilidad para este informe.
+        </div>
+
+        <h3>2.6 Open Graph y Redes Sociales</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>og:title / og:description</td>
+                    <td>Presentes y descriptivos en home y producto</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+                <tr>
+                    <td>og:image (Home)</td>
+                    <td>Logo generico de Housebar (no una imagen lifestyle/producto)</td>
+                    <td><span class="badge badge-medium">Mejorable</span></td>
+                </tr>
+                <tr>
+                    <td>og:image (Producto)</td>
+                    <td>Foto real del producto + sello Minsal (advertencia legal de alcohol)</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+                <tr>
+                    <td>og:type</td>
+                    <td>website (home) / product (fichas de producto)</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-warning">
+            <strong>og:image del home es solo el logo</strong>
+            Cuando se comparte el link housebar.cl en WhatsApp o redes sociales, la preview muestra el logo generico en vez de una imagen atractiva de productos o botellas. Se recomienda una imagen 1200x630px con productos destacados para mejorar el CTR al compartir.
+        </div>
+    </div>
+
+    <!-- ============ SECCION 3: CONTENIDO Y KEYWORDS ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">Contenido y Estrategia de Keywords</div>
+            <div class="section-score mid">52/100</div>
+        </div>
+
+        <h3>3.1 Catalogo de Productos</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">895+</div>
+                <div class="metric-label">Productos en Sitemap</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">8</div>
+                <div class="metric-label">Categorias Principales</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">25+</div>
+                <div class="metric-label">Paginas de Marca (Jack Daniels, Hendricks, etc)</div>
+            </div>
+        </div>
+
+        <p>El catalogo esta bien segmentado por categoria y sub-categoria (por ejemplo, dentro de Vinos: tinto, blanco, pack-vinos, y dentro de tinto: cabernet-sauvignon, carmenere, malbec, merlot, syrah, pinot-noir). Esta profundidad de categorizacion es una base excelente para capturar busquedas long-tail de cepas y estilos especificos.</p>
+
+        <h4>Categorias con Mayor Potencial SEO</h4>
+        <table class="keyword-table">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Sub-categorias Detectadas</th>
+                    <th>Potencial SEO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Whisky</td>
+                    <td>Tennessee Whiskey y Bourbon, Whisky Escoces, Whisky Irlandes, Whisky Puro de Malta</td>
+                    <td><span class="badge badge-high">Muy Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Vinos</td>
+                    <td>Tinto (7 cepas), Blanco (5 cepas), Pack Vinos</td>
+                    <td><span class="badge badge-high">Muy Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Espumantes</td>
+                    <td>Champagne, Asti, Prosecco, Cava, Brut, Brut Rose, Demi Sec, Moscato</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Licores</td>
+                    <td>Gin, Vodka, Ron, Tequila, Fernet, Brandy, Cachaza, Aperitivo</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Coctel</td>
+                    <td>Coctel Sour, Mixed Drink, Exotic Cocktail, Coctel con Espumante</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Pisco</td>
+                    <td>Destilado de Uva Peruano, Destilado de Uva Boliviano</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-warning">
+            <strong>Paginas de categoria sin texto descriptivo unico</strong>
+            La pagina de categoria Whisky (y por extension, las demas categorias del mismo tipo) no presenta texto descriptivo propio, solo grilla de productos y filtros. Esto limita las oportunidades de posicionar para busquedas informacionales tipo "diferencia entre whisky escoces y bourbon" o "mejores whiskys premium chile" directamente desde la pagina de categoria.
+        </div>
+
+        <h3>3.2 Contenido SEO del Homepage</h3>
+        <p>El home incluye un bloque de texto extenso (mas de 400 palabras) con enlaces internos a categorias y marcas usando anchor text descriptivo, por ejemplo: <em>"Compra Glenfiddich 12 anos con despacho rapido"</em>, <em>"Mejor gin premium para Gin Tonic con envio en Chile"</em>, <em>"Compra vinos blancos de vinas reconocidas en Chile"</em>. Esta es una practica de SEO on-page bien ejecutada para reforzar relevancia tematica.</p>
+
+        <div class="alert alert-info">
+            <strong>Repeticion de anchor text hacia la misma URL</strong>
+            Varios de estos enlaces (al menos 3) apuntan a la misma URL de categoria de licores con texto ancla distinto ("Packs de licores con descuento para eventos", "Ofertas en packs de whisky, gin y vodka en Chile", "Pack de licores para carretes y reuniones con amigos"). Repetir multiples anchors distintos hacia la misma URL desde un mismo bloque de texto puede diluir la señal en lugar de reforzarla. Se recomienda variar el destino o consolidar en un solo enlace mas fuerte.
+        </div>
+
+        <h3>3.3 Preguntas Frecuentes (FAQ)</h3>
+        <p>El home incluye una seccion de FAQ con 8 preguntas sobre maridaje, diferencias entre tipos de whisky/ron/tequila, almacenamiento de vino, licores esenciales para un bar en casa, despacho y asesoria para eventos. El contenido es solido y esta directamente alineado con busquedas informacionales del rubro.</p>
+
+        <div class="alert alert-warning">
+            <strong>FAQ sin schema FAQPage</strong>
+            Pese a que la estructura de datos detectada en el home incluye Product, WebSite y Organization, no se identifico schema FAQPage. Marcar estas 8 preguntas con schema FAQPage es una oportunidad de bajo esfuerzo y alto impacto para obtener rich snippets ("acordeon") directamente en resultados de busqueda.
+        </div>
+
+        <h3>3.4 Blog / Contenido Informacional</h3>
+        <div class="alert alert-critical">
+            <strong>Sin blog ni seccion de contenido</strong>
+            No se detecto una seccion de blog o articulos en el mapa del sitio. Para una categoria con alta intencion informacional (maridajes, recetas de coctel, guias de cata, diferencias entre destilados) esto representa una oportunidad perdida grande de trafico organico no transaccional que luego convierte. El propio contenido de FAQ del home demuestra que la marca ya tiene el conocimiento de producto necesario para producir este contenido.
+        </div>
+
+        <h3>3.5 Keywords Objetivo Recomendadas (Estimado)</h3>
+
+        <table class="keyword-table">
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Intencion</th>
+                    <th>Dificultad Est.</th>
+                    <th>Pagina Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>comprar licores online chile</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-high">Alta</span></td>
+                    <td>Homepage</td>
+                </tr>
+                <tr>
+                    <td>whisky premium chile despacho</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>/whisky</td>
+                </tr>
+                <tr>
+                    <td>vino blanco sauvignon blanc online</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>/vinos/blanco/sauvignon-blanc</td>
+                </tr>
+                <tr>
+                    <td>pack de gin y tonica</td>
+                    <td>Comercial</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/licores/gin</td>
+                </tr>
+                <tr>
+                    <td>cotizar bebidas para evento chile</td>
+                    <td>Transaccional</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>/cotizaciones</td>
+                </tr>
+                <tr>
+                    <td>diferencia whisky single malt y blended</td>
+                    <td>Informacional</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>Nuevo articulo de blog</td>
+                </tr>
+                <tr>
+                    <td>como maridar vino tinto y blanco</td>
+                    <td>Informacional</td>
+                    <td><span class="badge badge-medium">Media</span></td>
+                    <td>Nuevo articulo de blog</td>
+                </tr>
+                <tr>
+                    <td>licores esenciales para bar en casa</td>
+                    <td>Informacional</td>
+                    <td><span class="badge badge-low">Baja</span></td>
+                    <td>Nuevo articulo de blog</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ============ SECCION 4: OFF-PAGE Y LOCAL SEO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">Off-Page, Local SEO y Presencia Digital</div>
+            <div class="section-score low">28/100</div>
+        </div>
+
+        <h3>4.1 Presencia en Redes Sociales</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plataforma</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Facebook</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>web.facebook.com/housebarcl (enlazado en footer)</td>
+                </tr>
+                <tr>
+                    <td>Instagram</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>instagram.com/housebar_cl (enlazado en footer)</td>
+                </tr>
+                <tr>
+                    <td>WhatsApp</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>+569 3862 3200, enlazado como boton directo (wa.me)</td>
+                </tr>
+                <tr>
+                    <td>TikTok</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Formato de alto potencial para el segmento de coctel/lifestyle</td>
+                </tr>
+                <tr>
+                    <td>YouTube</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Sin videos de recetas de coctel o presentacion de productos</td>
+                </tr>
+                <tr>
+                    <td>LinkedIn</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Relevante para el canal de cotizaciones B2B/eventos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>4.2 Local SEO y Datos de Contacto</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Direccion fisica en footer</td>
+                    <td><span class="badge badge-medium">Con error</span></td>
+                    <td>"Av La Montana 776, Lampa, Region Metroplitana" - typo, deberia decir "Metropolitana"</td>
+                </tr>
+                <tr>
+                    <td>Telefono / WhatsApp</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>+569 3862 3200</td>
+                </tr>
+                <tr>
+                    <td>Email de soporte</td>
+                    <td><span class="badge badge-medium">Inconsistente</span></td>
+                    <td>soportehousebar@desa.cl - usa dominio "desa.cl" en vez de "housebar.cl"</td>
+                </tr>
+                <tr>
+                    <td>Pagina de contacto dedicada</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td>Los datos de contacto solo existen en el footer global, no hay /contacto</td>
+                </tr>
+                <tr>
+                    <td>Google Business Profile</td>
+                    <td><span class="badge badge-critical">Sin evidencia</span></td>
+                    <td>No se encontro enlace ni mencion en el sitio</td>
+                </tr>
+                <tr>
+                    <td>Schema LocalBusiness</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td>Solo se detecto Organization/WebSite/Product, sin propiedades de direccion o geo</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-warning">
+            <strong>Typo en la direccion: "Region Metroplitana"</strong>
+            El footer de todas las paginas del sitio muestra la direccion con un error tipografico: "Region Metroplitana" en vez de "Region Metropolitana". Es un detalle menor de contenido pero afecta consistencia NAP (Name-Address-Phone) si se usa como referencia para Google Business Profile o directorios.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Dominio de correo distinto a la marca</strong>
+            El email de soporte (soportehousebar@desa.cl) usa el dominio de la agencia/holding "desa.cl" en lugar de "housebar.cl". Esto no afecta el SEO tecnico, pero reduce la coherencia de marca y puede generar desconfianza en clientes que verifican el dominio del remitente.
+        </div>
+
+        <div class="alert alert-critical">
+            <strong>Sin Google Business Profile visible</strong>
+            Para una tienda con despacho en todo Chile y direccion fisica en Lampa, no contar con Google Business Profile enlazado es una oportunidad perdida para aparecer en busquedas locales tipo "licoreria cerca de mi" o "comprar vino Lampa" y para acumular resenas que refuercen confianza.
+        </div>
+
+        <h3>4.3 Enlaces Externos y Autoridad</h3>
+        <p>Sin acceso a herramientas de terceros como Ahrefs/SEMrush, se evaluo la autoridad por senales indirectas disponibles en el propio sitio:</p>
+        <ul>
+            <li><strong>Enlaces salientes detectados en el home:</strong> solo hacia vtex.com (plataforma) y propulsow.com (agencia desarrolladora), ambos en el footer como creditos</li>
+            <li><strong>Canal de denuncia:</strong> enlaza a un dominio corporativo externo (desab2b.cl), consistente con que Housebar pertenece a un grupo mayor (Distribucion y Excelencia S.A. / DESA)</li>
+            <li><strong>Sellos de cumplimiento:</strong> las fichas de producto incluyen el sello Minsal de advertencia sanitaria para alcohol, requisito legal en Chile que ademas transmite confianza</li>
+        </ul>
+    </div>
+
+    <!-- ============ SECCION 5: E-COMMERCE SEO (VTEX) ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">SEO E-Commerce (VTEX)</div>
+            <div class="section-score good">65/100</div>
+        </div>
+
+        <h3>5.1 Fichas de Producto</h3>
+
+        <div class="rec-grid">
+            <div class="rec-card">
+                <h4>Titles y Descriptions</h4>
+                <p>Bien optimizados. Incluyen nombre de producto, marca y formato (ej: "Whiskey Jack Daniel's Old No 7 750cc"). Meta descriptions con copy de marca autentico.</p>
+            </div>
+            <div class="rec-card">
+                <h4>Schema de Producto</h4>
+                <p>Presente y completo: precio, moneda (CLP), disponibilidad (instock), SKU, marca y categoria via meta tags product:*.</p>
+            </div>
+            <div class="rec-card">
+                <h4>Breadcrumbs</h4>
+                <p>Presentes y coherentes con la jerarquia de categorias (Inicio &gt; Whisky &gt; Tennessee Whiskey y Bourbon &gt; Tennessee Whiskey).</p>
+            </div>
+            <div class="rec-card">
+                <h4>Canonical</h4>
+                <p>Autoreferenciado correctamente en todas las fichas de producto verificadas, sin parametros de tracking.</p>
+            </div>
+        </div>
+
+        <h3>5.2 Paginas de Categoria</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Canonical</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Autoreferenciado (ej: /whisky)</td>
+                </tr>
+                <tr>
+                    <td>Breadcrumbs</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Inicio &gt; Whisky</td>
+                </tr>
+                <tr>
+                    <td>Filtros / Facetas</td>
+                    <td><span class="badge badge-ok">Amplios</span></td>
+                    <td>Sub-categoria, Marca, Maridaje, Pais de Origen, Sabor, Rango de Precio</td>
+                </tr>
+                <tr>
+                    <td>Texto descriptivo unico</td>
+                    <td><span class="badge badge-high">Ausente</span></td>
+                    <td>Solo grilla de productos, sin copy propio de categoria</td>
+                </tr>
+                <tr>
+                    <td>Meta title/description</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Presentes y con longitud adecuada</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-success">
+            <strong>Filtro de "Maridaje" es un diferenciador SEO valioso</strong>
+            El filtro por maridaje (pairing) en la categoria Whisky es poco comun en e-commerce de licores y puede generar URLs facetadas de alto valor comercial si se gestionan con canonical apropiado (ej. "whisky para maridar con carnes rojas"). Se recomienda evaluar convertir las combinaciones de mayor busqueda en landing pages estaticas en vez de solo filtros dinamicos.
+        </div>
+
+        <h3>5.3 Cumplimiento Regulatorio (Venta de Alcohol Online)</h3>
+        <p>Se verifico la presencia del sello del Ministerio de Salud (Minsal) en las imagenes de producto, requisito legal en Chile para la venta de bebidas alcoholicas online. Este es un elemento de cumplimiento correcto que tambien aporta confianza (trust signal) tanto a usuarios como, indirectamente, a la evaluacion de calidad de contenido de Google para YMYL-adyacentes (categorias sensibles).</p>
+    </div>
+
+    <!-- ============ SECCION 6: PLAN DE ACCION ============ -->
+    <div class="section action-plan">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            <div class="section-title">Plan de Accion Priorizado</div>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-critical">Prioridad Critica - Semana 1-2</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Corregir canonical de /sobre-nosotros para que se autoreferencie</td>
+                        <td>Evitar exclusion de indexacion de la pagina institucional</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Corregir o retirar el certificado SSL de housebar.cl (sin www), o forzar redireccion a nivel de servidor antes del handshake TLS</td>
+                        <td>Eliminar errores de seguridad en accesos directos sin www</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Bloquear o canonicalizar URLs de busqueda facetada (?initialMap=, ?map=, ?query=) enlazadas desde el home</td>
+                        <td>Reducir riesgo de contenido duplicado y desperdicio de crawl budget</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Corregir typo "Region Metroplitana" a "Region Metropolitana" en el footer</td>
+                        <td>Consistencia NAP para SEO local</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Unificar el mensaje de antiguedad de la empresa (5 anos vs 30+ anos) entre home y "Sobre Nosotros"</td>
+                        <td>Mejor consistencia de marca y senales E-E-A-T</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-high">Prioridad Alta - Semana 3-4</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>6</td>
+                        <td>Crear y verificar Google Business Profile con la direccion de Lampa</td>
+                        <td>Aparecer en Google Maps y busquedas locales de licoreria</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Agregar schema FAQPage a la seccion de preguntas frecuentes del home</td>
+                        <td>Rich snippets tipo acordeon en resultados de busqueda</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Agregar schema LocalBusiness con direccion, telefono y geo-coordenadas</td>
+                        <td>Mejor comprension de entidad local por Google</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Reemplazar el og:image generico del home por una imagen de productos/lifestyle</td>
+                        <td>Mejor preview al compartir en WhatsApp y redes sociales</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Reescribir el email de soporte para usar dominio housebar.cl en vez de desa.cl</td>
+                        <td>Mayor consistencia y confianza de marca</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-medium">Prioridad Media - Mes 2</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>11</td>
+                        <td>Agregar 150-250 palabras de texto descriptivo unico en las paginas de categoria principales (whisky, vinos, licores, espumantes)</td>
+                        <td>Mayor relevancia tematica y trafico informacional en categorias</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Lanzar seccion de blog con contenido de maridaje, recetas de coctel y guias de tipos de licor</td>
+                        <td>Trafico informacional que convierte a mediano plazo</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Crear perfiles en LinkedIn (canal B2B/eventos) y evaluar TikTok/YouTube para contenido de coctel</td>
+                        <td>Ampliar alcance de marca y señales sociales</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Diversificar el anchor text interno del bloque SEO del home para evitar repetir 3+ enlaces a la misma URL de categoria</td>
+                        <td>Distribucion mas eficiente de link equity interno</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Crear una pagina de contacto dedicada con NAP completo y mapa embebido</td>
+                        <td>Refuerza SEO local y facilita conversion B2B</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-low">Optimizacion Continua - Mes 3+</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>16</td>
+                        <td>Convertir combinaciones de filtro de alto volumen (ej. "whisky para maridar con carnes") en landing pages estaticas</td>
+                        <td>Captura de busquedas long-tail de alta intencion</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>Solicitar resenas de clientes en Google Business Profile una vez creado</td>
+                        <td>Social proof y mejor ranking local</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>Ampliar titles de categoria mas alla de "[Categoria] - Housebar" con diferenciadores</td>
+                        <td>Mejor CTR en resultados de busqueda</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>Monitorear cobertura de indexacion del sitemap de 895+ productos en Search Console</td>
+                        <td>Detectar productos no indexados a tiempo</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>Explorar Review/AggregateRating schema en fichas de producto si se habilitan resenas</td>
+                        <td>Estrellas en resultados de busqueda de producto</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>6.2 Schema Recomendado (LocalBusiness + FAQPage)</h3>
+
+        <div class="code-block">
+<span class="comment">// Agregar en el &lt;head&gt; del homepage, junto al Organization existente</span>
+<span class="tag">&lt;script type="application/ld+json"&gt;</span>
+{
+  <span class="attr">"@context"</span>: <span class="value">"https://schema.org"</span>,
+  <span class="attr">"@type"</span>: <span class="value">"LocalBusiness"</span>,
+  <span class="attr">"name"</span>: <span class="value">"Housebar"</span>,
+  <span class="attr">"url"</span>: <span class="value">"https://www.housebar.cl"</span>,
+  <span class="attr">"telephone"</span>: <span class="value">"+56938623200"</span>,
+  <span class="attr">"email"</span>: <span class="value">"soportehousebar@housebar.cl"</span>,
+  <span class="attr">"address"</span>: {
+    <span class="attr">"@type"</span>: <span class="value">"PostalAddress"</span>,
+    <span class="attr">"streetAddress"</span>: <span class="value">"Av La Montana 776"</span>,
+    <span class="attr">"addressLocality"</span>: <span class="value">"Lampa"</span>,
+    <span class="attr">"addressRegion"</span>: <span class="value">"Region Metropolitana"</span>,
+    <span class="attr">"addressCountry"</span>: <span class="value">"CL"</span>
+  },
+  <span class="attr">"sameAs"</span>: [
+    <span class="value">"https://web.facebook.com/housebarcl/"</span>,
+    <span class="value">"https://www.instagram.com/housebar_cl/"</span>
+  ]
+}
+<span class="tag">&lt;/script&gt;</span>
+        </div>
+
+        <h3>6.3 KPIs de Seguimiento</h3>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-value">50</div>
+                <div class="kpi-label">Score SEO Actual</div>
+                <div class="kpi-target">Meta: 70+</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">895+</div>
+                <div class="kpi-label">Productos en Sitemap</div>
+                <div class="kpi-target">Meta: 100% indexados</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">2</div>
+                <div class="kpi-label">Redes Sociales Activas</div>
+                <div class="kpi-target">Meta: 4 perfiles</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">0</div>
+                <div class="kpi-label">Articulos de Blog</div>
+                <div class="kpi-target">Meta: 15+ en 6 meses</div>
+            </div>
+        </div>
+
+        <h3>6.4 Timeline de Implementacion</h3>
+
+        <div class="timeline">
+            <div class="timeline-item phase1">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 1: Correccion Tecnica (Semana 1-2)</div>
+                    <div class="timeline-desc">Canonical de "Sobre Nosotros", certificado SSL sin www, bloqueo de URLs facetadas, typo de direccion, mensaje unificado de antiguedad. Impacto inmediato en indexacion y consistencia.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase2">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 2: Local SEO + Schema (Semana 3-4)</div>
+                    <div class="timeline-desc">Google Business Profile, schema LocalBusiness y FAQPage, og:image de home, email de dominio propio. Visibilidad local y rich snippets.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase3">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 3: Contenido y Estructura (Mes 2)</div>
+                    <div class="timeline-desc">Texto descriptivo en categorias, lanzamiento de blog, perfiles sociales adicionales, pagina de contacto dedicada. Crecimiento organico sostenido.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase4">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 4: Escala y Autoridad (Mes 3+)</div>
+                    <div class="timeline-desc">Landing pages de combinaciones de filtro, resenas de Google, optimizacion de titles de categoria, monitoreo continuo de indexacion del catalogo.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Auditoria SEO - housebar.cl</strong></p>
+        <p>Generado el 08 de Julio 2026 | Analisis basado en datos reales del sitio (scraping y verificacion tecnica directa)</p>
+        <p>Este documento es confidencial y de uso exclusivo para el cliente.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
