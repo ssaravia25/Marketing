@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria SEO - luxmetal.cl</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f2027;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e17055;
+            --critical: #d63031;
+            --steel: #37474f;
+            --steel-light: #546e7a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ============ COVER ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(230,81,0,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(44,83,100,0.3) 0%, transparent 50%);
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+
+        .cover-logo {
+            font-size: 13px; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 40px;
+            position: relative; z-index: 1; font-weight: 600;
+        }
+
+        .cover h1 {
+            font-size: 48px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+
+        .cover-domain {
+            font-size: 26px; font-weight: 300; color: rgba(255,255,255,0.55);
+            margin-bottom: 8px; position: relative; z-index: 1;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+
+        .cover-subtitle {
+            font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.65);
+            margin-bottom: 45px; position: relative; z-index: 1;
+        }
+
+        .cover-meta {
+            position: relative; z-index: 1;
+            display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+        }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.4); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 15px; font-weight: 600; }
+
+        .cover-score { margin-top: 45px; position: relative; z-index: 1; }
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid #f39c12;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; background: rgba(243,156,18,0.08);
+        }
+        .score-circle .number { font-size: 44px; font-weight: 900; color: #f39c12; line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
+        /* ============ CONTENT ============ */
+        .content { max-width: 860px; margin: 0 auto; padding: 20px 10px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+            page-break-after: always;
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-top: 25px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 18px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; }
+        .summary-score-card .score.critical { color: var(--critical); }
+        .summary-score-card .score.low { color: #e67e22; }
+        .summary-score-card .score.mid { color: #f39c12; }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; page-break-inside: avoid; padding-top: 5px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+        .section-score {
+            margin-left: auto; background: var(--bg-alt); padding: 6px 14px;
+            border-radius: 8px; font-weight: 700; font-size: 15px;
+        }
+        .section-score.low { color: var(--critical); background: #ffeef0; }
+        .section-score.mid { color: #e67e22; background: #fef9e7; }
+        .section-score.good { color: var(--success); background: #e8f8f5; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 24px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 14px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-critical { background: #ffeef0; color: var(--critical); }
+        .badge-high { background: #fff3e0; color: #e67e22; }
+        .badge-medium { background: #fef9e7; color: #f39c12; }
+        .badge-low { background: #e8f8f5; color: #27ae60; }
+        .badge-ok { background: #e8f8f5; color: var(--success); }
+        .badge-none { background: #f0f0f0; color: #999; }
+
+        .alert {
+            padding: 15px 18px; border-radius: 9px; margin: 12px 0; font-size: 13px;
+        }
+        .alert-critical { background: #ffeef0; border-left: 4px solid var(--critical); color: #c0392b; }
+        .alert-warning { background: #fff8e1; border-left: 4px solid #f39c12; color: #e67e22; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #eef2ff; border-left: 4px solid #5b6abf; color: #3949ab; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .code-block {
+            background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11px;
+            line-height: 1.7; overflow-x: auto; margin: 12px 0; white-space: pre-wrap;
+        }
+        .code-block .comment { color: #6c7086; }
+        .code-block .tag { color: #f38ba8; }
+        .code-block .attr { color: #a6e3a1; }
+        .code-block .value { color: #f9e2af; }
+
+        .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+        .rec-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+        .rec-card h4 { margin: 0 0 6px; font-size: 13px; }
+        .rec-card p { font-size: 12px; color: var(--text-light); margin: 0; }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        .action-plan { page-break-before: always; padding-top: 10px; }
+        .priority-section { margin-bottom: 24px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 12px;
+        }
+        .priority-critical { background: var(--critical); color: white; }
+        .priority-high { background: #e67e22; color: white; }
+        .priority-medium { background: #f39c12; color: white; }
+        .priority-low { background: var(--success); color: white; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 22px; font-weight: 800; color: var(--primary); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 3px;
+        }
+
+        .competitor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+        .competitor-card {
+            background: var(--bg-alt); border-radius: 9px; padding: 14px;
+            border: 1px solid var(--border);
+        }
+        .competitor-card .name { font-weight: 700; color: var(--primary); margin-bottom: 3px; font-size: 13px; }
+        .competitor-card .url { font-size: 11px; color: var(--accent); margin-bottom: 4px; font-family: monospace; }
+        .competitor-card .strength { font-size: 12px; color: var(--text-light); }
+
+        .keyword-table td:first-child { font-weight: 600; color: var(--primary); }
+
+        .tree-structure {
+            background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11.5px;
+            line-height: 1.8; margin: 12px 0;
+        }
+        .tree-structure .folder { color: #89b4fa; }
+        .tree-structure .file { color: #cdd6f4; }
+        .tree-structure .warning { color: #f38ba8; }
+        .tree-structure .ok { color: #a6e3a1; }
+        .tree-structure .dim { color: #6c7086; }
+
+        .timeline { margin: 16px 0; }
+        .timeline-item {
+            display: flex; gap: 16px; margin-bottom: 16px;
+            padding-left: 20px; border-left: 3px solid var(--border);
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            width: 12px; height: 12px; border-radius: 50%;
+            position: absolute; left: -7.5px; top: 4px;
+        }
+        .timeline-item.phase1::before { background: var(--critical); }
+        .timeline-item.phase2::before { background: #e67e22; }
+        .timeline-item.phase3::before { background: #f39c12; }
+        .timeline-item.phase4::before { background: var(--success); }
+        .timeline-content { flex: 1; }
+        .timeline-label { font-weight: 700; font-size: 14px; color: var(--primary); margin-bottom: 4px; }
+        .timeline-desc { font-size: 12px; color: var(--text-light); }
+
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; margin: 16px 0;
+        }
+        .kpi-card {
+            background: white; border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .kpi-card .kpi-value { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .kpi-card .kpi-label {
+            font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+            color: var(--text-light); margin-top: 2px;
+        }
+        .kpi-card .kpi-target { font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 3px; }
+
+        .footer {
+            text-align: center; padding: 30px; margin-top: 40px;
+            border-top: 2px solid var(--border); color: var(--text-light); font-size: 11px;
+        }
+
+        @media print {
+            .cover { margin: -15mm -12mm 0 -12mm; width: calc(100% + 24mm); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+    <div class="cover-logo">Auditoria SEO Profesional</div>
+    <h1>Auditoria <span>SEO</span></h1>
+    <div class="cover-domain">luxmetal.cl</div>
+    <div class="cover-subtitle">Arriendo de Gruas Horquillas - Servicio Industrial B2B</div>
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Fecha</div>
+            <div class="value">14 Agosto 2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Experiencia</div>
+            <div class="value">30+ Anos</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">CMS</div>
+            <div class="value">WordPress + Elementor</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Industria</div>
+            <div class="value">Arriendo de Equipos Industriales</div>
+        </div>
+    </div>
+    <div class="cover-score">
+        <div class="score-circle">
+            <div class="number">35</div>
+            <div class="out-of">/ 100</div>
+            <div class="label">Score SEO</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CONTENIDO ============ -->
+<div class="content">
+
+    <!-- Resumen Ejecutivo -->
+    <div class="executive-summary">
+        <h2>Resumen Ejecutivo</h2>
+        <p>
+            <strong>Lux-Metal</strong> es una empresa familiar chilena (3 generaciones, 15+ personas) con mas de 30 anos de experiencia, dedicada al <strong>arriendo de gruas horquillas</strong> (3 y 7 toneladas, con o sin operador, arriendo spot o por contrato) para bodegas, retail, construccion, metalmecanica y logistica, ubicada en San Miguel, Region Metropolitana. El sitio corre sobre <strong>WordPress 7.0.4 + Elementor + Yoast SEO</strong> y cuenta con solo 4 paginas de contenido real: home, servicios, sobre nosotros y contacto.
+        </p>
+        <p>
+            La base tecnica minima esta presente (SSL activo, robots.txt correcto, sitemap XML valido, canonicals autoreferenciados en las paginas revisadas), pero el sitio arrastra fallas graves que hoy le restan credibilidad y autoridad tematica frente a Google: el <strong>unico boton de navegacion real de la homepage ("Ver mas") apunta a una URL que devuelve error 404</strong>, el schema.org de Organization contiene un <strong>numero de telefono evidentemente falso</strong> (no coincide con ningun dato real de contacto), y no existe schema LocalBusiness pese a ser un negocio estrictamente local.
+        </p>
+        <p>
+            El hallazgo mas critico de todo el analisis es que <strong>el blog completo del sitio es contenido de muestra ("Lorem Ipsum") sin editar, heredado del tema de WordPress</strong>: 8 posts sobre manufactura generica en ingles, sin ninguna relacion con arriendo de gruas horquilla, cuya caja de autor enlaza a las redes sociales del propio vendedor del tema (ThemeRex) en vez de a Lux-Metal. Este contenido esta confirmado como indexable via el sitemap XML del sitio, lo que diluye la relevancia tematica del dominio completo.
+        </p>
+        <p>
+            El area mas debil es <strong>Off-Page y SEO Local</strong>: no se detecto Google Business Profile, no existe marcado NAP/LocalBusiness, no hay resenas ni testimonios visibles, y la pagina de Facebook usa una URL sin personalizar (ID numerico). Con las correcciones tecnicas priorizadas, la limpieza del contenido de relleno y el fortalecimiento de la presencia local, Lux-Metal tiene una oportunidad clara de crecimiento en busquedas de alta intencion comercial como "arriendo grua horquilla Santiago", hoy practicamente sin competencia optimizada por parte del propio sitio.
+        </p>
+
+        <div class="summary-scores">
+            <div class="summary-score-card">
+                <div class="score low">45</div>
+                <div class="category">SEO Tecnico</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score low">42</div>
+                <div class="category">On-Page</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score critical">28</div>
+                <div class="category">Contenido</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score critical">18</div>
+                <div class="category">Off-Page / Local</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 1: SEO TECNICO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">SEO Tecnico</div>
+            <div class="section-score low">45/100</div>
+        </div>
+
+        <h3>1.1 Infraestructura del Sitio</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">WordPress 7.0.4</div>
+                <div class="metric-label">CMS + Elementor 4.2.2 + Yoast SEO</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">4</div>
+                <div class="metric-label">Paginas de Contenido Real</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">~35</div>
+                <div class="metric-label">URLs Totales Mapeadas (incluye demo/utilitarias)</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SSL/HTTPS</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Certificado valido en todas las URLs revisadas</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Robots.txt</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Yoast SEO por defecto, Disallow vacio (todo rastreable), referencia correcta al sitemap</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Sitemap XML</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>sitemap_index.xml con 7 sub-sitemaps (post, page, cpt_layouts, metform-form, category, post_tag, author)</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Canonical (todas las paginas)</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                    <td>Autoreferenciado correctamente en home, /services, /about-us y /contact</td>
+                    <td><span class="badge badge-low">Bajo</span></td>
+                </tr>
+                <tr>
+                    <td>Enlace "Ver mas" (CTA principal home)</td>
+                    <td><span class="badge badge-critical">Error 404</span></td>
+                    <td>Apunta a /servicios, URL inexistente. La correcta es /services</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Schema.org Organization</td>
+                    <td><span class="badge badge-critical">Dato falso</span></td>
+                    <td>Telefono +56 2 1234 5678 (placeholder), no coincide con datos reales</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>Schema.org LocalBusiness</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td>Solo existe Organization generico, sin address ni geo</td>
+                    <td><span class="badge badge-critical">Critico</span></td>
+                </tr>
+                <tr>
+                    <td>URLs de layouts de Elementor</td>
+                    <td><span class="badge badge-high">Indexables</span></td>
+                    <td>/layouts/sidebar-main, /layouts/header-main-*, /layouts/footer-main-* incluidas en cpt_layouts-sitemap.xml</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>URLs de formularios Metform</td>
+                    <td><span class="badge badge-high">Indexables</span></td>
+                    <td>/metform-form/* incluidas en metform-form-sitemap.xml</td>
+                    <td><span class="badge badge-high">Alto</span></td>
+                </tr>
+                <tr>
+                    <td>Contadores "Por Los Numeros"</td>
+                    <td><span class="badge badge-medium">Riesgo</span></td>
+                    <td>Muestran "0+" en el HTML estatico (dependientes de JS, sin fallback)</td>
+                    <td><span class="badge badge-medium">Medio</span></td>
+                </tr>
+                <tr>
+                    <td>Velocidad de carga (Core Web Vitals)</td>
+                    <td><span class="badge badge-none">No medido</span></td>
+                    <td>Recomendado medir con PageSpeed Insights / Search Console</td>
+                    <td><span class="badge badge-medium">Por confirmar</span></td>
+                </tr>
+                <tr>
+                    <td>Mobile-friendly</td>
+                    <td><span class="badge badge-none">No confirmado</span></td>
+                    <td>Inferido responsive por uso de Elementor, sin verificacion directa</td>
+                    <td><span class="badge badge-medium">Por confirmar</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Enlace roto en el CTA principal de la homepage</strong>
+            El unico enlace interno real de la homepage -- el boton "Ver mas" -- apunta a <code>https://luxmetal.cl/servicios</code>, URL que devuelve error 404 "Page not found" (verificado directamente, meta robots "noindex, follow" en la pagina de error). La URL correcta y funcional es <code>https://luxmetal.cl/services</code>. Es simultaneamente un problema tecnico, de experiencia de usuario y de perdida de conversion: un visitante que llega a la home y quiere ver los servicios choca con un error.
+        </div>
+
+        <div class="alert alert-critical">
+            <strong>Schema.org con telefono falso y sin datos locales</strong>
+            El JSON-LD tipo Organization presente en la homepage declara el telefono <code>+56 2 1234 5678</code>, una secuencia de digitos correlativos tipica de un dato de relleno, que no coincide con ninguno de los telefonos reales del negocio (+56 9 7745 8631 / +56 2 2552 9212, visibles solo en /contact). Ademas no usa el tipo LocalBusiness, no incluye address ni geo, y no enlaza (sameAs) los perfiles sociales reales. Un schema con un dato falso puede generar informacion incorrecta en resultados enriquecidos de Google y en asistentes que lean structured data.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>URLs utilitarias de Elementor y Metform indexables</strong>
+            El sitemap confirma cpt_layouts-sitemap.xml y metform-form-sitemap.xml activos: las URLs tecnicas del constructor de paginas (/layouts/sidebar-main, /layouts/header-main-light-logo-menu, /layouts/footer-main-dark, etc) y del plugin de formularios (/metform-form/contact-2-col-left-aligned, /metform-form/sign-up-centered, etc) estan publicamente rastreables e incluidas en el sitemap. Son fragmentos de plantilla sin contenido util ni relevancia de busqueda; no deberian existir como paginas publicas indexables.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Contadores "0+" dependientes de JavaScript sin fallback</strong>
+            La seccion "Por Los Numeros" muestra literalmente "0+" en el HTML estatico (ej. "0+ Mas de 30 Anos de Experiencia", "0+ Servicios / Mes", "0+ Clientes Atendidos"), indicando un contador animado via JavaScript que reemplaza el "0" solo tras ejecutarse en el navegador. Si el renderizador de Google, un bot, o un usuario con JS deshabilitado no ejecuta ese script, la seccion muestra ceros -- un dato contradictorio con el propio mensaje de "30+ anos de experiencia". Se recomienda que el valor final quede tambien en el HTML estatico como fallback.
+        </div>
+
+        <h3>1.2 Estructura de URLs</h3>
+
+        <div class="tree-structure">
+<span class="folder">luxmetal.cl/</span>
+├── <span class="ok">/</span> <span class="dim">- homepage, CTA "Ver mas" roto (ver 1.1)</span>
+├── <span class="ok">services/</span> <span class="dim">- pagina real de servicios (flota, modalidades de arriendo)</span>
+├── <span class="ok">about-us/</span> <span class="dim">- pagina real "Sobre Nosotros" (historia, equipo, directores)</span>
+├── <span class="ok">contact/</span> <span class="dim">- pagina real de contacto, sin title ni description (ver seccion 2)</span>
+├── <span class="warning">servicios</span> <span class="dim">- 404, enlazado desde el boton "Ver mas" de la home</span>
+├── <span class="warning">the-evolution-of-manufacturing-techniques-in-2025</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">cost-cutting-strategies-for-small-manufacturers</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">3d-printing-a-game-changer-for-manufacturers</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">workforce-development-for-the-manufacturing-sector</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">the-future-of-supply-chain-management-in-manufacturing</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">how-iot-is-improving-industrial-automation</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">sustainability-practices-in-modern-factories</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">digital-twins-and-their-role-in-manufacturing-efficiency</span> <span class="dim">- post demo Lorem Ipsum</span>
+├── <span class="warning">category/[financial-strategies|human-resources|industrial-practices|manufacturing|market-analysis|operations]</span> <span class="dim">- 6 categorias de blog demo, en ingles</span>
+├── <span class="warning">tag/[3d-printing|automation|business|cost-cutting|digital-twins|education]</span> <span class="dim">- tag pages del blog demo</span>
+├── <span class="warning">author/tomas</span> <span class="dim">- autor demo, bio enlaza a redes de ThemeRex (vendedor del tema)</span>
+├── <span class="warning">layouts/*</span> <span class="dim">- 6 URLs de plantillas Elementor (sidebar, header, footer) indexables</span>
+└── <span class="warning">metform-form/*</span> <span class="dim">- 4 URLs de plantillas de formulario indexables</span>
+        </div>
+
+        <h3>1.3 Sitemap y Rastreo</h3>
+        <p>El sitemap principal (<code>sitemap_index.xml</code>) es un sitemapindex generado por Yoast SEO que referencia 7 sub-sitemaps: <code>post-sitemap.xml</code> (ultima modificacion 2025-03-10), <code>page-sitemap.xml</code> (actualizado 2026-08-06, muestra edicion reciente en las paginas reales), <code>cpt_layouts-sitemap.xml</code>, <code>metform-form-sitemap.xml</code>, <code>category-sitemap.xml</code>, <code>post_tag-sitemap.xml</code> y <code>author-sitemap.xml</code>.</p>
+
+        <ul>
+            <li>La existencia de <code>post-sitemap.xml</code> confirma que los 8 posts de blog demo estan incluidos en el sitemap y son indexables (meta robots "index, follow" en el post revisado)</li>
+            <li>La existencia de <code>cpt_layouts-sitemap.xml</code> y <code>metform-form-sitemap.xml</code> confirma que las URLs utilitarias de Elementor y Metform tambien estan sitemapeadas</li>
+            <li>El robots.txt referencia correctamente la ubicacion del sitemap index</li>
+            <li>Recomendacion: una vez limpiado el contenido de relleno, enviar el sitemap actualizado en Google Search Console y monitorear la cobertura de indexacion</li>
+        </ul>
+    </div>
+
+    <!-- ============ SECCION 2: SEO ON-PAGE ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">SEO On-Page</div>
+            <div class="section-score low">42/100</div>
+        </div>
+
+        <h3>2.1 Meta Tags y Titles por Pagina</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pagina</th>
+                    <th>Title</th>
+                    <th>Evaluacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homepage</td>
+                    <td>Arriendo de Gruas Horquillas - Lux Metal</td>
+                    <td><span class="badge badge-ok">Bueno</span></td>
+                </tr>
+                <tr>
+                    <td>/services</td>
+                    <td>LUX-METAL: Servicios de Arriendo de Gruas Horquillas. Confiabilidad. Eficiencia. Disponibilidad 24/7.</td>
+                    <td><span class="badge badge-critical">Muy largo</span></td>
+                </tr>
+                <tr>
+                    <td>/about-us</td>
+                    <td>Optimiza tus operaciones con Gruas Horquillas de Lux-Metal</td>
+                    <td><span class="badge badge-medium">Mejorable</span></td>
+                </tr>
+                <tr>
+                    <td>/contact</td>
+                    <td><em>(vacio)</em></td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Title de /services excesivamente largo</strong>
+            "LUX-METAL: Servicios de Arriendo de Gruas Horquillas. Confiabilidad. Eficiencia. Disponibilidad 24/7." se cortara en el SERP de Google (limite practico ~55-60 caracteres visibles). Ademas concatena fragmentos de frase sueltos en vez de una propuesta de valor cohesionada, leyendose como relleno de keywords de baja calidad.
+        </div>
+
+        <h3>2.2 Meta Descriptions</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pagina</th>
+                    <th>Meta Description</th>
+                    <th>Evaluacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Homepage</td>
+                    <td>Mas de 30 anos de experiencia en arriendo de gruas horquillas disponibles 24/7. Ofrecemos soluciones eficientes para carga y transporte interno.</td>
+                    <td><span class="badge badge-ok">Buena</span></td>
+                </tr>
+                <tr>
+                    <td>/services</td>
+                    <td>Lux-Metal esta dedicada a ofrecer eficiencia, seguridad y precision en distintas industrias a traves de nuestro servicio de arriendo de grua horquilla.</td>
+                    <td><span class="badge badge-ok">Buena</span></td>
+                </tr>
+                <tr>
+                    <td>/about-us</td>
+                    <td>Mas de 30 anos de experiencia nos respaldan. Nos especializamos en brindar soluciones eficientes para carga, descarga y transporte interno en distintos sectores industriales.</td>
+                    <td><span class="badge badge-ok">Buena</span></td>
+                </tr>
+                <tr>
+                    <td>/contact</td>
+                    <td><em>(vacia)</em></td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>/contact sin title ni meta description</strong>
+            La pagina de conversion mas importante del sitio -- contiene telefonos, WhatsApp, email y direccion -- no tiene configurado ni title ni meta description. En el SERP, Google mostrara un titulo autogenerado (probablemente solo "Contacto" o el nombre del sitio) y un snippet extraido al azar del contenido. Una pagina clave para busquedas como "contacto arriendo grua horquilla San Miguel" hoy no esta optimizada en absoluto.
+        </div>
+
+        <h3>2.3 Estructura de Encabezados: Title = H1 Duplicado</h3>
+
+        <div class="code-block">
+<span class="tag">/services</span>
+<span class="comment">Title:</span> LUX-METAL: Servicios de Arriendo de Gruas Horquillas. Confiabilidad. Eficiencia. Disponibilidad 24/7.
+<span class="tag">&lt;h1&gt;</span> LUX-METAL: Servicios de Arriendo de Gruas Horquillas. Confiabilidad. Eficiencia. Disponibilidad 24/7. <span class="comment">-- identico al title</span>
+
+<span class="tag">/about-us</span>
+<span class="comment">Title:</span> Optimiza tus operaciones con Gruas Horquillas de Lux-Metal
+<span class="tag">&lt;h1&gt;</span> Optimiza tus operaciones con Gruas Horquillas de Lux-Metal <span class="comment">-- identico al title</span>
+
+<span class="tag">Homepage</span>
+<span class="comment">Title:</span> Arriendo de Gruas Horquillas - Lux Metal
+<span class="tag">&lt;h1&gt;</span> ARRIENDO DE  GRUAS HORQUILLAS <span class="comment">-- OK, distinto del title (nota: doble espacio en el HTML)</span>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Patron de duplicacion Title = H1 en /services y /about-us</strong>
+            En ambas paginas el H1 es una copia exacta del title tag. Esto es un desperdicio estructural: title y H1 deberian ser variantes complementarias (el title orientado al SERP/CTR, el H1 orientado a la lectura en pagina), no el mismo texto repetido dos veces seguidas para el usuario.
+        </div>
+
+        <h3>2.4 Enlazado Interno</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">1</div>
+                <div class="metric-label">Enlace Interno Real en Homepage (y roto)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Enlaces Cruzados entre Services/About/Contact</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Enlaces Externos en Homepage</div>
+            </div>
+        </div>
+
+        <div class="alert alert-critical">
+            <strong>Enlazado interno practicamente inexistente</strong>
+            En toda la homepage hay un solo enlace interno real en el HTML (el boton "Ver mas", ademas roto -- ver seccion 1.1). El resto de la homepage son imagenes sin texto ancla. No hay enlaces cruzados entre /services, /about-us y /contact: /about-us no enlaza a /services ni a /contact, y /services no enlaza a /contact para convertir. Un sitio de 4 paginas reales deberia tener enlazado interno trivial de resolver.
+        </div>
+
+        <h3>2.5 Imagenes y Alt Text</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">38</div>
+                <div class="metric-label">Imagenes en Homepage</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Sin Atributo Alt (Homepage)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">--</div>
+                <div class="metric-label">Services / About / Contact: Sin Verificar</div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Buen resultado en homepage, pendiente verificar el resto</strong>
+            Las 38 imagenes de la homepage (incluyendo la galeria de 24 fotos) tienen atributo alt presente. No se verifico el estado de alt text en /services, /about-us, /contact ni en el blog; se recomienda auditar esas paginas tambien.
+        </div>
+
+        <h3>2.6 Open Graph</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>og:title / og:description</td>
+                    <td>Presentes y descriptivos en las 4 paginas reales</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+                <tr>
+                    <td>og:type (Homepage)</td>
+                    <td>website</td>
+                    <td><span class="badge badge-ok">OK</span></td>
+                </tr>
+                <tr>
+                    <td>og:type (/services y /about-us)</td>
+                    <td>article</td>
+                    <td><span class="badge badge-medium">Incorrecto</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-info">
+            <strong>og:type "article" en paginas que no son articulos</strong>
+            /services y /about-us declaran og:type "article" cuando deberian usar "website", ya que no son contenido editorial tipo blog sino paginas institucionales/comerciales. Impacto menor, pero afecta como se categoriza el contenido al compartirse.
+        </div>
+
+        <h3>2.7 Idioma de las URLs</h3>
+        <div class="alert alert-warning">
+            <strong>Slugs de URL en ingles, inconsistentes con el contenido en espanol</strong>
+            El sitio declara idioma es-CL, la navegacion y los titulos estan en espanol, pero los slugs de URL son en ingles (/about-us, /services, /contact) -- mientras que el unico enlace interno de la home apunta a un slug en espanol (/servicios) que no existe. No hay tags hreflang ni configuracion multi-idioma real. URLs en espanol con keywords locales (ej. /servicios, /arriendo-gruas-horquilla) tendrian mas valor de posicionamiento que slugs genericos en ingles.
+        </div>
+    </div>
+
+    <!-- ============ SECCION 3: CONTENIDO Y KEYWORDS ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">Contenido y Estrategia de Keywords</div>
+            <div class="section-score critical">28/100</div>
+        </div>
+
+        <h3>3.1 El Blog es Contenido Demo sin Editar</h3>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">8</div>
+                <div class="metric-label">Posts de Blog, 100% Lorem Ipsum</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">6</div>
+                <div class="metric-label">Categorias en Ingles sin Relacion al Rubro</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Posts con Contenido Real</div>
+            </div>
+        </div>
+
+        <p>Se confirmo, mediante revision completa de un post publicado (<code>the-evolution-of-manufacturing-techniques-in-2025</code>), que el blog completo de Lux-Metal es contenido de muestra del tema de WordPress, nunca reemplazado por contenido real:</p>
+
+        <ul>
+            <li><strong>Cuerpo del texto en Lorem Ipsum:</strong> parrafos literales de relleno tipografico ("Quspendisse non sapien in sem vehicula bibendum. Curabitur egestas erat sed vulputate mattis..."), incluyendo un supuesto testimonio atribuido a "Peter Smith" que tambien es texto de relleno</li>
+            <li><strong>Autor "tomas" con bio del vendedor del tema:</strong> la caja de "Sobre el autor" enlaza a las redes sociales oficiales de <strong>ThemeRex</strong> (twitter.com/ThemerexThemes, facebook.com/ThemeRexStudio, instagram.com/themerex_net) y a un correo update@themerex.net -- el sitio promociona gratis, en cada post, al vendedor del tema en vez de a Lux-Metal</li>
+            <li><strong>Correo placeholder visible:</strong> el link de "compartir por email" usa la direccion de prueba test@fwe.com, aun activa en produccion</li>
+            <li><strong>Temas sin relacion con el negocio:</strong> los 8 posts tratan sobre manufactura generica, impresion 3D, IoT industrial, cadena de suministro, sostenibilidad en fabricas -- cero relacion, ni siquiera tangencial, con arriendo de gruas horquilla</li>
+            <li><strong>Estructura completa en ingles e indexable:</strong> ademas de los 8 posts, existen 6 categorias en ingles, una pagina de autor y multiples tag pages en ingles, todas confirmadas indexables via post-sitemap.xml</li>
+        </ul>
+
+        <div class="alert alert-critical">
+            <strong>Impacto en autoridad tematica del dominio</strong>
+            Google evalua la relevancia tematica de un dominio en su conjunto (topical authority). Un sitio cuyo blog -- probablemente la seccion con mas paginas de todo el dominio -- habla de manufactura generica en ingles en vez de arriendo de gruas horquilla en Chile, envia senales confusas sobre de que trata realmente el sitio, y diluye cualquier avance logrado por las 4 paginas reales.
+        </div>
+
+        <h3>3.2 Pagina de Servicios: Contenido Correcto pero Delgado</h3>
+        <p>/services cubre bien lo esencial (flota 3 y 7 toneladas, con/sin operador, spot vs. contrato, alianza estrategica) pero todo vive en una sola pagina generica. No hay:</p>
+        <ul>
+            <li>Landing pages individuales por tonelaje (3 toneladas / 7 toneladas) que permitan posicionar keywords especificas</li>
+            <li>Landing pages por vertical de industria (bodega/logistica, retail, construccion, metalmecanica)</li>
+            <li>Mencion de precios o rangos referenciales</li>
+            <li>Detalle de zonas/comunas de cobertura (Santiago, San Miguel y alrededores)</li>
+        </ul>
+
+        <h3>3.3 Keywords Objetivo Recomendadas</h3>
+
+        <table class="keyword-table">
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Intencion</th>
+                    <th>Pagina Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>arriendo grua horquilla santiago</td>
+                    <td>Comercial</td>
+                    <td>Homepage</td>
+                </tr>
+                <tr>
+                    <td>arriendo grua horquilla 3 toneladas</td>
+                    <td>Comercial</td>
+                    <td>Nueva landing dedicada</td>
+                </tr>
+                <tr>
+                    <td>arriendo grua horquilla 7 toneladas</td>
+                    <td>Comercial</td>
+                    <td>Nueva landing dedicada</td>
+                </tr>
+                <tr>
+                    <td>arriendo grua horquilla con operador</td>
+                    <td>Comercial</td>
+                    <td>/services</td>
+                </tr>
+                <tr>
+                    <td>arriendo grua horquilla San Miguel</td>
+                    <td>Comercial / Local</td>
+                    <td>/contact (con contenido local)</td>
+                </tr>
+                <tr>
+                    <td>grua horquilla para bodega</td>
+                    <td>Comercial</td>
+                    <td>Nueva landing por industria (logistica)</td>
+                </tr>
+                <tr>
+                    <td>arriendo grua horquilla para construccion</td>
+                    <td>Comercial</td>
+                    <td>Nueva landing por industria</td>
+                </tr>
+                <tr>
+                    <td>arriendo grua horquilla para retail</td>
+                    <td>Comercial</td>
+                    <td>Nueva landing por industria</td>
+                </tr>
+                <tr>
+                    <td>arriendo montacargas santiago</td>
+                    <td>Comercial (variante de nombre)</td>
+                    <td>Homepage / /services</td>
+                </tr>
+                <tr>
+                    <td>como elegir entre grua horquilla 3 o 7 toneladas</td>
+                    <td>Informacional</td>
+                    <td>Nuevo articulo de blog (real)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Ninguna de estas keywords tiene hoy una pagina dedicada; toda la intencion de busqueda comercial se concentra, sin optimizar del todo, en /services.</p>
+
+        <h3>3.4 Recomendacion Editorial</h3>
+        <p>En lugar de mantener el blog demo, se recomienda eliminar o noindexar todo el contenido de relleno (posts, categorias, tags, autor) y las URLs utilitarias de Elementor/Metform, y reemplazar gradualmente con contenido real y especifico del rubro: casos de uso por industria, guias practicas ("como elegir entre 3 y 7 toneladas", "arriendo spot vs. contrato: cual conviene", "requisitos de seguridad para operar una grua horquilla arrendada"), y contenido orientado a las busquedas locales identificadas arriba.</p>
+    </div>
+
+    <!-- ============ SECCION 4: OFF-PAGE Y LOCAL SEO ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">Off-Page, Local SEO y Presencia Digital</div>
+            <div class="section-score critical">18/100</div>
+        </div>
+
+        <p>Esta es el area mas debil de todo el analisis, y particularmente critica porque Lux-Metal es, por definicion, un negocio hiperlocal: arrienda equipos fisicos que deben trasladarse dentro de un radio operativo desde San Miguel, Santiago.</p>
+
+        <h3>4.1 Presencia en Redes Sociales</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plataforma</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>LinkedIn</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>linkedin.com/company/lux-metal-ltda (enlazado solo desde /contact)</td>
+                </tr>
+                <tr>
+                    <td>Instagram</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>instagram.com/luxmetalgruas (enlazado solo desde /contact)</td>
+                </tr>
+                <tr>
+                    <td>Facebook</td>
+                    <td><span class="badge badge-medium">Sin optimizar</span></td>
+                    <td>facebook.com/profile.php?id=61578189183675 -- URL con ID numerico, sin vanity URL personalizada</td>
+                </tr>
+                <tr>
+                    <td>WhatsApp</td>
+                    <td><span class="badge badge-ok">Activo</span></td>
+                    <td>+56 9 7745 8631, enlazado como boton directo (wa.me)</td>
+                </tr>
+                <tr>
+                    <td>YouTube</td>
+                    <td><span class="badge badge-critical">No enlazado</span></td>
+                    <td>Sin videos de flota en operacion, formato de alto valor para equipos pesados</td>
+                </tr>
+                <tr>
+                    <td>Google Business Profile</td>
+                    <td><span class="badge badge-critical">Sin evidencia</span></td>
+                    <td>No se encontro enlace ni mencion en ninguna pagina del sitio</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>4.2 Local SEO y Datos de Contacto</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Direccion fisica</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>Brigadier de La Cruz 682, 8900243 San Miguel, Region Metropolitana (solo en /contact)</td>
+                </tr>
+                <tr>
+                    <td>Telefono / WhatsApp</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>+56 9 7745 8631 / +56 2 2552 9212 (solo en /contact)</td>
+                </tr>
+                <tr>
+                    <td>Email de contacto</td>
+                    <td><span class="badge badge-ok">Presente</span></td>
+                    <td>ventas@luxmetal.cl (solo en /contact)</td>
+                </tr>
+                <tr>
+                    <td>Schema NAP / LocalBusiness</td>
+                    <td><span class="badge badge-critical">Ausente</span></td>
+                    <td>Los datos reales de contacto no estan estructurados en ningun schema; el unico schema presente usa un telefono falso (ver seccion 1)</td>
+                </tr>
+                <tr>
+                    <td>Google Business Profile</td>
+                    <td><span class="badge badge-critical">Sin evidencia</span></td>
+                    <td>No detectado</td>
+                </tr>
+                <tr>
+                    <td>Mapa embebido en /contact</td>
+                    <td><span class="badge badge-medium">Ausente</span></td>
+                    <td>No se observo mapa de Google Maps incrustado</td>
+                </tr>
+                <tr>
+                    <td>Resenas / testimonios</td>
+                    <td><span class="badge badge-critical">Ausentes</span></td>
+                    <td>No se detectaron resenas de clientes ni logos de empresas que usan el servicio</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-critical">
+            <strong>Sin Google Business Profile visible</strong>
+            Para un negocio de servicios locales B2B como Lux-Metal, el Local Pack de Google (los 3 resultados con mapa que aparecen sobre los organicos en busquedas como "arriendo grua horquilla cerca de mi" o "arriendo grua horquilla Santiago") es frecuentemente el canal de mayor conversion, y hoy Lux-Metal esta ausente de el.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Facebook con URL sin optimizar</strong>
+            La pagina de Facebook usa el ID numerico crudo (facebook.com/profile.php?id=61578189183675) en vez de una vanity URL personalizada, tipico de una pagina recien creada o nunca configurada del todo. Esto hace el link mas dificil de recordar y menos profesional al compartirlo.
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Redes sociales no enlazadas desde la homepage ni desde el schema</strong>
+            Los 3 perfiles sociales confirmados (LinkedIn, Instagram, Facebook) solo son visibles en el footer de /contact. No estan enlazados desde la homepage ni referenciados en el schema.org (propiedad sameAs), perdiendo una senal de autoridad de marca facil de implementar.
+        </div>
+
+        <h3>4.3 Enlaces Externos y Autoridad</h3>
+        <p>Sin acceso a herramientas de terceros como Ahrefs/SEMrush, no se dispone de datos de perfil de enlaces entrantes (backlinks) en este analisis. Se recomienda una auditoria especifica de autoridad de dominio como parte del plan de accion.</p>
+    </div>
+
+    <!-- ============ SECCION 5: PLAN DE ACCION ============ -->
+    <div class="section action-plan">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">Plan de Accion Priorizado</div>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-critical">Prioridad Critica - Semana 1-2</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Corregir el boton "Ver mas" de la homepage para que apunte a /services en vez de /servicios (404)</td>
+                        <td>Recuperar el unico CTA real de navegacion de la home</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Reemplazar el schema.org Organization por LocalBusiness con datos reales (telefono, email, direccion) -- ver bloque recomendado abajo</td>
+                        <td>Eliminar el dato falso y habilitar senales de SEO local correctas</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Eliminar o noindexar los 8 posts de blog demo, sus 6 categorias, tag pages y la pagina de autor "tomas"</td>
+                        <td>Recuperar autoridad tematica del dominio, eliminar contenido que promociona al vendedor del tema</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Bloquear/noindexar y excluir del sitemap las URLs utilitarias de Elementor (/layouts/*) y Metform (/metform-form/*)</td>
+                        <td>Evitar desperdicio de crawl budget en paginas sin valor de busqueda</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Completar title y meta description en /contact (hoy vacios), con keyword local</td>
+                        <td>Optimizar la pagina de conversion mas importante del sitio para el SERP</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Crear y verificar el Google Business Profile de Lux-Metal con NAP real y fotos de la flota</td>
+                        <td>Aparecer en el Local Pack y Google Maps para busquedas locales del rubro</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-high">Prioridad Alta - Semana 3-4</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7</td>
+                        <td>Reescribir el H1 de /services para que no sea copia literal del title, y acortar el title (~55-60 caracteres)</td>
+                        <td>Evitar corte en SERP y mejor jerarquia de contenido</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Reescribir el H1 de /about-us con el mismo criterio</td>
+                        <td>Evitar duplicacion exacta title/H1</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Corregir og:type de /services y /about-us de "article" a "website"</td>
+                        <td>Categorizacion correcta al compartir en redes</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Construir enlazado interno real entre las 4 paginas: /about-us enlaza a /services y /contact; /services enlaza a /contact</td>
+                        <td>Distribuir relevancia interna y facilitar conversion</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Reclamar la vanity URL de la pagina de Facebook y enlazar LinkedIn, Instagram y Facebook desde el footer de la home y desde sameAs del schema</td>
+                        <td>Mayor profesionalismo y senal de autoridad de marca</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Agregar fallback estatico a los contadores "Por Los Numeros" para que no muestren "0+" sin JavaScript</td>
+                        <td>Consistencia de mensaje y mejor experiencia para bots/usuarios sin JS</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Corregir el correo placeholder test@fwe.com heredado del tema demo</td>
+                        <td>Eliminar dato de prueba visible en produccion</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-medium">Prioridad Media - Mes 2</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14</td>
+                        <td>Crear landing pages dedicadas por tonelaje (3 toneladas / 7 toneladas), cada una con title/H1/contenido propio</td>
+                        <td>Capturar keywords especificas por capacidad de carga</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Crear landing pages o secciones por industria vertical: logistica/bodega, retail, construccion, metalmecanica</td>
+                        <td>Capturar busquedas long-tail por sector</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>Publicar contenido real de blog especifico del rubro (guias, casos de uso, seguridad operacional) reemplazando gradualmente el espacio del contenido demo</td>
+                        <td>Trafico informacional que convierte a mediano plazo</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>Agregar mapa de Google Maps embebido en /contact</td>
+                        <td>Refuerza SEO local y facilita coordinacion logistica con clientes</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>Solicitar activamente resenas en Google Business Profile y sumar testimonios/logos de clientes al sitio</td>
+                        <td>Social proof y mejor ranking local</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>Medir Core Web Vitals con PageSpeed Insights y Search Console, y actuar sobre los hallazgos</td>
+                        <td>Linea base de velocidad y accionables concretos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="priority-section">
+            <div class="priority-label priority-low">Optimizacion Continua - Mes 3+</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Accion</th>
+                        <th>Impacto Esperado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>20</td>
+                        <td>Evaluar migracion de slugs de URL hacia espanol con keywords (/servicios, /nosotros, /contacto) con redirecciones 301 correctas</td>
+                        <td>Mejor coherencia entre contenido en espanol y URLs</td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>Agregar schema AboutPage y Person para los tres directores en /about-us</td>
+                        <td>Aprovechar el contenido de confianza ya existente</td>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td>Auditoria de backlinks con herramienta especializada (Ahrefs/Semrush/Search Console)</td>
+                        <td>Evaluar autoridad de dominio y detectar oportunidades</td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td>Producir videos cortos de la flota en operacion para YouTube</td>
+                        <td>Contenido visual de alto valor para equipos pesados, potencial en busqueda de video</td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td>Corregir el doble espacio en el H1 de la homepage ("ARRIENDO DE  GRUAS HORQUILLAS")</td>
+                        <td>Ajuste menor de calidad de codigo/plantilla</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>5.2 Schema Recomendado (LocalBusiness)</h3>
+
+        <div class="code-block">
+<span class="comment">// Reemplazar el schema.org Organization actual en el &lt;head&gt; del homepage</span>
+<span class="tag">&lt;script type="application/ld+json"&gt;</span>
+{
+  <span class="attr">"@context"</span>: <span class="value">"https://schema.org"</span>,
+  <span class="attr">"@type"</span>: <span class="value">"LocalBusiness"</span>,
+  <span class="attr">"name"</span>: <span class="value">"Lux-Metal"</span>,
+  <span class="attr">"url"</span>: <span class="value">"https://luxmetal.cl"</span>,
+  <span class="attr">"telephone"</span>: <span class="value">"+56977458631"</span>,
+  <span class="attr">"email"</span>: <span class="value">"ventas@luxmetal.cl"</span>,
+  <span class="attr">"address"</span>: {
+    <span class="attr">"@type"</span>: <span class="value">"PostalAddress"</span>,
+    <span class="attr">"streetAddress"</span>: <span class="value">"Brigadier de La Cruz 682"</span>,
+    <span class="attr">"addressLocality"</span>: <span class="value">"San Miguel"</span>,
+    <span class="attr">"addressRegion"</span>: <span class="value">"Region Metropolitana"</span>,
+    <span class="attr">"postalCode"</span>: <span class="value">"8900243"</span>,
+    <span class="attr">"addressCountry"</span>: <span class="value">"CL"</span>
+  },
+  <span class="attr">"areaServed"</span>: {
+    <span class="attr">"@type"</span>: <span class="value">"City"</span>,
+    <span class="attr">"name"</span>: <span class="value">"Santiago, Chile"</span>
+  },
+  <span class="attr">"sameAs"</span>: [
+    <span class="value">"https://www.linkedin.com/company/lux-metal-ltda"</span>,
+    <span class="value">"https://www.instagram.com/luxmetalgruas"</span>,
+    <span class="value">"https://www.facebook.com/profile.php?id=61578189183675"</span>
+  ]
+}
+<span class="tag">&lt;/script&gt;</span>
+        </div>
+
+        <h3>5.3 KPIs de Seguimiento</h3>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-value">35</div>
+                <div class="kpi-label">Score SEO Actual</div>
+                <div class="kpi-target">Meta: 65+</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">8</div>
+                <div class="kpi-label">Posts Demo a Eliminar</div>
+                <div class="kpi-target">Meta: 0</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">0</div>
+                <div class="kpi-label">Resenas en Google</div>
+                <div class="kpi-target">Meta: 15+ en 6 meses</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">4</div>
+                <div class="kpi-label">Paginas Reales de Contenido</div>
+                <div class="kpi-target">Meta: 10+ (landings + blog real)</div>
+            </div>
+        </div>
+
+        <h3>5.4 Timeline de Implementacion</h3>
+
+        <div class="timeline">
+            <div class="timeline-item phase1">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 1: Correccion Critica (Semana 1-2)</div>
+                    <div class="timeline-desc">Enlace roto del CTA, schema LocalBusiness con datos reales, eliminacion del blog demo y URLs utilitarias, title/description de /contact, alta de Google Business Profile.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase2">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 2: On-Page y Presencia Social (Semana 3-4)</div>
+                    <div class="timeline-desc">Correccion de H1 duplicados, og:type, enlazado interno entre las 4 paginas, optimizacion de redes sociales, fix de contadores JS.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase3">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 3: Contenido y Local SEO (Mes 2)</div>
+                    <div class="timeline-desc">Landing pages por tonelaje e industria, contenido de blog real, mapa embebido, campana de resenas, medicion de velocidad y mobile.</div>
+                </div>
+            </div>
+            <div class="timeline-item phase4">
+                <div class="timeline-content">
+                    <div class="timeline-label">Fase 4: Escala y Autoridad (Mes 3+)</div>
+                    <div class="timeline-desc">Migracion de slugs a espanol, schema adicional (AboutPage/Person), auditoria de backlinks, contenido en video, ajustes menores de codigo.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Auditoria SEO - luxmetal.cl</strong></p>
+        <p>Generado el 14 de Agosto 2026 | Analisis basado en datos reales del sitio (scraping y verificacion tecnica directa)</p>
+        <p>Este documento es confidencial y de uso exclusivo para el cliente.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
