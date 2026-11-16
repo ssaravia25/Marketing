@@ -101,7 +101,7 @@ Version comercial para vender el servicio: GEO al frente ("que dice la IA de tu 
 
 ### Reglas comerciales
 
-- CTA siempre a `https://sfinance.world/contacto` (URL exacta, sin UTM), en 4 puntos: portada, despues del resumen, despues de la seccion IA y bloque final. La URL va visible en texto para que salga en PDF.
+- CTA siempre por correo: `mailto:contact@sfinance.world?subject=Auditoria%20GEO%20%2B%20SEO%20-%20{dominio}` (no usar sfinance.world/contacto, no funciona), en 4 puntos: portada, despues del resumen, despues de la seccion IA y bloque final. El correo va visible en texto para que salga en PDF.
 - Sin planes ni precios del servicio.
 - No inventar cifras: nada de volumenes, trafico ni ROI. KPIs como "hoy medido vs meta".
 - Sin testimonios ni casos de otros clientes (los reportes son confidenciales).
