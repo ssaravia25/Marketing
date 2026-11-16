@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria GEO + SEO - pinpilinpausha.cl | SFinance</title>
+    <meta name="description" content="Que dicen ChatGPT, Gemini y Google Modo IA de Pinpilinpausha, por que no siempre lo recomiendan primero y el plan para corregirlo.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #0f2027;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --bg: #ffffff;
+            --bg-alt: #f7f8fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #e1e5eb;
+            --success: #00b894;
+            --critical: #d63031;
+            --high: #e67e22;
+            --medium: #f39c12;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page { size: A4; margin: 15mm 12mm 15mm 12mm; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.65;
+            background: var(--bg);
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        a { color: var(--accent); }
+
+        /* ============ PORTADA ============ */
+        .cover {
+            width: 100%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+            color: white;
+            text-align: center;
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(230,81,0,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(44,83,100,0.3) 0%, transparent 50%);
+        }
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+        .cover > * { position: relative; z-index: 1; }
+        .cover-logo {
+            font-size: 13px; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 32px; font-weight: 600;
+        }
+        .cover h1 {
+            font-size: 46px; font-weight: 900; line-height: 1.1;
+            margin-bottom: 12px; letter-spacing: -1px;
+        }
+        .cover h1 span { color: var(--accent); }
+        .cover-domain {
+            font-size: 24px; font-weight: 300; color: rgba(255,255,255,0.55);
+            margin-bottom: 26px; font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+        .cover-headline {
+            max-width: 680px; font-size: 19px; font-weight: 500; line-height: 1.5;
+            color: rgba(255,255,255,0.92); margin-bottom: 34px;
+        }
+        .cover-headline strong { color: var(--accent-light); font-weight: 700; }
+        .cover-meta { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
+        .cover-meta-item { text-align: center; }
+        .cover-meta-item .label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.4); margin-bottom: 4px;
+        }
+        .cover-meta-item .value { font-size: 14px; font-weight: 600; }
+        .cover-scores { margin-top: 38px; display: flex; gap: 34px; justify-content: center; flex-wrap: wrap; }
+
+        .score-circle {
+            width: 128px; height: 128px; border-radius: 50%;
+            border: 4px solid var(--medium);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(243,156,18,0.08);
+        }
+        .score-circle .number { font-size: 42px; font-weight: 900; color: var(--medium); line-height: 1; }
+        .score-circle .out-of { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .score-circle .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+        .score-circle.critical { border-color: var(--critical); background: rgba(214,48,49,0.08); }
+        .score-circle.critical .number { color: #ff6b6b; }
+        .score-circle.low { border-color: var(--high); background: rgba(230,126,34,0.08); }
+        .score-circle.low .number { color: #ff9f43; }
+        .score-circle.good { border-color: var(--success); background: rgba(0,184,148,0.08); }
+        .score-circle.good .number { color: var(--success); }
+
+        /* ============ CTA ============ */
+        .cta-button {
+            display: inline-block; background: var(--accent); color: white !important;
+            text-decoration: none; font-weight: 700; font-size: 15px;
+            padding: 14px 30px; border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(230,81,0,0.28);
+        }
+        .cta-button:hover { background: #ff6d00; }
+        .cta-url { display: block; font-size: 11px; margin-top: 8px; letter-spacing: 0.5px; }
+        .cover .cta-wrap { margin-top: 38px; }
+        .cover .cta-url { color: rgba(255,255,255,0.55); }
+
+        .cta-banner {
+            display: flex; align-items: center; justify-content: space-between; gap: 20px;
+            background: var(--primary); color: white; border-radius: 14px;
+            padding: 22px 26px; margin: 28px 0 36px; page-break-inside: avoid;
+            border-left: 5px solid var(--accent);
+        }
+        .cta-banner p { margin: 0; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.9); }
+        .cta-banner p strong { color: white; display: block; font-size: 16px; margin-bottom: 3px; }
+        .cta-banner .cta-side { text-align: center; flex-shrink: 0; }
+        .cta-banner .cta-button { font-size: 13px; padding: 11px 20px; }
+        .cta-banner .cta-url { color: rgba(255,255,255,0.5); }
+
+        .cta-final {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: white; border-radius: 16px; padding: 44px 34px; text-align: center;
+            margin: 30px 0 10px; page-break-inside: avoid; position: relative; overflow: hidden;
+        }
+        .cta-final h2 { font-size: 28px; font-weight: 900; margin-bottom: 12px; line-height: 1.2; }
+        .cta-final h2 span { color: var(--accent); }
+        .cta-final p { font-size: 14.5px; color: rgba(255,255,255,0.82); max-width: 600px; margin: 0 auto 26px; }
+        .cta-final .cta-button { font-size: 17px; padding: 16px 36px; }
+        .cta-final .cta-url { color: rgba(255,255,255,0.6); font-size: 12px; }
+
+        /* ============ CONTENIDO ============ */
+        .content { max-width: 880px; margin: 0 auto; padding: 24px 16px; }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+            border-radius: 14px; padding: 30px; margin-bottom: 10px;
+            border-left: 5px solid var(--accent);
+        }
+        .executive-summary h2 { font-size: 22px; color: var(--primary); margin-bottom: 14px; }
+        .executive-summary p { font-size: 13.5px; color: var(--text); margin-bottom: 12px; }
+        .conclusion {
+            font-size: 16px !important; font-weight: 600; color: var(--primary) !important;
+            line-height: 1.55; margin-bottom: 18px !important;
+        }
+
+        .finding-list { list-style: none; margin: 16px 0 20px; }
+        .finding-list li {
+            background: white; border-radius: 10px; padding: 14px 16px 14px 54px;
+            margin-bottom: 10px; position: relative; font-size: 13px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .finding-list li .n {
+            position: absolute; left: 14px; top: 14px; width: 28px; height: 28px;
+            border-radius: 8px; background: var(--primary); color: var(--accent);
+            font-weight: 800; display: flex; align-items: center; justify-content: center;
+        }
+        .finding-list li strong { color: var(--primary); display: block; margin-bottom: 2px; font-size: 13.5px; }
+        .finding-list li .consequence { color: var(--critical); font-weight: 600; }
+
+        .summary-scores {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 12px; margin-top: 22px;
+        }
+        .summary-score-card {
+            background: white; border-radius: 10px; padding: 16px 10px;
+            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .summary-score-card .score { font-size: 28px; font-weight: 800; margin-bottom: 3px; }
+        .summary-score-card .score.critical { color: var(--critical); }
+        .summary-score-card .score.low { color: var(--high); }
+        .summary-score-card .score.mid { color: var(--medium); }
+        .summary-score-card .score.good { color: var(--success); }
+        .summary-score-card .category {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-light); font-weight: 600;
+        }
+
+        .section { margin-bottom: 36px; padding-top: 8px; }
+        .page-break { page-break-before: always; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 22px; padding-bottom: 14px; border-bottom: 2px solid var(--border);
+        }
+        .section-number {
+            width: 42px; height: 42px; background: var(--primary); color: var(--accent);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; flex-shrink: 0;
+        }
+        .section-title { font-size: 23px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+        .section-score {
+            margin-left: auto; background: var(--bg-alt); padding: 6px 14px;
+            border-radius: 8px; font-weight: 700; font-size: 15px; white-space: nowrap;
+        }
+        .section-score.critical { color: var(--critical); background: #ffeef0; }
+        .section-score.low { color: var(--high); background: #fff3e0; }
+        .section-score.mid { color: var(--medium); background: #fef9e7; }
+        .section-score.good { color: var(--success); background: #e8f8f5; }
+        .section-intro { font-size: 14px; color: var(--text-light); margin-bottom: 18px; }
+
+        h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 26px 0 12px; }
+        h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+        p { margin-bottom: 10px; }
+
+        .table-wrap { width: 100%; overflow-x: auto; margin: 12px 0 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        thead th {
+            background: var(--primary); color: var(--accent); padding: 10px 12px;
+            text-align: left; font-weight: 600; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        thead th:first-child { border-radius: 6px 0 0 0; }
+        thead th:last-child { border-radius: 0 6px 0 0; }
+        tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        tbody tr:nth-child(even) { background: var(--bg-alt); }
+        td.center, th.center { text-align: center; }
+        .muted { color: var(--text-light); font-size: 11px; }
+
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+            line-height: 1.5;
+        }
+        td.center .badge, .opp-meta .badge, .issue-head .badge { white-space: nowrap; }
+        .badge-critical { background: #ffeef0; color: var(--critical); }
+        .badge-high { background: #fff3e0; color: var(--high); }
+        .badge-medium { background: #fef9e7; color: #c87f0a; }
+        .badge-low { background: #e8f8f5; color: #27ae60; }
+        .badge-ok { background: #e8f8f5; color: #0a8f6f; }
+        .badge-none { background: #f0f0f0; color: #888; }
+
+        .alert { padding: 15px 18px; border-radius: 9px; margin: 14px 0; font-size: 13px; }
+        .alert-critical { background: #ffeef0; border-left: 4px solid var(--critical); color: #a93226; }
+        .alert-warning { background: #fff8e1; border-left: 4px solid var(--medium); color: #a85d0b; }
+        .alert-success { background: #e8f8f5; border-left: 4px solid var(--success); color: #1e8449; }
+        .alert-info { background: #eef2ff; border-left: 4px solid #5b6abf; color: #3949ab; }
+        .alert strong { display: block; margin-bottom: 3px; }
+
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+        .metric-card {
+            background: var(--bg-alt); border-radius: 10px; padding: 16px 10px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .metric-card .metric-value { font-size: 26px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+        .metric-card .metric-value.bad { color: var(--critical); }
+        .metric-card .metric-value.warn { color: var(--high); }
+        .metric-card .metric-value.ok { color: var(--success); }
+        .metric-card .metric-label {
+            font-size: 10px; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 5px; line-height: 1.4;
+        }
+
+        /* Citas de IA */
+        .ai-quote {
+            background: white; border: 1px solid var(--border); border-left: 4px solid #5b6abf;
+            border-radius: 10px; padding: 14px 18px; margin: 12px 0; page-break-inside: avoid;
+        }
+        .ai-quote .engine {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+            color: #5b6abf; margin-bottom: 4px;
+        }
+        .ai-quote .question { font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
+        .ai-quote blockquote { font-size: 14px; font-style: italic; color: var(--primary); }
+        .ai-quote .note { font-size: 12px; color: var(--critical); margin-top: 6px; font-weight: 600; }
+
+        /* Share of voice */
+        .sov-chart { margin: 14px 0 22px; }
+        .sov-row { display: grid; grid-template-columns: 190px 1fr 70px; gap: 12px; align-items: center; margin-bottom: 9px; }
+        .sov-name { font-size: 12.5px; font-weight: 600; color: var(--primary); }
+        .sov-bar { background: #edf0f4; border-radius: 6px; height: 18px; overflow: hidden; }
+        .sov-fill { height: 100%; border-radius: 6px; background: #b2bec3; }
+        .sov-fill.brand { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .sov-value { font-size: 12px; font-weight: 700; text-align: right; color: var(--primary); }
+
+        /* Pilares GEO */
+        .pillar { margin-bottom: 12px; }
+        .pillar-head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .pillar-bar { background: #edf0f4; border-radius: 6px; height: 12px; overflow: hidden; }
+        .pillar-fill { height: 100%; border-radius: 6px; }
+        .fill-critical { background: var(--critical); }
+        .fill-low { background: var(--high); }
+        .fill-mid { background: var(--medium); }
+        .fill-good { background: var(--success); }
+
+        /* Tarjetas de hallazgo con evidencia */
+        .issue {
+            border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+            margin: 14px 0; background: white; page-break-inside: avoid;
+        }
+        .issue-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+        .issue-head h4 { margin: 0; font-size: 15px; color: var(--primary); }
+        .issue p { font-size: 13px; }
+        .evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .evidence > div { border-radius: 8px; padding: 12px 14px; font-size: 12.5px; }
+        .evidence .now { background: #ffeef0; }
+        .evidence .fix { background: #e8f8f5; }
+        .evidence .tag { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .evidence .now .tag { color: var(--critical); }
+        .evidence .fix .tag { color: #0a8f6f; }
+
+        /* Quick wins */
+        .opp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+        .opp-card {
+            border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; background: white;
+            page-break-inside: avoid; border-top: 4px solid var(--accent);
+        }
+        .opp-card h4 { margin: 0 0 6px; font-size: 14px; color: var(--primary); }
+        .opp-card p { font-size: 12.5px; color: var(--text-light); margin-bottom: 8px; }
+        .opp-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+
+        .code-block {
+            background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px;
+            font-family: 'Courier New', monospace; font-size: 11px;
+            line-height: 1.6; overflow-x: auto; margin: 12px 0; white-space: pre-wrap;
+            page-break-inside: avoid;
+        }
+        .code-block .comment { color: #6c7086; }
+
+        ul, ol { margin: 8px 0 14px 22px; }
+        li { margin-bottom: 5px; font-size: 13px; }
+
+        .priority-section { margin-bottom: 22px; }
+        .priority-label {
+            display: inline-block; padding: 5px 16px; border-radius: 5px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px;
+        }
+        .priority-critical { background: var(--critical); color: white; }
+        .priority-high { background: var(--high); color: white; }
+        .priority-medium { background: var(--medium); color: white; }
+        .priority-low { background: var(--success); color: white; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+        .kpi-card {
+            background: white; border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .kpi-card .kpi-value { font-size: 22px; font-weight: 800; color: var(--primary); }
+        .kpi-card .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin-top: 2px; }
+        .kpi-card .kpi-target { font-size: 11px; color: var(--accent); font-weight: 700; margin-top: 5px; }
+
+        .timeline { margin: 16px 0; }
+        .timeline-item {
+            display: flex; gap: 16px; margin-bottom: 16px;
+            padding-left: 20px; border-left: 3px solid var(--border); position: relative;
+        }
+        .timeline-item::before {
+            content: ''; width: 12px; height: 12px; border-radius: 50%;
+            position: absolute; left: -7.5px; top: 4px;
+        }
+        .timeline-item.phase1::before { background: var(--critical); }
+        .timeline-item.phase2::before { background: var(--high); }
+        .timeline-item.phase3::before { background: var(--medium); }
+        .timeline-item.phase4::before { background: var(--success); }
+        .timeline-label { font-weight: 700; font-size: 14px; color: var(--primary); margin-bottom: 4px; }
+        .timeline-desc { font-size: 12.5px; color: var(--text-light); }
+
+        /* Proceso SFinance */
+        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+        .step {
+            background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px 18px; page-break-inside: avoid;
+        }
+        .step .step-n {
+            width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: white;
+            font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;
+        }
+        .step h4 { margin: 0 0 6px; color: var(--primary); font-size: 15px; }
+        .step p { font-size: 12.5px; color: var(--text-light); margin-bottom: 8px; }
+        .step ul { margin: 6px 0 0 16px; }
+        .step li { font-size: 12px; margin-bottom: 3px; }
+
+        .footer {
+            text-align: center; padding: 28px 16px; margin-top: 36px;
+            border-top: 2px solid var(--border); color: var(--text-light); font-size: 11px;
+        }
+        .footer .brand { font-weight: 800; color: var(--primary); font-size: 14px; letter-spacing: 1px; }
+        .footer p { margin-bottom: 6px; }
+
+        /* ============ RESPONSIVE ============ */
+        @media screen and (max-width: 760px) {
+            .cover { padding: 40px 18px; min-height: auto; }
+            .cover h1 { font-size: 32px; }
+            .cover-domain { font-size: 18px; }
+            .cover-headline { font-size: 16px; }
+            .cover-meta { gap: 18px; }
+            .summary-scores { grid-template-columns: repeat(2, 1fr); }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .opp-grid, .evidence, .steps { grid-template-columns: 1fr; }
+            .cta-banner { flex-direction: column; text-align: center; }
+            .section-header { flex-wrap: wrap; }
+            .section-title { font-size: 19px; }
+            .sov-row { grid-template-columns: 1fr 70px; }
+            .sov-row .sov-bar { grid-column: 1 / -1; grid-row: 2; }
+            .executive-summary { padding: 22px 16px; }
+            .cta-final { padding: 34px 18px; }
+            .cta-final h2 { font-size: 22px; }
+        }
+
+        @media print {
+            .cover { margin: -15mm -12mm 0 -12mm; width: calc(100% + 24mm); min-height: 270mm; }
+            .cta-button { box-shadow: none; }
+            .issue, .opp-card, .kpi-card, .ai-quote, .cta-banner, .section-header, tr { page-break-inside: avoid; }
+            .section-header, h3 { page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+    <div class="cover-logo">SFinance &middot; Auditoria GEO + SEO</div>
+    <h1>Visibilidad en <span>IA</span> + SEO</h1>
+    <div class="cover-domain">pinpilinpausha.cl</div>
+    <div class="cover-headline">
+        ChatGPT, Gemini y Google ya conocen a Pinpilinpausha. Pero cuando alguien pide <strong>comida vasca en Santiago</strong>, los tres recomiendan primero a otro restaurante.
+    </div>
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Fecha</div>
+            <div class="value">16-11-2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Rubro</div>
+            <div class="value">Restaurante vasco-espa&ntilde;ol</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Ubicacion</div>
+            <div class="value">El Golf, Las Condes</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">CMS</div>
+            <div class="value">WordPress + Elementor</div>
+        </div>
+    </div>
+    <div class="cover-scores">
+        <div class="score-circle low">
+            <div class="number">43</div>
+            <div class="out-of">/ 100</div>
+            <div class="label">Score GEO (IA)</div>
+        </div>
+        <div class="score-circle low">
+            <div class="number">38</div>
+            <div class="out-of">/ 100</div>
+            <div class="label">Score SEO</div>
+        </div>
+    </div>
+    <div class="cta-wrap">
+        <a class="cta-button" href="https://sfinance.world/contacto">Quiero corregirlo: agendar una reunion</a>
+        <span class="cta-url">sfinance.world/contacto</span>
+    </div>
+</div>
+
+<!-- ============ CONTENIDO ============ -->
+<div class="content">
+
+    <!-- ============ RESUMEN EJECUTIVO ============ -->
+    <div class="executive-summary">
+        <h2>Resumen ejecutivo</h2>
+        <p class="conclusion">
+            La IA te conoce, pero no te elige. Pinpilinpausha aparece en 17 de 21 respuestas de ChatGPT, Gemini y Google Modo IA, pero es la primera recomendacion solo en 5. En las preguntas especificas, como cocina vasca, almuerzo de negocios en El Golf o terraza en familia, la primera opcion es otro restaurante.
+        </p>
+        <p>
+            Tienes lo que la IA valora: desde 1940, 3,1 K rese&ntilde;as en Google con nota 4,6, presencia en Tripadvisor y prensa (La Tercera). El problema es que tu sitio y tus fichas no le entregan esa informacion de forma clara y consistente, y la IA completa los vacios con datos de terceros, a veces contradictorios.
+        </p>
+
+        <ul class="finding-list">
+            <li><span class="n">1</span>
+                <strong>Para "comida vasca", las tres IA eligen primero a El Txoko Alaves.</strong>
+                Pinpilinpausha significa "mariposa" en vasco, pero en Google tu categoria es "Espa&ntilde;ola", tu sitio se titula solo "Pinpilinpausha" y no tiene datos estructurados que digan "cocina vasca".
+                <span class="consequence">Pierdes justo la pregunta en la que deberias ganar.</span>
+            </li>
+            <li><span class="n">2</span>
+                <strong>La IA entrega datos contradictorios sobre ti.</strong>
+                Encontramos 3 horarios distintos para el domingo, precios por persona que van desde "$15.000 en adelante" hasta $50.000, y canales de reserva que no son el tuyo (Mesa 24/7, Resy o un correo personal en vez de CoverManager).
+                <span class="consequence">Un cliente puede llegar con el restaurante cerrado o reservar por un canal que no usas.</span>
+            </li>
+            <li><span class="n">3</span>
+                <strong>Tu sitio no le habla a las maquinas.</strong>
+                Tiene 0 datos estructurados, no tiene H1 ni meta description, la carta vigente es un PDF de 9 paginas solo con imagenes y la terraza no aparece mencionada.
+                <span class="consequence">Gemini no te nombra para almuerzo de negocios en tu propio barrio ni para almuerzo familiar con terraza.</span>
+            </li>
+        </ul>
+
+        <p>
+            <strong>La buena noticia:</strong> casi todo se corrige en 30 a 60 dias sin rehacer el sitio, porque la reputacion ya existe. Ordenar datos, ficha de Google y contenido deberia mover a Pinpilinpausha de "una opcion mas" a "la primera recomendacion" en las preguntas donde ya tiene argumentos de sobra.
+        </p>
+
+        <div class="summary-scores">
+            <div class="summary-score-card">
+                <div class="score low">43</div>
+                <div class="category">GEO / IA</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score low">45</div>
+                <div class="category">SEO Tecnico</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score critical">20</div>
+                <div class="category">On-Page</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score critical">25</div>
+                <div class="category">Contenido</div>
+            </div>
+            <div class="summary-score-card">
+                <div class="score mid">60</div>
+                <div class="category">Local y reputacion</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-banner">
+        <p><strong>Quieres revisar este diagnostico con nosotros?</strong>Te mostramos las respuestas reales de cada IA y por donde conviene partir.</p>
+        <div class="cta-side">
+            <a class="cta-button" href="https://sfinance.world/contacto">Agendar reunion</a>
+            <span class="cta-url">sfinance.world/contacto</span>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 1: QUE DICE LA IA ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">Que dice la IA de tu marca</div>
+            <div class="section-score low">21/40</div>
+        </div>
+        <p class="section-intro">
+            Hicimos 8 preguntas que haria un cliente real en ChatGPT, Gemini y Google Modo IA el 16-11-2026: 7 de descubrimiento ("donde comer...") y 1 sobre la marca. En total revisamos 24 respuestas.
+        </p>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value ok">17/21</div>
+                <div class="metric-label">Respuestas donde apareces</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value warn">5/21</div>
+                <div class="metric-label">Veces que eres la primera opcion</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value bad">0/3</div>
+                <div class="metric-label">IA que te eligen primero para "comida vasca"</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value bad">3</div>
+                <div class="metric-label">Horarios distintos de domingo segun la fuente</div>
+            </div>
+        </div>
+
+        <h3>1.1 Tu posicion en cada respuesta</h3>
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pregunta del cliente</th>
+                    <th class="center">ChatGPT</th>
+                    <th class="center">Google Modo IA</th>
+                    <th class="center">Gemini</th>
+                    <th>Primera opcion cuando no eres tu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mejores restaurantes de comida espa&ntilde;ola en Santiago</td>
+                    <td class="center"><span class="badge badge-ok">#1</span></td>
+                    <td class="center"><span class="badge badge-ok">#1</span></td>
+                    <td class="center"><span class="badge badge-ok">#1</span></td>
+                    <td class="muted">Ganas en los 3</td>
+                </tr>
+                <tr>
+                    <td>Donde comer una buena paella en Santiago</td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td class="center"><span class="badge badge-ok">#1</span></td>
+                    <td class="center"><span class="badge badge-medium">#2</span></td>
+                    <td>La Bodeguilla de Cristobal (ChatGPT), La Cocina de Javier (Gemini)</td>
+                </tr>
+                <tr>
+                    <td>Restaurante de comida vasca en Santiago</td>
+                    <td class="center"><span class="badge badge-medium">#2</span></td>
+                    <td class="center"><span class="badge badge-medium">#2</span></td>
+                    <td class="center"><span class="badge badge-medium">#2</span></td>
+                    <td><strong>El Txoko Alaves en los 3</strong></td>
+                </tr>
+                <tr>
+                    <td>Almuerzo de negocios en el barrio El Golf</td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td class="center"><span class="badge badge-critical">No apareces</span></td>
+                    <td>Amandine (ChatGPT), Estro (Google y Gemini)</td>
+                </tr>
+                <tr>
+                    <td>Churros con chocolate en Santiago</td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td class="center"><span class="badge badge-high">Mencion menor</span></td>
+                    <td class="center"><span class="badge badge-critical">No apareces</span></td>
+                    <td>Soy Churro (ChatGPT), Cacao Much (Google y Gemini)</td>
+                </tr>
+                <tr>
+                    <td>Almuerzo familiar el domingo con terraza en Las Condes</td>
+                    <td class="center"><span class="badge badge-ok">#1</span></td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td class="center"><span class="badge badge-critical">No apareces</span></td>
+                    <td>Puerto del Alto (Google y Gemini)</td>
+                </tr>
+                <tr>
+                    <td>Donde comer jamon iberico y tortilla espa&ntilde;ola</td>
+                    <td class="center"><span class="badge badge-critical">No apareces</span></td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td class="center"><span class="badge badge-medium">#3</span></td>
+                    <td>Enrique Tomas (ChatGPT y Google), Casa del Jamon (Gemini)</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>La lectura: te conocen, pero no te eligen.</strong>
+            Ganas la pregunta generica ("mejores restaurantes espa&ntilde;oles"), donde pesa la historia. Pierdes las preguntas especificas, que son las que hace quien ya decidio que quiere comer. Ahi la IA elige a quien tiene la informacion mas clara sobre ese plato u ocasion.
+        </div>
+
+        <div class="ai-quote">
+            <div class="engine">ChatGPT &middot; 16-11-2026</div>
+            <div class="question">Pregunta: "Recomiendame un restaurante de comida vasca en Santiago de Chile"</div>
+            <blockquote>"Te recomendaria El Txoko Alaves, en el barrio de Bellas Artes."</blockquote>
+            <div class="note">Pinpilinpausha aparece solo como "otra opcion" despues de El Txoko.</div>
+        </div>
+
+        <div class="ai-quote">
+            <div class="engine">Gemini &middot; 16-11-2026</div>
+            <div class="question">Pregunta: "Que restaurante me recomiendas en el barrio El Golf para un almuerzo de negocios?"</div>
+            <blockquote>Recomienda Estro, Casa Asa, Bermuda Restogolf, La Yunta y La Flaca.</blockquote>
+            <div class="note">No menciona a Pinpilinpausha, aunque esta en Isidora Goyenechea 2900, en el centro de El Golf.</div>
+        </div>
+
+        <h3>1.2 Share of voice: cuantas veces te nombra la IA frente a tu competencia</h3>
+        <p>Menciones en las 21 respuestas de descubrimiento:</p>
+        <div class="sov-chart">
+            <div class="sov-row"><div class="sov-name">Pinpilinpausha</div><div class="sov-bar"><div class="sov-fill brand" style="width:81%"></div></div><div class="sov-value">17 (81%)</div></div>
+            <div class="sov-row"><div class="sov-name">El Txoko Alaves</div><div class="sov-bar"><div class="sov-fill" style="width:43%"></div></div><div class="sov-value">9 (43%)</div></div>
+            <div class="sov-row"><div class="sov-name">La Cocina de Javier</div><div class="sov-bar"><div class="sov-fill" style="width:29%"></div></div><div class="sov-value">6 (29%)</div></div>
+            <div class="sov-row"><div class="sov-name">Carrer Nou</div><div class="sov-bar"><div class="sov-fill" style="width:24%"></div></div><div class="sov-value">5 (24%)</div></div>
+            <div class="sov-row"><div class="sov-name">De la Ostia</div><div class="sov-bar"><div class="sov-fill" style="width:24%"></div></div><div class="sov-value">5 (24%)</div></div>
+        </div>
+        <p>Veces como <strong>primera recomendacion</strong>, que es la posicion que se lleva la visita:</p>
+        <div class="sov-chart">
+            <div class="sov-row"><div class="sov-name">Pinpilinpausha</div><div class="sov-bar"><div class="sov-fill brand" style="width:24%"></div></div><div class="sov-value">5 (24%)</div></div>
+            <div class="sov-row"><div class="sov-name">El Txoko Alaves</div><div class="sov-bar"><div class="sov-fill" style="width:14%"></div></div><div class="sov-value">3 (14%)</div></div>
+            <div class="sov-row"><div class="sov-name">Otros 9 locales</div><div class="sov-bar"><div class="sov-fill" style="width:62%"></div></div><div class="sov-value">13 (62%)</div></div>
+        </div>
+        <div class="alert alert-info">
+            <strong>Tienes la mayor presencia del grupo, pero en 16 de 21 respuestas la primera opcion es otro local.</strong>
+            En la mayoria de esas respuestas ya estas en la lista. Pasar del puesto #2 o #3 al #1 depende de datos y contenido, no de crear reputacion desde cero.
+        </div>
+
+        <h3>1.3 Lo que la IA responde cuando preguntan directamente por ti</h3>
+        <p>Pregunta: "Que me puedes contar del restaurante Pinpilinpausha? Horario, precios, como reservar y si tiene opciones veganas".</p>
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dato</th>
+                    <th>Tu sitio</th>
+                    <th>ChatGPT</th>
+                    <th>Google Modo IA</th>
+                    <th>Gemini</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Horario domingo</strong></td>
+                    <td>12:30 - 16:30</td>
+                    <td><span class="badge badge-critical">12:30 - 16:00</span><br><span class="muted">tomado de Tripadvisor</span></td>
+                    <td>12:30 - 16:30<br><span class="muted">en otra consulta dijo 12:00</span></td>
+                    <td><span class="badge badge-critical">12:00 - 16:30</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Cierre lunes a sabado</strong></td>
+                    <td>23:00</td>
+                    <td><span class="badge badge-critical">22:30</span></td>
+                    <td>23:00</td>
+                    <td>23:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Precio por persona</strong></td>
+                    <td><span class="muted">No lo publica</span></td>
+                    <td>~ $35.000 <span class="muted">(segun una rese&ntilde;a)</span></td>
+                    <td>$25.000 - $50.000</td>
+                    <td><span class="badge badge-critical">desde $15.000</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Como reservar</strong></td>
+                    <td>CoverManager (boton "Reservar")</td>
+                    <td><span class="badge badge-critical">Telefono y un correo personal</span><br><span class="muted">no menciona reserva online</span></td>
+                    <td>CoverManager, Resy, Mesa 24/7, telefono, correo</td>
+                    <td><span class="badge badge-high">Mesa 24/7</span>, sitio, correo, telefono</td>
+                </tr>
+                <tr>
+                    <td><strong>Nota que muestra</strong></td>
+                    <td>-</td>
+                    <td><span class="badge badge-high">4,4 (Tripadvisor)</span></td>
+                    <td>4,6 (Google, 3,1 K)</td>
+                    <td>4,6 (Google)</td>
+                </tr>
+                <tr>
+                    <td><strong>Precio de un mismo plato</strong><br><span class="muted">Gnocchis de butternut</span></td>
+                    <td><span class="muted">Carta en imagen</span></td>
+                    <td>$13.900</td>
+                    <td>$14.900</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="alert alert-critical">
+            <strong>Cada IA arma tu ficha con fuentes distintas, y no coinciden.</strong>
+            Tu sitio no publica los datos de forma que una maquina los lea (datos estructurados), asi que ChatGPT usa Tripadvisor y Gemini usa la ficha de Google. Ni siquiera el precio de un mismo plato coincide entre una IA y otra. El resultado es una marca de 1940 con informacion inconsistente justo en el momento en que el cliente decide.
+        </div>
+
+        <h3>1.4 Las fuentes que usa la IA (y donde estan tus competidores)</h3>
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Fuente citada por la IA</th><th>Para que la usa</th><th>Tu situacion</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Ficha de Google (Business Profile)</td><td>Nota, rango de precio, horario y categoria que muestran Gemini y Google Modo IA</td><td><span class="badge badge-high">Categoria "Espa&ntilde;ola", nombre "Restoran"</span></td></tr>
+                <tr><td>Tripadvisor</td><td>Horario y nota en ChatGPT</td><td><span class="badge badge-high">Horario distinto al del sitio</span></td></tr>
+                <tr><td>Tu sitio y cartas PDF</td><td>Platos, precios, opciones veganas y reservas</td><td><span class="badge badge-critical">Carta vigente ilegible, PDF 2022 publicado</span></td></tr>
+                <tr><td>Prensa y guias (La Tercera, The Clinic, La Nacion, Santiago Turismo, 800.cl)</td><td>Respaldan la recomendacion</td><td><span class="badge badge-medium">Presente</span> <span class="muted">La IA cita guias tematicas para otros: The Clinic ("La ruta de la paella") para La Cocina de Javier y Santiago Turismo para El Txoko</span></td></tr>
+                <tr><td>Instagram</td><td>Perfil oficial de la marca. Su bio es el unico lugar que dice "Terraza &middot; Pet friendly"</td><td><span class="badge badge-high">Los links de redes en tu sitio estan rotos</span></td></tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="cta-banner">
+        <p><strong>La mayor parte se corrige en semanas.</strong>Te mostramos que cambiar primero para ganar las preguntas de cocina vasca y almuerzo de negocios.</p>
+        <div class="cta-side">
+            <a class="cta-button" href="https://sfinance.world/contacto">Hablar con SFinance</a>
+            <span class="cta-url">sfinance.world/contacto</span>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 2: POR QUE ============ -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">Por que la IA no te elige primero</div>
+            <div class="section-score low">43/100</div>
+        </div>
+        <p class="section-intro">El Score GEO suma 5 pilares. Cada uno explica una parte de lo que viste en la seccion 1.</p>
+
+        <div class="pillar">
+            <div class="pillar-head"><span>Visibilidad en respuestas IA</span><span>21 / 40</span></div>
+            <div class="pillar-bar"><div class="pillar-fill fill-mid" style="width:52.5%"></div></div>
+        </div>
+        <div class="pillar">
+            <div class="pillar-head"><span>Acceso para buscadores e IA (robots, llms.txt, estructura)</span><span>7 / 15</span></div>
+            <div class="pillar-bar"><div class="pillar-fill fill-low" style="width:46.7%"></div></div>
+        </div>
+        <div class="pillar">
+            <div class="pillar-head"><span>Datos estructurados (schema)</span><span>0 / 15</span></div>
+            <div class="pillar-bar"><div class="pillar-fill fill-critical" style="width:2%"></div></div>
+        </div>
+        <div class="pillar">
+            <div class="pillar-head"><span>Contenido citable (carta, ocasiones, preguntas frecuentes)</span><span>5 / 15</span></div>
+            <div class="pillar-bar"><div class="pillar-fill fill-critical" style="width:33.3%"></div></div>
+        </div>
+        <div class="pillar">
+            <div class="pillar-head"><span>Autoridad y consistencia de la marca</span><span>10 / 15</span></div>
+            <div class="pillar-bar"><div class="pillar-fill fill-mid" style="width:66.7%"></div></div>
+        </div>
+        <p class="muted">Visibilidad = 40 x (50% presencia 17/21 + 50% primera opcion 5/21). Los demas pilares se evaluan con la revision tecnica del sitio y las fichas, al 16-11-2026.</p>
+
+        <div class="issue">
+            <div class="issue-head"><span class="badge badge-critical">Critico</span><h4>No le dices a la IA que eres un restaurante vasco</h4></div>
+            <p>El Txoko Alaves gana la pregunta "comida vasca" porque todo lo dice: su ficha de Google es "Cocina vasca" y su sitio se titula "Restaurante, Cocina Vasco - Espa&ntilde;ola". Pinpilinpausha no lo dice en ninguna de las dos partes.</p>
+            <div class="evidence">
+                <div class="now"><span class="tag">Hoy</span>Ficha de Google: "Restoran Pinpilinpausha", categoria "Espa&ntilde;ola". Titulo del sitio: "Pinpilinpausha". Sin H1 y sin meta description.</div>
+                <div class="fix"><span class="tag">Recomendado</span>Categoria principal "Restaurante vasco" y secundaria "Restaurante espa&ntilde;ol". Titulo: "Pinpilinpausha | Restaurante vasco en El Golf, Las Condes desde 1940". H1 equivalente y descripcion con cocina vasca, paella, terraza y almuerzo de negocios.</div>
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-head"><span class="badge badge-critical">Critico</span><h4>Cero datos estructurados: la IA tiene que adivinar</h4></div>
+            <p>Los datos estructurados (schema.org) son la ficha tecnica que leen Google, ChatGPT y Gemini. Sin ellos, el horario, el precio y el canal de reserva se toman de terceros, y por eso cada IA dice algo distinto.</p>
+            <div class="evidence">
+                <div class="now"><span class="tag">Hoy</span>0 bloques JSON-LD en el sitio. Ni Restaurant, ni horario, ni carta, ni reservas.</div>
+                <div class="fix"><span class="tag">Recomendado</span>Schema Restaurant con cocina (vasca y espa&ntilde;ola), horario oficial, direccion, telefono, link de reserva en CoverManager, carta, rango de precio, a&ntilde;o de fundacion y perfiles sociales. Va en la seccion 5.</div>
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-head"><span class="badge badge-critical">Critico</span><h4>La carta vigente es una imagen y la antigua sigue publicada</h4></div>
+            <p>La carta de noviembre 2026 es un PDF de 9 paginas y 8,5 MB hecho solo de imagenes, sin texto. Las cartas de 2022 (platos, vinos y cocteles) siguen publicadas y Google Modo IA todavia cita una de ellas como fuente. Mientras no haya una sola carta en texto, la IA arma los precios como puede: ChatGPT y Google Modo IA dan precios distintos para el mismo plato ($13.900 y $14.900).</p>
+            <div class="evidence">
+                <div class="now"><span class="tag">Hoy</span>Carta vigente en imagen (0 caracteres de texto). PDFs de 2022 indexados. Sitio de una sola pagina, con 1 URL en el sitemap.</div>
+                <div class="fix"><span class="tag">Recomendado</span>Carta en HTML en /carta (texto, precios y etiquetas vegano y sin lactosa), con schema Menu. Retirar o redirigir los PDFs de 2022. Si se mantiene el PDF, que tenga texto seleccionable.</div>
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-head"><span class="badge badge-high">Alto</span><h4>Las ocasiones que mas venden no estan en tu sitio</h4></div>
+            <p>Tu Instagram dice "Terraza &middot; Pet friendly", pero tu sitio no menciona la terraza ni a las mascotas. Los negocios aparecen solo de pasada, en la historia ("gente de negocios", "empresarios a cerrar negocios"), sin una propuesta concreta para un almuerzo de trabajo. La IA recomienda para una ocasion a quien la describe.</p>
+            <div class="evidence">
+                <div class="now"><span class="tag">Hoy</span>Sitio de una pagina con historia, galeria y links a PDFs. Sin contenido para negocios, terraza, eventos ni preguntas frecuentes.</div>
+                <div class="fix"><span class="tag">Recomendado</span>Secciones o paginas para almuerzo de negocios en El Golf, terraza y pet friendly, paella y arroces, cocina vasca y patxaran, churros (temporada mayo-agosto) y preguntas frecuentes con schema FAQ.</div>
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-head"><span class="badge badge-high">Alto</span><h4>Datos distintos en cada plataforma</h4></div>
+            <p>Segun la fuente, el domingo abre a las 12:00 o a las 12:30 y cierra a las 16:00 o a las 16:30. De lunes a sabado cierra a las 22:30 o a las 23:00. La reserva aparece en CoverManager, Resy o Mesa 24/7.</p>
+            <div class="evidence">
+                <div class="now"><span class="tag">Hoy</span>Sitio, ficha de Google y Tripadvisor con horarios distintos. Canales de reserva multiples y sin un canal oficial declarado.</div>
+                <div class="fix"><span class="tag">Recomendado</span>Un solo horario oficial publicado en el sitio, Google, Tripadvisor e Instagram. Un canal de reserva oficial (CoverManager) declarado en el schema, en la ficha de Google y en el sitio.</div>
+            </div>
+        </div>
+
+        <div class="issue">
+            <div class="issue-head"><span class="badge badge-medium">Medio</span><h4>Acceso para buscadores e IA</h4></div>
+            <div class="evidence">
+                <div class="now"><span class="tag">Hoy</span>robots.txt con "crawl-delay: 60", que pide a los bots que respetan esa regla esperar 60 segundos entre paginas. Sin /llms.txt (error 404). Los iconos de Facebook e Instagram del header y footer apuntan a "#".</div>
+                <div class="fix"><span class="tag">Recomendado</span>Quitar el crawl-delay, publicar un llms.txt con los datos clave del restaurante y corregir los links a redes para conectar la marca con sus perfiles oficiales.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 3: BASE SEO ============ -->
+    <div class="section page-break">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">Base SEO del sitio</div>
+            <div class="section-score low">38/100</div>
+        </div>
+        <p class="section-intro">La IA se apoya en lo que Google ya entiende de tu sitio. Este es el estado de esa base.</p>
+
+        <div class="metrics-grid">
+            <div class="metric-card"><div class="metric-value bad">0</div><div class="metric-label">Etiquetas H1</div></div>
+            <div class="metric-card"><div class="metric-value bad">13,45 MB</div><div class="metric-label">Imagenes en la home (57 archivos)</div></div>
+            <div class="metric-card"><div class="metric-value bad">0</div><div class="metric-label">Imagenes en WebP</div></div>
+            <div class="metric-card"><div class="metric-value warn">1</div><div class="metric-label">URL en el sitemap</div></div>
+        </div>
+
+        <h3>3.1 Tecnico <span class="muted">(45/100)</span></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Elemento</th><th>Estado</th><th>Severidad</th></tr></thead>
+            <tbody>
+                <tr><td>HTTPS y redirecciones (http y sin www hacia https://www)</td><td>Correcto</td><td><span class="badge badge-ok">OK</span></td></tr>
+                <tr><td>Canonical, idioma (lang="es") y viewport movil</td><td>Correcto</td><td><span class="badge badge-ok">OK</span></td></tr>
+                <tr><td>Tiempo de respuesta del servidor</td><td>0,37 a 0,82 s en 3 mediciones</td><td><span class="badge badge-ok">OK</span></td></tr>
+                <tr><td>Peso de imagenes</td><td>57 imagenes JPG/PNG que suman 13,45 MB. La mas pesada pesa 1 MB. Ninguna en WebP</td><td><span class="badge badge-critical">Critico</span></td></tr>
+                <tr><td>robots.txt</td><td>"crawl-delay: 60" para todos los bots</td><td><span class="badge badge-high">Alto</span></td></tr>
+                <tr><td>Sitemap</td><td>Sitemap nativo de WordPress con 1 sola URL (home)</td><td><span class="badge badge-high">Alto</span></td></tr>
+                <tr><td>Version de PHP</td><td>PHP 7.4.33, sin soporte oficial desde el 28-11-2022</td><td><span class="badge badge-high">Alto</span></td></tr>
+                <tr><td>Elementor</td><td>Version 3.11.5, desactualizada</td><td><span class="badge badge-medium">Medio</span></td></tr>
+                <tr><td>Medicion</td><td>Google Tag Manager instalado</td><td><span class="badge badge-ok">OK</span></td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>3.2 On-page <span class="muted">(20/100)</span></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Elemento</th><th>Hoy</th><th>Severidad</th></tr></thead>
+            <tbody>
+                <tr><td>Title</td><td>"Pinpilinpausha" (sin rubro ni ubicacion)</td><td><span class="badge badge-critical">Critico</span></td></tr>
+                <tr><td>Meta description</td><td>No existe</td><td><span class="badge badge-critical">Critico</span></td></tr>
+                <tr><td>H1</td><td>No existe. Hay 16 H2, varios repetidos ("DESDE 1940" y "Familia Sanz Raab" dos veces cada uno)</td><td><span class="badge badge-critical">Critico</span></td></tr>
+                <tr><td>Open Graph (vista al compartir en WhatsApp o redes)</td><td>No existe: al compartir el link no sale imagen ni descripcion</td><td><span class="badge badge-high">Alto</span></td></tr>
+                <tr><td>Texto alternativo de imagenes</td><td>69 imagenes, 19 sin alt. El resto usa el nombre del archivo ("BANNER-1", "GALERIA-IMG-8")</td><td><span class="badge badge-high">Alto</span></td></tr>
+                <tr><td>Enlaces a redes sociales</td><td>Iconos de Facebook e Instagram en header y footer apuntan a "#"</td><td><span class="badge badge-high">Alto</span></td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>3.3 Contenido <span class="muted">(25/100)</span></h3>
+        <p>La historia de la familia y la descripcion de la cocina estan bien escritas y son la base de lo que la IA repite sobre ti ("fundado en 1940", "mariposa en vasco", "familia Sanz-Raab"). El problema es la estructura: todo vive en una sola pagina, la carta esta en imagen y no hay contenido para las busquedas por plato u ocasion (paella, cocina vasca, almuerzo de negocios, terraza, eventos).</p>
+
+        <h3>3.4 Local y reputacion <span class="muted">(60/100)</span></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Activo</th><th>Estado</th><th></th></tr></thead>
+            <tbody>
+                <tr><td>Google Business Profile</td><td>4,6 con 3,1 K rese&ntilde;as. Rango $25.000 - $50.000. Nombre "Restoran Pinpilinpausha", categoria "Espa&ntilde;ola"</td><td><span class="badge badge-medium">Ajustar</span></td></tr>
+                <tr><td>Tripadvisor</td><td>4,4 con 1.263 opiniones. Segundo en su ranking de restaurantes espa&ntilde;oles en Santiago</td><td><span class="badge badge-ok">Fortaleza</span></td></tr>
+                <tr><td>Prensa</td><td>Critica en La Tercera y entrevista en el sitio de CCU</td><td><span class="badge badge-ok">Fortaleza</span></td></tr>
+                <tr><td>Directorios (Yelp, HappyCow, My Guide Chile)</td><td>Presente. HappyCow refuerza las opciones veganas</td><td><span class="badge badge-ok">OK</span></td></tr>
+                <tr><td>Consistencia de datos (horario y reserva)</td><td>Distinta entre plataformas (ver 1.3)</td><td><span class="badge badge-critical">Critico</span></td></tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 4: QUICK WINS ============ -->
+    <div class="section page-break">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">Quick wins: lo que se resuelve en 30 dias</div>
+        </div>
+        <p class="section-intro">Cambios de bajo esfuerzo que atacan directo los problemas de la seccion 1.</p>
+
+        <div class="opp-grid">
+            <div class="opp-card">
+                <h4>1. Ficha de Google como restaurante vasco</h4>
+                <p>Categoria principal "Restaurante vasco", revisar el nombre "Restoran" y unificar el horario. Es la fuente de Gemini y de Google Modo IA.</p>
+                <div class="opp-meta"><span class="badge badge-critical">Impacto alto</span><span class="badge badge-low">Esfuerzo bajo</span></div>
+            </div>
+            <div class="opp-card">
+                <h4>2. Schema Restaurant en el sitio</h4>
+                <p>Un solo bloque de codigo con cocina, horario, reserva, carta y redes, para que la IA deje de adivinar.</p>
+                <div class="opp-meta"><span class="badge badge-critical">Impacto alto</span><span class="badge badge-low">Esfuerzo bajo</span></div>
+            </div>
+            <div class="opp-card">
+                <h4>3. Title, descripcion, H1 y Open Graph</h4>
+                <p>Decir en el sitio lo que eres: restaurante vasco en El Golf desde 1940, con terraza y reservas online.</p>
+                <div class="opp-meta"><span class="badge badge-critical">Impacto alto</span><span class="badge badge-low">Esfuerzo bajo</span></div>
+            </div>
+            <div class="opp-card">
+                <h4>4. Un horario y un canal de reserva</h4>
+                <p>El mismo horario en el sitio, Google, Tripadvisor e Instagram, con CoverManager como canal oficial.</p>
+                <div class="opp-meta"><span class="badge badge-high">Impacto medio-alto</span><span class="badge badge-low">Esfuerzo bajo</span></div>
+            </div>
+            <div class="opp-card">
+                <h4>5. Arreglar los links de redes y el robots.txt</h4>
+                <p>Conectar Facebook e Instagram, quitar el crawl-delay y publicar llms.txt.</p>
+                <div class="opp-meta"><span class="badge badge-medium">Impacto medio</span><span class="badge badge-low">Esfuerzo bajo</span></div>
+            </div>
+            <div class="opp-card">
+                <h4>6. Retirar las cartas 2022</h4>
+                <p>Eliminar o redirigir los PDFs antiguos: Google Modo IA todavia cita la carta 2022 como fuente.</p>
+                <div class="opp-meta"><span class="badge badge-medium">Impacto medio</span><span class="badge badge-low">Esfuerzo bajo</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 5: PLAN 90 DIAS ============ -->
+    <div class="section page-break">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">Plan de accion a 90 dias</div>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-critical">Prioridad critica &middot; Semana 1-2</span>
+            <div class="table-wrap"><table>
+                <thead><tr><th>#</th><th>Accion</th><th>Problema que resuelve</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>Categoria "Restaurante vasco" y horario unificado en la ficha de Google</td><td>Perder "comida vasca" y horarios inconsistentes</td></tr>
+                    <tr><td>2</td><td>Schema Restaurant (ver abajo)</td><td>Datos contradictorios en la IA</td></tr>
+                    <tr><td>3</td><td>Title, meta description, H1 y Open Graph</td><td>Identidad debil y mala vista al compartir</td></tr>
+                    <tr><td>4</td><td>Links de redes sociales y robots.txt sin crawl-delay</td><td>Marca desconectada de sus perfiles y rastreo lento</td></tr>
+                </tbody>
+            </table></div>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-high">Prioridad alta &middot; Semana 3-4</span>
+            <div class="table-wrap"><table>
+                <thead><tr><th>#</th><th>Accion</th><th>Problema que resuelve</th></tr></thead>
+                <tbody>
+                    <tr><td>5</td><td>Carta en HTML (/carta) con schema Menu y retiro de los PDFs 2022</td><td>Precios distintos y carta ilegible</td></tr>
+                    <tr><td>6</td><td>Canal de reserva oficial unico, actualizado en Tripadvisor y directorios</td><td>Reservas por canales que no usas</td></tr>
+                    <tr><td>7</td><td>Imagenes a WebP con compresion y alt descriptivos</td><td>13,45 MB de imagenes y alts con nombre de archivo</td></tr>
+                    <tr><td>8</td><td>Publicar /llms.txt</td><td>Resumen oficial para modelos de IA</td></tr>
+                </tbody>
+            </table></div>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-medium">Prioridad media &middot; Mes 2</span>
+            <div class="table-wrap"><table>
+                <thead><tr><th>#</th><th>Accion</th><th>Problema que resuelve</th></tr></thead>
+                <tbody>
+                    <tr><td>9</td><td>Paginas o secciones por ocasion: almuerzo de negocios en El Golf, terraza y pet friendly, eventos y grupos</td><td>No aparecer en negocios ni terraza (Gemini)</td></tr>
+                    <tr><td>10</td><td>Contenido por plato: paella y arroces, cocina vasca y patxaran, churros (temporada)</td><td>Ser #2 o #3 en paella, vasca y churros</td></tr>
+                    <tr><td>11</td><td>Preguntas frecuentes con schema FAQ (horario, reserva, estacionamiento, veganos, mascotas)</td><td>Respuestas directas que la IA puede citar</td></tr>
+                </tbody>
+            </table></div>
+        </div>
+
+        <div class="priority-section">
+            <span class="priority-label priority-low">Prioridad baja &middot; Mes 3 en adelante</span>
+            <div class="table-wrap"><table>
+                <thead><tr><th>#</th><th>Accion</th><th>Problema que resuelve</th></tr></thead>
+                <tbody>
+                    <tr><td>12</td><td>Presencia en guias tematicas ("mejores restaurantes vascos", "ruta de la paella")</td><td>La IA usa esas guias para recomendar a La Cocina de Javier y El Txoko</td></tr>
+                    <tr><td>13</td><td>Actualizar PHP y Elementor</td><td>Seguridad y rendimiento</td></tr>
+                    <tr><td>14</td><td>Medicion mensual de las mismas 8 preguntas en 3 motores (24 respuestas)</td><td>Saber si la IA ya te elige primero</td></tr>
+                </tbody>
+            </table></div>
+        </div>
+
+        <h3>5.1 Schema recomendado (Restaurant)</h3>
+        <p class="muted">Antes de publicar, confirma el horario oficial, porque hoy el sitio y la ficha de Google no coinciden. "hasMenu" apunta a la carta en HTML propuesta (/carta).</p>
+<div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Pinpilinpausha",
+  "url": "https://www.pinpilinpausha.cl/",
+  "logo": "https://www.pinpilinpausha.cl/wp-content/uploads/2022/06/LOGO-PINPI.png",
+  "foundingDate": "1940",
+  "servesCuisine": ["Vasca", "Espa&ntilde;ola", "Mediterranea"],
+  "priceRange": "CLP 25.000 - 50.000",
+  "telephone": "+56232754303",
+  "email": "reserva@pinpilinpausha.cl",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Isidora Goyenechea 2900",
+    "addressLocality": "Las Condes",
+    "addressRegion": "Region Metropolitana",
+    "postalCode": "7550033",
+    "addressCountry": "CL"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "12:30", "closes": "23:00" },
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday", "opens": "12:30", "closes": "16:30" }
+  ],
+  "acceptsReservations": "https://www.covermanager.com/reserve/module_restaurant/pinpilinpausha-santiago/spanish",
+  "hasMenu": "https://www.pinpilinpausha.cl/carta/",
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Terraza", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Pet friendly", "value": true }
+  ],
+  "sameAs": ["https://www.instagram.com/pinpilinpausha/"]
+}
+&lt;/script&gt;</div>
+
+        <h3>5.2 llms.txt propuesto</h3>
+<div class="code-block"># Pinpilinpausha
+&gt; Restaurante de cocina vasca y espa&ntilde;ola en el barrio El Golf (Las Condes, Santiago de Chile), fundado en 1940 por la familia Sanz-Raab.
+
+- Direccion: Isidora Goyenechea 2900, Las Condes
+- Horario: [horario oficial unico]
+- Reservas: https://www.covermanager.com/reserve/module_restaurant/pinpilinpausha-santiago/spanish
+- Carta: https://www.pinpilinpausha.cl/carta/
+- Especialidades: paella, corvina donostiarra, calamares en su tinta, tortilla espa&ntilde;ola, jamon de pata negra, churros con chocolate (mayo a agosto)
+- Opciones veganas y sin lactosa
+- Terraza, pet friendly, almuerzos de negocios</div>
+
+        <h3>5.3 KPIs: hoy vs. meta a 90 dias</h3>
+        <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-value">17/21</div><div class="kpi-label">Respuestas IA donde apareces</div><div class="kpi-target">Meta: 20/21</div></div>
+            <div class="kpi-card"><div class="kpi-value">5/21</div><div class="kpi-label">Primera recomendacion</div><div class="kpi-target">Meta: 10/21</div></div>
+            <div class="kpi-card"><div class="kpi-value">0/3</div><div class="kpi-label">Primera opcion para "comida vasca"</div><div class="kpi-target">Meta: 2/3</div></div>
+            <div class="kpi-card"><div class="kpi-value">3</div><div class="kpi-label">Horarios de domingo distintos</div><div class="kpi-target">Meta: 1 (el oficial)</div></div>
+            <div class="kpi-card"><div class="kpi-value">0</div><div class="kpi-label">Tipos de schema</div><div class="kpi-target">Meta: Restaurant + Menu + FAQ</div></div>
+            <div class="kpi-card"><div class="kpi-value">13,45 MB</div><div class="kpi-label">Imagenes en la home</div><div class="kpi-target">Meta: menos de 3 MB</div></div>
+        </div>
+        <p class="muted">Las metas son objetivos de trabajo, no resultados garantizados. Las respuestas de IA cambian segun usuario, ubicacion y momento.</p>
+
+        <h3>5.4 Timeline</h3>
+        <div class="timeline">
+            <div class="timeline-item phase1"><div><div class="timeline-label">Semana 1-2: identidad y datos</div><div class="timeline-desc">Ficha de Google, schema Restaurant, title, descripcion, H1, Open Graph, redes y robots.txt.</div></div></div>
+            <div class="timeline-item phase2"><div><div class="timeline-label">Semana 3-4: carta y consistencia</div><div class="timeline-desc">Carta en HTML, retiro de PDFs 2022, canal de reserva unico, imagenes WebP y llms.txt.</div></div></div>
+            <div class="timeline-item phase3"><div><div class="timeline-label">Mes 2: contenido por ocasion y plato</div><div class="timeline-desc">Negocios, terraza, eventos, paella, cocina vasca, churros y preguntas frecuentes.</div></div></div>
+            <div class="timeline-item phase4"><div><div class="timeline-label">Mes 3: autoridad y medicion</div><div class="timeline-desc">Guias tematicas, actualizacion tecnica y nueva medicion de las 8 preguntas (24 respuestas) para comparar con esta linea base.</div></div></div>
+        </div>
+    </div>
+
+    <!-- ============ SECCION 6: SFINANCE ============ -->
+    <div class="section page-break">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            <div class="section-title">Como lo hacemos en SFinance</div>
+        </div>
+        <p class="section-intro">Trabajamos sobre tu sitio actual, sin rehacerlo, y medimos lo mismo que medimos hoy para que veas el avance en las respuestas reales de la IA.</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-n">1</div>
+                <h4>Diagnostico</h4>
+                <p>Este reporte es el punto de partida. Lo revisamos contigo y priorizamos segun tu operacion.</p>
+                <ul>
+                    <li>24 respuestas de IA como linea base</li>
+                    <li>Revision tecnica del sitio</li>
+                    <li>Mapa de competidores en IA</li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-n">2</div>
+                <h4>Implementacion</h4>
+                <p>Ejecutamos el plan de 90 dias sobre tu WordPress y tus fichas.</p>
+                <ul>
+                    <li>Datos estructurados y llms.txt</li>
+                    <li>Ficha de Google y consistencia de datos</li>
+                    <li>Carta en HTML y contenido por ocasion</li>
+                    <li>Correcciones tecnicas y de imagenes</li>
+                </ul>
+            </div>
+            <div class="step">
+                <div class="step-n">3</div>
+                <h4>Medicion mensual</h4>
+                <p>Cada mes repetimos las mismas preguntas en ChatGPT, Gemini y Google Modo IA.</p>
+                <ul>
+                    <li>Presencia y primera opcion por motor</li>
+                    <li>Share of voice frente a competidores</li>
+                    <li>Datos que la IA dice de ti, corregidos o no</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-final">
+            <h2>Que la IA recomiende <span>Pinpilinpausha</span> primero</h2>
+            <p>Llevas 86 a&ntilde;os siendo un clasico de Santiago. Hagamos que ChatGPT, Gemini y Google lo digan con los datos correctos, empezando por la pregunta que mas te pertenece: donde comer cocina vasca.</p>
+            <a class="cta-button" href="https://sfinance.world/contacto">Agendar una reunion con SFinance</a>
+            <span class="cta-url">sfinance.world/contacto</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="brand">SFINANCE</p>
+        <p><a href="https://sfinance.world/contacto">sfinance.world/contacto</a></p>
+        <p>Auditoria GEO + SEO de pinpilinpausha.cl &middot; 16-11-2026</p>
+        <p>Metodologia: 8 preguntas en ChatGPT (sin sesion iniciada), Google Modo IA y Gemini, realizadas el 16-11-2026. Las respuestas de IA varian segun usuario, ubicacion y momento: esta medicion es una fotografia de ese dia, no un ranking fijo. Los datos tecnicos se obtuvieron analizando directamente el sitio publico, su robots.txt, su sitemap y sus archivos.</p>
+    </div>
+
+</div>
+</body>
+</html>
