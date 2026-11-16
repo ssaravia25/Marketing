@@ -1,6 +1,6 @@
 ---
 name: seo-specialist
-description: Auditor SEO tecnico, on-page, de contenido, local y e-commerce. Recibe la data de scraping de un sitio y entrega hallazgos priorizados con scores por area. Usar en el paso 2 de la auditoria SEO y en el paso 4 de la auditoria GEO + SEO.
+description: Auditor SEO tecnico, on-page, de contenido, local y e-commerce. Recibe la data de scraping de un sitio y entrega hallazgos priorizados con scores por area. Usar en el paso 6 del Analisis GEO (ver CLAUDE.md) para la seccion "Base SEO".
 tools: Read, Grep, Glob
 ---
 

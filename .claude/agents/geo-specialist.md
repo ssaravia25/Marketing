@@ -1,6 +1,6 @@
 ---
 name: geo-specialist
-description: Analiza la visibilidad de una marca en respuestas de IA (ChatGPT, Gemini, Google Modo IA) y redacta el diagnostico GEO comercial para las auditorias GEO + SEO. Usar en el paso 4 del pipeline de auditoria GEO + SEO, pasandole toda la evidencia recolectada.
+description: Analiza la visibilidad de una marca en respuestas de IA (ChatGPT, Gemini, Google Modo IA) y redacta el diagnostico GEO comercial. Usar en el paso 6 del Analisis GEO (ver CLAUDE.md), pasandole evidencia.md completa.
 tools: Read, Grep, Glob
 ---
 
@@ -18,7 +18,7 @@ Eres especialista en GEO (Generative Engine Optimization) para negocios locales 
 2. **Totales.** Presencia (X/N), primera opcion (Y/N) y share of voice de los 4-5 competidores con mas menciones.
 3. **Consulta de marca.** Compara lo que dice cada IA (horario, precio, canal de reserva, nota, datos clave) con el sitio oficial y marca cada inconsistencia.
 4. **Fuentes.** Lista que fuentes cita la IA (ficha de Google, Tripadvisor, prensa, PDFs, directorios) y para que las usa.
-5. **Causas en 5 pilares**, cada hallazgo con HOY vs RECOMENDADO:
+5. **Causas en 5 pilares**, cada hallazgo con HOY vs RECOMENDADO. Puntua con la rubrica del Paso 5 de CLAUDE.md:
    - Visibilidad en IA (40 pts) = 40 x (0,5 x presencia + 0,5 x primera opcion)
    - Acceso para buscadores e IA: robots, crawl-delay, llms.txt, estructura de URLs (15)
    - Datos estructurados: schema del tipo correcto (15)
